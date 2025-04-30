@@ -387,7 +387,7 @@ const BoilerplateDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [template, setTemplate] = useState<Template | null>(null);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [_, setActiveTab] = useState("overview");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, login } = useAuth();
 

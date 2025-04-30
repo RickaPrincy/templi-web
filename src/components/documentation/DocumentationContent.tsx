@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileJson, Terminal, Library, Folder, File, Code, Package, Wrench, Book, Download } from "lucide-react";
 import { DocumentationPagination } from "./DocumentationPagination";
 import CodeBlock from "./CodeBlock";

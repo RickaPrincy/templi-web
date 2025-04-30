@@ -25,7 +25,7 @@ const Examples = () => {
   const { user, login } = useAuth();
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [_, setActiveTab] = useState("overview");
 
   const templateConfig = {
     excludes: [

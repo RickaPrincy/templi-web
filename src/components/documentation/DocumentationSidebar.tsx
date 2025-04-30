@@ -3,7 +3,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { File, FileJson, Terminal, Book, Code } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const documentationPages = [
   {
@@ -54,7 +54,6 @@ type DocumentationSidebarProps = {
 
 export function DocumentationSidebar({ currentPage }: DocumentationSidebarProps) {
   const { open } = useSidebar();
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
