@@ -2,7 +2,7 @@ import { Navigation } from '@/components/Navigation';
 import DocumentationContent from '@/components/documentation/DocumentationContent';
 import { DocumentationSidebar } from '@/components/documentation/DocumentationSidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
@@ -12,7 +12,7 @@ const Documentation = () => {
   const navigate = useNavigate();
 
   // Extract page from URL hash or default to introduction
-  useEffect(() => {
+  useLayoutEffect(() => {
     const hash = location.hash.replace('#', '');
     if (hash) {
       setCurrentPage(hash);

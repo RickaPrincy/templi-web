@@ -1,25 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { useTheme } from './ThemeProvider';
-import { Moon, Sun } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
-  const { theme, setTheme } = useTheme();
-
   return (
     <div className="container px-4 pt-16 pb-12 text-center lg:pt-32 relative">
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-        className="absolute right-4 top-4"
-      >
-        {theme === 'light' ? (
-          <Moon className="h-5 w-5" />
-        ) : (
-          <Sun className="h-5 w-5" />
-        )}
-      </Button>
 
       <motion.h1
         className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight sm:text-7xl"
@@ -27,16 +12,14 @@ const Hero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Simplify{' '}
+        Simplify boilerplate{' '}
         <motion.span
-          className="relative whitespace-nowrap"
+          className="relative whitespace-nowrap bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <span className="relative bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-            boilerplate creation
-          </span>
+          creation and usage
         </motion.span>{' '}
         with Templi
       </motion.h1>
@@ -58,9 +41,9 @@ const Hero = () => {
         <Button
           asChild
           size="lg"
-          className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
+          className="text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
         >
-          <a href="#quickstart">Get Started</a>
+          <Link to="/boilerplates">Get Started</Link>
         </Button>
         <Button variant="outline" size="lg" asChild>
           <a href="https://github.com/RickaPrincy/Templi" target="_blank">

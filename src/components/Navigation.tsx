@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Github } from 'lucide-react';
+import { GithubIcon } from './GithubIcon';
 import { useAuth } from '@/contexts/AuthContext';
+import { ToggleThemeButton } from './ToggleThemeButton';
 
 export const Navigation = () => {
   const { user, login, logout } = useAuth();
@@ -40,30 +41,34 @@ export const Navigation = () => {
 
         <div>
           {user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground hidden md:inline">
+            <div className="flex items-center gap-5">
+              <h2 className="text-sm text-muted-foreground hidden md:inline">
                 Signed in as {user.username}
-              </span>
+              </h2>
               <Button
                 variant="outline"
                 size="sm"
                 className="flex items-center gap-2"
                 onClick={logout}
               >
-                <Github className="h-4 w-4" />
+                <GithubIcon />
                 Sign Out
               </Button>
+              <ToggleThemeButton />
             </div>
           ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-              onClick={login}
-            >
-              <Github className="h-4 w-4" />
-              Sign In with GitHub
-            </Button>
+            <div className='flex gap-5'>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+                onClick={login}
+              >
+                <GithubIcon />
+                Sign In with GitHub
+              </Button>
+              <ToggleThemeButton />
+            </div>
           )}
         </div>
       </div>

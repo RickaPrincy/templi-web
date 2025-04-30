@@ -88,11 +88,8 @@ export function DocumentationSidebar({
 
   return (
     <Sidebar className="md:block hidden border-r">
-      <SidebarHeader>
+      <SidebarHeader className='mt-1 pl-2 mb-5'>
         <h4 className="text-foreground font-semibold">Documentation</h4>
-        <p className="text-muted-foreground text-sm">
-          Explore Templi's features and usage
-        </p>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
