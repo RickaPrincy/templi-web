@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Terminal } from "lucide-react";
-import CodeBlock from "../CodeBlock";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Terminal } from 'lucide-react';
+import CodeBlock from '../CodeBlock';
 
 export function CLIReference() {
   return (
@@ -9,9 +8,10 @@ export function CLIReference() {
       <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
         CLI Reference
       </h1>
-      
+
       <p className="text-lg text-muted-foreground mb-6">
-        Complete reference for Templi's command-line interface commands and options.
+        Complete reference for Templi's command-line interface commands and
+        options.
       </p>
 
       <Card className="mb-8">
@@ -33,15 +33,26 @@ export function CLIReference() {
               />
               <p className="mt-4 mb-2">Options:</p>
               <ul className="list-disc pl-5 space-y-2">
-                <li><code>-t, --template</code>: Path to the template directory or GitHub repository</li>
-                <li><code>-o, --output</code>: Output directory for the generated project</li>
-                <li><code>-p, --path-suffix</code>: Optional subfolder path for monorepo templates</li>
+                <li>
+                  <code>-t, --template</code>: Path to the template directory or
+                  GitHub repository
+                </li>
+                <li>
+                  <code>-o, --output</code>: Output directory for the generated
+                  project
+                </li>
+                <li>
+                  <code>-p, --path-suffix</code>: Optional subfolder path for
+                  monorepo templates
+                </li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-xl font-semibold mb-2">configure</h3>
-              <p className="mb-3">Creates or updates templi.json configuration.</p>
+              <p className="mb-3">
+                Creates or updates templi.json configuration.
+              </p>
               <CodeBlock
                 language="bash"
                 code={`templi configure -t <template_path>`}
@@ -49,7 +60,9 @@ export function CLIReference() {
               />
               <p className="mt-4 mb-2">Options:</p>
               <ul className="list-disc pl-5 space-y-2">
-                <li><code>-t, --template</code>: Path to the template directory</li>
+                <li>
+                  <code>-t, --template</code>: Path to the template directory
+                </li>
               </ul>
             </div>
           </div>

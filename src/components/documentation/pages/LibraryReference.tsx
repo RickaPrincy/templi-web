@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Code } from "lucide-react";
-import CodeBlock from "../CodeBlock";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Code } from 'lucide-react';
+import CodeBlock from '../CodeBlock';
 
 export function LibraryReference() {
   return (
@@ -9,9 +8,10 @@ export function LibraryReference() {
       <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
         Library Reference
       </h1>
-      
+
       <p className="text-lg text-muted-foreground mb-6">
-        Detailed documentation of Templi's core library functionality and API reference.
+        Detailed documentation of Templi's core library functionality and API
+        reference.
       </p>
 
       <Card className="mb-8">
@@ -25,7 +25,10 @@ export function LibraryReference() {
           <div className="space-y-6">
             <div>
               <h3 className="text-xl font-semibold mb-2">generate</h3>
-              <p className="mb-3">Generates a project from a template with specified values and exclusions.</p>
+              <p className="mb-3">
+                Generates a project from a template with specified values and
+                exclusions.
+              </p>
               <CodeBlock
                 language="cpp"
                 code={`void generate(
@@ -38,8 +41,12 @@ export function LibraryReference() {
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-2">generate_with_templi_config</h3>
-              <p className="mb-3">Generates a project using templi.json configuration.</p>
+              <h3 className="text-xl font-semibold mb-2">
+                generate_with_templi_config
+              </h3>
+              <p className="mb-3">
+                Generates a project using templi.json configuration.
+              </p>
               <CodeBlock
                 language="cpp"
                 code={`void generate_with_templi_config(
@@ -52,7 +59,9 @@ export function LibraryReference() {
 
             <div>
               <h3 className="text-xl font-semibold mb-2">configure</h3>
-              <p className="mb-3">Creates or updates templi.json configuration for a template.</p>
+              <p className="mb-3">
+                Creates or updates templi.json configuration for a template.
+              </p>
               <CodeBlock
                 language="cpp"
                 code={`void configure(std::string template_path);`}
@@ -62,7 +71,9 @@ export function LibraryReference() {
 
             <div>
               <h3 className="text-xl font-semibold mb-2">TempliConfig Class</h3>
-              <p className="mb-3">Manages template configuration and settings.</p>
+              <p className="mb-3">
+                Manages template configuration and settings.
+              </p>
               <CodeBlock
                 language="cpp"
                 code={`class TempliConfig {

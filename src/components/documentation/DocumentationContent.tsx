@@ -1,10 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileJson, Terminal, Library, Folder, File, Code, Package, Wrench, Book, Download } from "lucide-react";
-import { DocumentationPagination } from "./DocumentationPagination";
-import CodeBlock from "./CodeBlock";
-import { motion } from "framer-motion";
-import { CLIReference } from "./pages/CLIReference";
-import { LibraryReference } from "./pages/LibraryReference";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  FileJson,
+  Terminal,
+  Library,
+  Folder,
+  File,
+  Code,
+  Package,
+  Wrench,
+  Book,
+  Download,
+} from 'lucide-react';
+import { DocumentationPagination } from './DocumentationPagination';
+import CodeBlock from './CodeBlock';
+import { motion } from 'framer-motion';
+import { CLIReference } from './pages/CLIReference';
+import { LibraryReference } from './pages/LibraryReference';
 
 interface DocumentationContentProps {
   currentPage: string;
@@ -13,13 +24,13 @@ interface DocumentationContentProps {
 const pageAnimationVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.2 } }
+  exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
 };
 
 const DocumentationContent = ({ currentPage }: DocumentationContentProps) => {
   return (
     <main className="flex-1 container max-w-5xl mx-auto px-4 py-8 overflow-y-auto">
-      <motion.div 
+      <motion.div
         className="prose prose-blue max-w-none"
         key={currentPage}
         initial="hidden"
@@ -27,14 +38,16 @@ const DocumentationContent = ({ currentPage }: DocumentationContentProps) => {
         exit="exit"
         variants={pageAnimationVariants}
       >
-        {currentPage === "introduction" && <IntroductionPage />}
-        {currentPage === "installation" && <InstallationPage />}
-        {currentPage === "creating-boilerplate" && <CreatingBoilerplatePage />}
-        {currentPage === "configuring-boilerplate" && <ConfiguringBoilerplatePage />}
-        {currentPage === "using-boilerplate" && <UsingBoilerplatePage />}
-        {currentPage === "cli-reference" && <CLIReference />}
-        {currentPage === "library-reference" && <LibraryReference />}
-        {currentPage === "example-project" && <ExampleProjectPage />}
+        {currentPage === 'introduction' && <IntroductionPage />}
+        {currentPage === 'installation' && <InstallationPage />}
+        {currentPage === 'creating-boilerplate' && <CreatingBoilerplatePage />}
+        {currentPage === 'configuring-boilerplate' && (
+          <ConfiguringBoilerplatePage />
+        )}
+        {currentPage === 'using-boilerplate' && <UsingBoilerplatePage />}
+        {currentPage === 'cli-reference' && <CLIReference />}
+        {currentPage === 'library-reference' && <LibraryReference />}
+        {currentPage === 'example-project' && <ExampleProjectPage />}
 
         <DocumentationPagination currentPage={currentPage} />
       </motion.div>
@@ -48,14 +61,18 @@ const IntroductionPage = () => (
       Templi Documentation
     </h1>
     <p className="text-lg text-muted-foreground mb-6">
-      Templi is a powerful tool that simplifies boilerplate creation and usage, available as both a library and a CLI.
+      Templi is a powerful tool that simplifies boilerplate creation and usage,
+      available as both a library and a CLI.
     </p>
 
     <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200 mb-8">
       <Book className="h-10 w-10 text-blue-500" />
       <div>
         <h3 className="text-lg font-medium">What is Templi?</h3>
-        <p>A modern tool for generating and managing project templates with customizable placeholders and scripts.</p>
+        <p>
+          A modern tool for generating and managing project templates with
+          customizable placeholders and scripts.
+        </p>
       </div>
     </div>
 
@@ -85,7 +102,9 @@ Github: <https://github.com/RickaPrincy/Templi>`}
         </CardHeader>
         <CardContent>
           <ul className="list-disc pl-5 space-y-2">
-            <li>Simple template configuration with <code>templi.json</code></li>
+            <li>
+              Simple template configuration with <code>templi.json</code>
+            </li>
             <li>Powerful templating with placeholders</li>
             <li>Pre and post-generation scripts</li>
             <li>Supports both CLI and library usage</li>
@@ -93,7 +112,7 @@ Github: <https://github.com/RickaPrincy/Templi>`}
           </ul>
         </CardContent>
       </Card>
-      
+
       <Card className="transition-all duration-300 hover:shadow-lg">
         <CardHeader>
           <CardTitle>Use Cases</CardTitle>
@@ -117,10 +136,13 @@ const InstallationPage = () => (
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
       Installation
     </h1>
-    
+
     <div className="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-200 mb-8">
       <Download className="h-10 w-10 text-amber-500" />
-      <p>Templi can be installed globally as a CLI tool or as a library in your project.</p>
+      <p>
+        Templi can be installed globally as a CLI tool or as a library in your
+        project.
+      </p>
     </div>
 
     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
@@ -131,13 +153,14 @@ const InstallationPage = () => (
     <Card className="mb-8">
       <CardContent className="pt-6">
         <p className="mb-4">Install Templi globally using npm:</p>
-        <CodeBlock 
+        <CodeBlock
           language="bash"
-          code="npm install -g templi" 
+          code="npm install -g templi"
           caption="Global installation command"
         />
         <p className="mt-4 text-muted-foreground">
-          This makes the <code>templi</code> command available throughout your system.
+          This makes the <code>templi</code> command available throughout your
+          system.
         </p>
       </CardContent>
     </Card>
@@ -192,7 +215,7 @@ const CreatingBoilerplatePage = () => (
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
       Creating a Boilerplate
     </h1>
-    
+
     <p className="text-lg text-muted-foreground mb-6">
       Learn how to create your own project boilerplate templates with Templi.
     </p>
@@ -203,8 +226,8 @@ const CreatingBoilerplatePage = () => (
     </h2>
 
     <p className="mb-4">
-      A Templi template is simply a directory containing the files you want to use as a boilerplate.
-      To create a template:
+      A Templi template is simply a directory containing the files you want to
+      use as a boilerplate. To create a template:
     </p>
 
     <div className="space-y-6 mb-8">
@@ -227,7 +250,10 @@ cd my-express-template`}
           <CardTitle>2. Create Your Template Files</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="mb-4">Add the files you want in your template. You can include placeholders in the files using double curly braces:</p>
+          <p className="mb-4">
+            Add the files you want in your template. You can include
+            placeholders in the files using double curly braces:
+          </p>
           <CodeBlock
             language="json"
             code={`// package.json
@@ -248,20 +274,29 @@ cd my-express-template`}
           <CardTitle>3. Configure Templi for Your Template</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="mb-4">Run the configure command in your template directory:</p>
+          <p className="mb-4">
+            Run the configure command in your template directory:
+          </p>
           <CodeBlock
             language="bash"
             code="templi configure -t ./my-express-template"
             caption="Generate templi.json configuration"
           />
-          <p className="mt-4">This will generate a <code>templi.json</code> file for your template.</p>
+          <p className="mt-4">
+            This will generate a <code>templi.json</code> file for your
+            template.
+          </p>
         </CardContent>
       </Card>
     </div>
 
     <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
       <h3 className="text-xl font-semibold mb-2">Working with Binary Files</h3>
-      <p className="mb-4">If your template contains binary files like images, you should exclude them in the <code>templi.json</code> file to prevent Templi from trying to parse them as text:</p>
+      <p className="mb-4">
+        If your template contains binary files like images, you should exclude
+        them in the <code>templi.json</code> file to prevent Templi from trying
+        to parse them as text:
+      </p>
       <CodeBlock
         language="json"
         code={`{
@@ -274,13 +309,20 @@ cd my-express-template`}
 }`}
         caption="Example excludes configuration for binary files"
       />
-      <p className="mt-4">You should create or edit the <code>templi.json</code> file to exclude binary files before running the configuration command.</p>
+      <p className="mt-4">
+        You should create or edit the <code>templi.json</code> file to exclude
+        binary files before running the configuration command.
+      </p>
     </div>
 
     <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
-      <h3 className="text-xl font-semibold mb-2">Example: Express.js Template</h3>
-      <p className="mb-4">Here's an example of a template structure for an Express.js application:</p>
-      
+      <h3 className="text-xl font-semibold mb-2">
+        Example: Express.js Template
+      </h3>
+      <p className="mb-4">
+        Here's an example of a template structure for an Express.js application:
+      </p>
+
       <div className="ml-6 space-y-2">
         <div className="flex items-center gap-2">
           <Folder className="h-4 w-4" />
@@ -332,7 +374,9 @@ cd my-express-template`}
         <CardTitle>Creating Placeholders</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="mb-4">In your template files, use double curly braces for placeholders:</p>
+        <p className="mb-4">
+          In your template files, use double curly braces for placeholders:
+        </p>
         <CodeBlock
           language="javascript"
           code={`// src/server.js
@@ -354,9 +398,10 @@ const ConfiguringBoilerplatePage = () => (
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
       Configuring a Boilerplate
     </h1>
-    
+
     <p className="text-lg text-muted-foreground mb-6">
-      Customize your template with the <code>templi.json</code> configuration file.
+      Customize your template with the <code>templi.json</code> configuration
+      file.
     </p>
 
     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
@@ -424,7 +469,10 @@ const ConfiguringBoilerplatePage = () => (
         </h3>
         <Card>
           <CardContent className="pt-6">
-            <p className="mb-4">The <code>scripts</code> section defines commands to run before and after template generation:</p>
+            <p className="mb-4">
+              The <code>scripts</code> section defines commands to run before
+              and after template generation:
+            </p>
             <CodeBlock
               language="json"
               code={`"scripts": {
@@ -451,7 +499,10 @@ const ConfiguringBoilerplatePage = () => (
         </h3>
         <Card>
           <CardContent className="pt-6">
-            <p className="mb-4">The <code>excludes</code> array lists files and directories to exclude from the generated output:</p>
+            <p className="mb-4">
+              The <code>excludes</code> array lists files and directories to
+              exclude from the generated output:
+            </p>
             <CodeBlock
               language="json"
               code={`"excludes": [
@@ -473,7 +524,10 @@ const ConfiguringBoilerplatePage = () => (
         </h3>
         <Card>
           <CardContent className="pt-6">
-            <p className="mb-4">The <code>keys</code> array defines the placeholders and how they should be handled:</p>
+            <p className="mb-4">
+              The <code>keys</code> array defines the placeholders and how they
+              should be handled:
+            </p>
             <CodeBlock
               language="json"
               code={`"keys": [
@@ -501,9 +555,15 @@ const ConfiguringBoilerplatePage = () => (
             />
             <p className="mt-4">Available key types:</p>
             <ul className="list-disc pl-5 space-y-2 mt-2">
-              <li><code>INPUT</code>: Text input</li>
-              <li><code>SELECT</code>: Option selection</li>
-              <li><code>BOOLEAN</code>: Yes/No input</li>
+              <li>
+                <code>INPUT</code>: Text input
+              </li>
+              <li>
+                <code>SELECT</code>: Option selection
+              </li>
+              <li>
+                <code>BOOLEAN</code>: Yes/No input
+              </li>
             </ul>
           </CardContent>
         </Card>
@@ -511,9 +571,12 @@ const ConfiguringBoilerplatePage = () => (
     </div>
 
     <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 mb-8">
-      <h3 className="text-xl font-semibold mb-2">Creating Configuration Automatically</h3>
+      <h3 className="text-xl font-semibold mb-2">
+        Creating Configuration Automatically
+      </h3>
       <p>
-        Instead of writing <code>templi.json</code> manually, you can generate it using the configure command:
+        Instead of writing <code>templi.json</code> manually, you can generate
+        it using the configure command:
       </p>
       <CodeBlock
         language="bash"
@@ -521,11 +584,12 @@ const ConfiguringBoilerplatePage = () => (
         caption="Automatic configuration generation"
       />
       <p className="mt-4">
-        This will analyze your template and create a <code>templi.json</code> configuration file with detected placeholders.
+        This will analyze your template and create a <code>templi.json</code>{' '}
+        configuration file with detected placeholders.
       </p>
-      <img 
-        src="/lovable-uploads/1148d55d-1d22-4078-b146-4f452db89e3b.png" 
-        alt="Templi configure command output" 
+      <img
+        src="/lovable-uploads/1148d55d-1d22-4078-b146-4f452db89e3b.png"
+        alt="Templi configure command output"
         className="mt-4 rounded-md border border-amber-300 shadow-sm"
       />
     </div>
@@ -537,7 +601,7 @@ const UsingBoilerplatePage = () => (
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
       Using Your Boilerplate
     </h1>
-    
+
     <p className="text-lg text-muted-foreground mb-6">
       Generate projects from your templates using the Templi CLI or library.
     </p>
@@ -560,10 +624,21 @@ const UsingBoilerplatePage = () => (
         />
         <p className="mt-4">Options:</p>
         <ul className="list-disc pl-5 space-y-2 mt-2">
-          <li><code>-t, --template</code>: Path to the template directory</li>
-          <li><code>-o, --output</code>: Output directory for the generated project</li>
-          <li><code>-p, --prefix</code>: (Optional) Subfolder for monorepo projects</li>
-          <li><code>-v, --values</code>: (Optional) JSON string with placeholder values</li>
+          <li>
+            <code>-t, --template</code>: Path to the template directory
+          </li>
+          <li>
+            <code>-o, --output</code>: Output directory for the generated
+            project
+          </li>
+          <li>
+            <code>-p, --prefix</code>: (Optional) Subfolder for monorepo
+            projects
+          </li>
+          <li>
+            <code>-v, --values</code>: (Optional) JSON string with placeholder
+            values
+          </li>
         </ul>
       </CardContent>
     </Card>
@@ -571,11 +646,12 @@ const UsingBoilerplatePage = () => (
     <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
       <h3 className="text-xl font-semibold mb-2">Interactive Prompts</h3>
       <p className="mb-4">
-        When generating a project, Templi will prompt you for the values of placeholders defined in <code>templi.json</code>:
+        When generating a project, Templi will prompt you for the values of
+        placeholders defined in <code>templi.json</code>:
       </p>
-      <img 
-        src="/lovable-uploads/a48d3829-38f7-485a-8440-d80cf1c1929c.png" 
-        alt="Templi interactive prompts" 
+      <img
+        src="/lovable-uploads/a48d3829-38f7-485a-8440-d80cf1c1929c.png"
+        alt="Templi interactive prompts"
         className="mt-4 rounded-md border border-blue-300 shadow-sm"
       />
     </div>
@@ -587,7 +663,9 @@ const UsingBoilerplatePage = () => (
 
     <Card className="mb-8">
       <CardContent className="pt-6">
-        <p className="mb-4">Use Templi programmatically in your JavaScript/TypeScript code:</p>
+        <p className="mb-4">
+          Use Templi programmatically in your JavaScript/TypeScript code:
+        </p>
         <CodeBlock
           language="javascript"
           code={`const { Templi } = require('templi');
@@ -610,15 +688,18 @@ Templi.generate('./my-template', './output', {
 
     <Card>
       <CardContent className="pt-6">
-        <p className="mb-4">After successful generation, you'll see output similar to:</p>
-        <img 
-          src="/lovable-uploads/951dc1e2-40af-46d5-865c-3ce46b219c04.png" 
-          alt="Templi generation result" 
+        <p className="mb-4">
+          After successful generation, you'll see output similar to:
+        </p>
+        <img
+          src="/lovable-uploads/951dc1e2-40af-46d5-865c-3ce46b219c04.png"
+          alt="Templi generation result"
           className="rounded-md border border-gray-300 shadow-sm"
         />
         <p className="mt-4">
-          The generated project will have all placeholders replaced with the provided values 
-          and any scripts defined in <code>templi.json</code> will have been executed.
+          The generated project will have all placeholders replaced with the
+          provided values and any scripts defined in <code>templi.json</code>{' '}
+          will have been executed.
         </p>
       </CardContent>
     </Card>
@@ -630,9 +711,10 @@ const ExampleProjectPage = () => (
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
       Example Project
     </h1>
-    
+
     <p className="text-lg text-muted-foreground mb-6">
-      Let's walk through creating and using a complete Express.js boilerplate template.
+      Let's walk through creating and using a complete Express.js boilerplate
+      template.
     </p>
 
     <div className="space-y-8 mb-8">
@@ -791,10 +873,10 @@ npm start
             code="templi configure -t ~/Ricka/Projects/templi-express-js"
             caption="Configure command example"
           />
-          
-          <img 
-            src="/lovable-uploads/9a662493-d3d1-4c5a-89f6-196d9dc434b1.png" 
-            alt="Templi configure output" 
+
+          <img
+            src="/lovable-uploads/9a662493-d3d1-4c5a-89f6-196d9dc434b1.png"
+            alt="Templi configure output"
             className="mt-4 rounded-md border border-gray-300 shadow-sm"
           />
         </CardContent>
@@ -814,18 +896,20 @@ npm start
             code="templi generate -t ~/Ricka/Projects/templi-express-js -o test"
             caption="Generate project command"
           />
-          
-          <img 
-            src="/lovable-uploads/a48d3829-38f7-485a-8440-d80cf1c1929c.png" 
-            alt="Templi interactive prompts during generation" 
+
+          <img
+            src="/lovable-uploads/a48d3829-38f7-485a-8440-d80cf1c1929c.png"
+            alt="Templi interactive prompts during generation"
             className="mt-4 rounded-md border border-gray-300 shadow-sm"
           />
-          
-          <p className="mt-4">After filling out the prompts, Templi generates the project:</p>
-          
-          <img 
-            src="/lovable-uploads/951dc1e2-40af-46d5-865c-3ce46b219c04.png" 
-            alt="Templi generation results" 
+
+          <p className="mt-4">
+            After filling out the prompts, Templi generates the project:
+          </p>
+
+          <img
+            src="/lovable-uploads/951dc1e2-40af-46d5-865c-3ce46b219c04.png"
+            alt="Templi generation results"
             className="mt-4 rounded-md border border-gray-300 shadow-sm"
           />
         </CardContent>
@@ -839,7 +923,9 @@ npm start
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="mb-4">Here's what happens after the project is generated:</p>
+          <p className="mb-4">
+            Here's what happens after the project is generated:
+          </p>
           <CodeBlock
             language="bash"
             code={`cd test; npm install; rm -rf .git; git init . ; git add --all; git commit -m "chore: init project with templi"
@@ -867,7 +953,8 @@ Dépôt Git vide initialisé dans /home/ricka/Ricka/Projects/test/.git/
             caption="Post-generation output"
           />
           <p className="mt-4 bg-green-50 p-3 rounded-md border border-green-200">
-            You now have a fully functional Express.js application, initialized as a Git repository and ready for development!
+            You now have a fully functional Express.js application, initialized
+            as a Git repository and ready for development!
           </p>
         </CardContent>
       </Card>
@@ -881,7 +968,8 @@ Dépôt Git vide initialisé dans /home/ricka/Ricka/Projects/test/.git/
       </CardHeader>
       <CardContent>
         <p className="mb-4">
-          The templi-templates repository contains various ready-to-use templates:
+          The templi-templates repository contains various ready-to-use
+          templates:
         </p>
 
         <CodeBlock
@@ -892,7 +980,7 @@ templi generate -t https://github.com/RickaPrincy/templi-templates.git -p <templ
         />
 
         <h3 className="mt-8 mb-4 text-xl font-semibold">Example Commands</h3>
-        
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card className="transition-all duration-300 hover:shadow-md">
             <CardHeader className="pb-2">
@@ -932,7 +1020,7 @@ templi generate -t https://github.com/RickaPrincy/templi-templates.git -p <templ
         </div>
 
         <div className="mt-8 text-center">
-          <a 
+          <a
             href="https://github.com/RickaPrincy/templi-templates"
             target="_blank"
             rel="noopener noreferrer"
@@ -945,7 +1033,9 @@ templi generate -t https://github.com/RickaPrincy/templi-templates.git -p <templ
       </CardContent>
     </Card>
 
-    <h2 className="text-2xl font-semibold mb-6">Template Examples: C++ Implementation</h2>
+    <h2 className="text-2xl font-semibold mb-6">
+      Template Examples: C++ Implementation
+    </h2>
 
     <Card className="mb-8">
       <CardHeader>
@@ -953,7 +1043,8 @@ templi generate -t https://github.com/RickaPrincy/templi-templates.git -p <templ
       </CardHeader>
       <CardContent>
         <p className="mb-4">
-          Templi is written in C++. Here's an example of its core implementation:
+          Templi is written in C++. Here's an example of its core
+          implementation:
         </p>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -1082,7 +1173,7 @@ int main(int argc, const char *argv[])
 }`}
             />
           </div>
-          
+
           <div>
             <h3 className="mb-2 font-medium">Core Library Implementation</h3>
             <CodeBlock

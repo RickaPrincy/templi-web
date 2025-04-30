@@ -1,8 +1,7 @@
-
-import { Navigation } from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import { Features } from "@/components/Features";
-import { QuickStart } from "@/components/QuickStart";
+import { Navigation } from '@/components/Navigation';
+import Hero from '@/components/Hero';
+import { Features } from '@/components/Features';
+import { QuickStart } from '@/components/QuickStart';
 
 const Index = () => {
   return (
@@ -16,7 +15,7 @@ const Index = () => {
       <footer className="border-t py-6 md:py-0">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            Built by{" "}
+            Built by{' '}
             <a
               href="https://github.com/RickaPrincy"
               target="_blank"

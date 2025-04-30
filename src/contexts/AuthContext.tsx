@@ -1,5 +1,4 @@
-
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type User = {
   username: string;
@@ -21,13 +20,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Check if user is stored in localStorage
-    const storedUser = localStorage.getItem("github_user");
+    const storedUser = localStorage.getItem('github_user');
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error("Failed to parse stored user:", error);
-        localStorage.removeItem("github_user");
+        console.error('Failed to parse stored user:', error);
+        localStorage.removeItem('github_user');
       }
     }
     setLoading(false);
@@ -36,13 +35,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = () => {
     // In a real app, this would redirect to GitHub OAuth
     // For demo purposes, we'll simulate a successful login
-    const mockUser = { username: "github_user", token: "mock_token_12345" };
-    localStorage.setItem("github_user", JSON.stringify(mockUser));
+    const mockUser = { username: 'github_user', token: 'mock_token_12345' };
+    localStorage.setItem('github_user', JSON.stringify(mockUser));
     setUser(mockUser);
   };
 
   const logout = () => {
-    localStorage.removeItem("github_user");
+    localStorage.removeItem('github_user');
     setUser(null);
   };
 
@@ -56,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }

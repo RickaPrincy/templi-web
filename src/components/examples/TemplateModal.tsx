@@ -1,18 +1,45 @@
-
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { Github, Loader } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog";
-import { Progress } from "../ui/progress";
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+} from '@/components/ui/form';
+import { useForm } from 'react-hook-form';
+import { Github, Loader } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '../ui/alert-dialog';
+import { Progress } from '../ui/progress';
 
 type TemplateKey = {
   label: string;
@@ -48,11 +75,18 @@ type FormValues = {
   [key: string]: any;
 };
 
-export function TemplateModal({ isOpen, onClose, templateName, templateUrl, templatePath, templateConfig }: TemplateModalProps) {
+export function TemplateModal({
+  isOpen,
+  onClose,
+  templateName,
+  templateUrl,
+  templatePath,
+  templateConfig,
+}: TemplateModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [generatedRepoUrl, setGeneratedRepoUrl] = useState("");
+  const [generatedRepoUrl, setGeneratedRepoUrl] = useState('');
   const navigate = useNavigate();
 
   const defaultValues: FormValues = {
@@ -62,7 +96,7 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
 
   // Add default values from template config
   if (templateConfig) {
-    templateConfig.keys.forEach(key => {
+    templateConfig.keys.forEach((key) => {
       if (key.default !== undefined) {
         defaultValues[key.name] = key.default;
       } else if (key.type === 'INPUT' || key.type === 'SELECT') {
@@ -74,23 +108,23 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
   }
 
   const form = useForm<FormValues>({
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     setProgress(0);
-    
+
     try {
       // In a real app, we would make an API call to create the repository
-      console.log("Generating project with values:", values);
-      console.log("Template URL:", templateUrl);
-      console.log("Template Path:", templatePath || "root");
-      
+      console.log('Generating project with values:', values);
+      console.log('Template URL:', templateUrl);
+      console.log('Template Path:', templatePath || 'root');
+
       // Simulate API call with progress
       const simulateProgress = () => {
         const interval = setInterval(() => {
-          setProgress(prev => {
+          setProgress((prev) => {
             if (prev >= 95) {
               clearInterval(interval);
               return prev;
@@ -98,39 +132,38 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
             return prev + 5;
           });
         }, 200);
-        
+
         return () => clearInterval(interval);
       };
-      
+
       const cleanup = simulateProgress();
-      
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
       // Clean up and set to 100%
       cleanup();
       setProgress(100);
-      
+
       // Create mock GitHub repository URL
       const repoName = values.repositoryName;
-      const username = "github-username"; // In a real app, this would come from the user's GitHub profile
+      const username = 'github-username'; // In a real app, this would come from the user's GitHub profile
       const repoUrl = `https://github.com/${username}/${repoName}`;
       setGeneratedRepoUrl(repoUrl);
-      
+
       // Show success dialog after a small delay to see 100% progress
       setTimeout(() => {
         setShowSuccess(true);
       }, 400);
-      
     } catch (error) {
-      console.error("Error generating project:", error);
-      toast.error("Failed to generate project. Please try again.");
+      console.error('Error generating project:', error);
+      toast.error('Failed to generate project. Please try again.');
     }
   };
 
   // Build command preview
   const buildCommand = () => {
-    const repoName = form.watch("repositoryName");
+    const repoName = form.watch('repositoryName');
     let command = `templi generate -t ${templateUrl}`;
     if (templatePath) {
       command += ` -p ${templatePath}`;
@@ -139,7 +172,7 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
 
     // Add dynamic flags based on form values if we have a config
     if (templateConfig) {
-      templateConfig.keys.forEach(key => {
+      templateConfig.keys.forEach((key) => {
         const value = form.watch(key.name);
         if (value !== undefined && value !== '') {
           if (key.type === 'BOOLEAN') {
@@ -166,7 +199,10 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
 
   return (
     <>
-      <Dialog open={isOpen} onOpenChange={(open) => !open && !isSubmitting && onClose()}>
+      <Dialog
+        open={isOpen}
+        onOpenChange={(open) => !open && !isSubmitting && onClose()}
+      >
         <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Generate {templateName} Project</DialogTitle>
@@ -193,15 +229,15 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="isPrivate"
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-end space-x-2 space-y-0 rounded-md border p-4">
                       <FormControl>
-                        <Checkbox 
-                          checked={field.value} 
+                        <Checkbox
+                          checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
@@ -216,55 +252,59 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
                 />
               </div>
 
-              {templateConfig && templateConfig.keys.map((key) => (
-                <FormField
-                  key={key.name}
-                  control={form.control}
-                  name={key.name}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{key.label}</FormLabel>
-                      <FormControl>
-                        {key.type === 'INPUT' && (
-                          key.name === 'description' ? 
-                          <Textarea placeholder={key.label} {...field} /> :
-                          <Input placeholder={key.label} {...field} />
+              {templateConfig &&
+                templateConfig.keys.map((key) => (
+                  <FormField
+                    key={key.name}
+                    control={form.control}
+                    name={key.name}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{key.label}</FormLabel>
+                        <FormControl>
+                          {key.type === 'INPUT' &&
+                            (key.name === 'description' ? (
+                              <Textarea placeholder={key.label} {...field} />
+                            ) : (
+                              <Input placeholder={key.label} {...field} />
+                            ))}
+                          {key.type === 'SELECT' && (
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select an option" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {key.choices?.map((choice) => (
+                                  <SelectItem key={choice} value={choice}>
+                                    {choice}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          )}
+                          {key.type === 'BOOLEAN' && (
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id={key.name}
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                              <label htmlFor={key.name} className="text-sm">
+                                Enable {key.label}
+                              </label>
+                            </div>
+                          )}
+                        </FormControl>
+                        {key.required === false && (
+                          <FormDescription>Optional</FormDescription>
                         )}
-                        {key.type === 'SELECT' && (
-                          <Select 
-                            onValueChange={field.onChange} 
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select an option" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {key.choices?.map((choice) => (
-                                <SelectItem key={choice} value={choice}>{choice}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        )}
-                        {key.type === 'BOOLEAN' && (
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id={key.name}
-                              checked={field.value} 
-                              onCheckedChange={field.onChange}
-                            />
-                            <label htmlFor={key.name} className="text-sm">
-                              Enable {key.label}
-                            </label>
-                          </div>
-                        )}
-                      </FormControl>
-                      {key.required === false && (
-                        <FormDescription>Optional</FormDescription>
-                      )}
-                    </FormItem>
-                  )}
-                />
-              ))}
+                      </FormItem>
+                    )}
+                  />
+                ))}
 
               <div className="mt-4">
                 <h3 className="text-sm font-medium mb-2">Command Preview</h3>
@@ -272,26 +312,30 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
                   {buildCommand()}
                 </div>
               </div>
-              
+
               {isSubmitting && (
                 <div className="mt-4">
-                  <h3 className="text-sm font-medium mb-2">Generating Project</h3>
+                  <h3 className="text-sm font-medium mb-2">
+                    Generating Project
+                  </h3>
                   <Progress value={progress} className="h-2" />
-                  <p className="text-xs text-muted-foreground mt-1 text-right">{progress}%</p>
+                  <p className="text-xs text-muted-foreground mt-1 text-right">
+                    {progress}%
+                  </p>
                 </div>
               )}
-              
+
               <DialogFooter className="mt-6">
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={onClose}
                   disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isSubmitting}
                   className="flex items-center gap-2"
                 >
@@ -319,10 +363,18 @@ export function TemplateModal({ isOpen, onClose, templateName, templateUrl, temp
             <AlertDialogTitle>Project Generated Successfully!</AlertDialogTitle>
             <AlertDialogDescription>
               <p className="mb-2">
-                Your project "{form.watch('repositoryName')}" has been successfully generated from the {templateName} template.
+                Your project "{form.watch('repositoryName')}" has been
+                successfully generated from the {templateName} template.
               </p>
               <p className="font-medium">
-                Repository URL: <a href={generatedRepoUrl} target="_blank" className="text-blue-500 underline">{generatedRepoUrl}</a>
+                Repository URL:{' '}
+                <a
+                  href={generatedRepoUrl}
+                  target="_blank"
+                  className="text-blue-500 underline"
+                >
+                  {generatedRepoUrl}
+                </a>
               </p>
             </AlertDialogDescription>
           </AlertDialogHeader>

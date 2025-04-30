@@ -1,49 +1,56 @@
-
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { File, FileJson, Terminal, Book, Code } from "lucide-react";
-import { useSidebar } from "@/components/ui/sidebar";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from '@/components/ui/sidebar';
+import { File, FileJson, Terminal, Book, Code } from 'lucide-react';
+import { useSidebar } from '@/components/ui/sidebar';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const documentationPages = [
   {
-    id: "introduction",
-    title: "Introduction",
+    id: 'introduction',
+    title: 'Introduction',
     icon: Book,
   },
   {
-    id: "installation",
-    title: "Installation",
+    id: 'installation',
+    title: 'Installation',
     icon: Terminal,
   },
   {
-    id: "creating-boilerplate",
-    title: "Creating a Boilerplate",
+    id: 'creating-boilerplate',
+    title: 'Creating a Boilerplate',
     icon: File,
   },
   {
-    id: "configuring-boilerplate",
-    title: "Configuring a Boilerplate",
+    id: 'configuring-boilerplate',
+    title: 'Configuring a Boilerplate',
     icon: FileJson,
   },
   {
-    id: "using-boilerplate",
-    title: "Using Your Boilerplate",
+    id: 'using-boilerplate',
+    title: 'Using Your Boilerplate',
     icon: Terminal,
   },
   {
-    id: "cli-reference",
-    title: "CLI Reference",
+    id: 'cli-reference',
+    title: 'CLI Reference',
     icon: Terminal,
   },
   {
-    id: "library-reference",
-    title: "Library Reference",
+    id: 'library-reference',
+    title: 'Library Reference',
     icon: Code,
   },
   {
-    id: "example-project",
-    title: "Example Project",
+    id: 'example-project',
+    title: 'Example Project',
     icon: File,
   },
 ] as const;
@@ -52,18 +59,20 @@ type DocumentationSidebarProps = {
   currentPage: string;
 };
 
-export function DocumentationSidebar({ currentPage }: DocumentationSidebarProps) {
+export function DocumentationSidebar({
+  currentPage,
+}: DocumentationSidebarProps) {
   const { open } = useSidebar();
   const navigate = useNavigate();
 
   useEffect(() => {
     // Function to scroll to the active sidebar item
     const scrollToActiveItem = () => {
-      const activeItem = document.querySelector(".sidebar-menu-item.active");
+      const activeItem = document.querySelector('.sidebar-menu-item.active');
       if (activeItem) {
         activeItem.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
+          behavior: 'smooth',
+          block: 'center',
         });
       }
     };
@@ -90,12 +99,12 @@ export function DocumentationSidebar({ currentPage }: DocumentationSidebarProps)
           {documentationPages.map((page) => {
             const Icon = page.icon;
             return (
-              <SidebarMenuItem key={page.id} className={`sidebar-menu-item ${currentPage === page.id ? 'active' : ''}`}>
-                <SidebarMenuButton 
-                  asChild 
-                  isActive={currentPage === page.id}
-                >
-                  <a 
+              <SidebarMenuItem
+                key={page.id}
+                className={`sidebar-menu-item ${currentPage === page.id ? 'active' : ''}`}
+              >
+                <SidebarMenuButton asChild isActive={currentPage === page.id}>
+                  <a
                     href={`#${page.id}`}
                     onClick={(e) => {
                       e.preventDefault();

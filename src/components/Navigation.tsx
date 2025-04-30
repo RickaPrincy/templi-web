@@ -1,8 +1,7 @@
-
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Github } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Github } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const Navigation = () => {
   const { user, login, logout } = useAuth();
@@ -17,31 +16,37 @@ export const Navigation = () => {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link to="/docs" className="text-foreground/60 transition-colors hover:text-foreground">
+            <Link
+              to="/docs"
+              className="text-foreground/60 transition-colors hover:text-foreground"
+            >
               Documentation
             </Link>
-            <Link to="/boilerplates" className="text-foreground/60 transition-colors hover:text-foreground">
+            <Link
+              to="/boilerplates"
+              className="text-foreground/60 transition-colors hover:text-foreground"
+            >
               Boilerplates
             </Link>
-            <a 
-              href="https://github.com/RickaPrincy/Templi" 
-              target="_blank" 
+            <a
+              href="https://github.com/RickaPrincy/Templi"
+              target="_blank"
               className="text-foreground/60 transition-colors hover:text-foreground"
             >
               GitHub
             </a>
           </div>
         </div>
-        
+
         <div>
           {user ? (
             <div className="flex items-center gap-3">
               <span className="text-sm text-muted-foreground hidden md:inline">
                 Signed in as {user.username}
               </span>
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 className="flex items-center gap-2"
                 onClick={logout}
               >
@@ -50,9 +55,9 @@ export const Navigation = () => {
               </Button>
             </div>
           ) : (
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="flex items-center gap-2"
               onClick={login}
             >

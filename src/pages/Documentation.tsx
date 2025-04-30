@@ -1,26 +1,25 @@
-
-import { Navigation } from "@/components/Navigation";
-import DocumentationContent from "@/components/documentation/DocumentationContent";
-import { DocumentationSidebar } from "@/components/documentation/DocumentationSidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { Navigation } from '@/components/Navigation';
+import DocumentationContent from '@/components/documentation/DocumentationContent';
+import { DocumentationSidebar } from '@/components/documentation/DocumentationSidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 
 const Documentation = () => {
   const location = useLocation();
-  const [currentPage, setCurrentPage] = useState("introduction");
+  const [currentPage, setCurrentPage] = useState('introduction');
   const navigate = useNavigate();
 
   // Extract page from URL hash or default to introduction
   useEffect(() => {
-    const hash = location.hash.replace("#", "");
+    const hash = location.hash.replace('#', '');
     if (hash) {
       setCurrentPage(hash);
     } else {
       // Set default page if no hash
-      setCurrentPage("introduction");
-      navigate("#introduction", { replace: true });
+      setCurrentPage('introduction');
+      navigate('#introduction', { replace: true });
     }
   }, [location.hash, navigate]);
 

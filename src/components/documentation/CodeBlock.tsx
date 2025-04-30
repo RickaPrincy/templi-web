@@ -1,7 +1,6 @@
-
-import React, { useState } from "react";
-import { Check, Copy } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+import { Check, Copy } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface CodeBlockProps {
   code: string;
@@ -12,7 +11,7 @@ interface CodeBlockProps {
 
 const CodeBlock: React.FC<CodeBlockProps> = ({
   code,
-  language = "bash",
+  language = 'bash',
   showLineNumbers = false,
   caption,
 }) => {
@@ -51,7 +50,9 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
             )}
           </Button>
         </div>
-        <pre className={`p-4 overflow-x-auto text-sm text-white ${showLineNumbers ? "line-numbers" : ""}`}>
+        <pre
+          className={`p-4 overflow-x-auto text-sm text-white ${showLineNumbers ? 'line-numbers' : ''}`}
+        >
           <code className={`language-${language}`}>{code}</code>
         </pre>
       </div>
