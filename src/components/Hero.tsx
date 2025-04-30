@@ -1,48 +1,66 @@
-
-import { ArrowRight } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { useTheme } from "./ThemeProvider";
+import { Moon, Sun } from "lucide-react";
 
 const Hero = () => {
+  const { theme, setTheme } = useTheme();
+
   return (
-    <div className="relative bg-white pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-          <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-            <h1>
-              <span className="block text-gray-900 text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
-                Beautiful templates for your
-              </span>
-              <span className="block text-blue-600 text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
-                next web project
-              </span>
-            </h1>
-            <p className="mt-6 text-lg text-gray-500">
-              Start your development with a modern, clean, and customizable template.
-              Built with Vite, React, and Tailwind CSS for lightning-fast performance.
-            </p>
-            <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
-              <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
-                <button className="px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center">
-                  Get Started <ArrowRight size={16} className="ml-2" />
-                </button>
-                <button className="px-8 py-3 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition-colors flex items-center justify-center">
-                  Live Demo
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-            <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-              <div className="relative block w-full bg-gray-900 rounded-lg overflow-hidden">
-                <div className="aspect-w-16 aspect-h-9">
-                  <div className="flex items-center justify-center h-64 bg-gradient-to-r from-blue-600 to-blue-800 text-white text-opacity-80 text-xl">
-                    Template Preview
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="container px-4 pt-16 pb-12 text-center lg:pt-32 relative">
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        className="absolute right-4 top-4"
+      >
+        {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+      </Button>
+
+      <motion.h1 
+        className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight sm:text-7xl"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        Simplify{" "}
+        <motion.span 
+          className="relative whitespace-nowrap"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          <span className="relative bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
+            boilerplate creation
+          </span>
+        </motion.span>{" "}
+        with Templi
+      </motion.h1>
+      <motion.p 
+        className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700 dark:text-slate-300"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+      >
+        A powerful tool that streamlines boilerplate creation and usage, available as both a library and CLI.
+      </motion.p>
+      <motion.div 
+        className="mt-10 flex justify-center gap-x-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
+      >
+        <Button 
+          asChild 
+          size="lg"
+          className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
+        >
+          <a href="#quickstart">Get Started</a>
+        </Button>
+        <Button variant="outline" size="lg" asChild>
+          <a href="https://github.com/RickaPrincy/Templi" target="_blank">View on GitHub</a>
+        </Button>
+      </motion.div>
     </div>
   );
 };
