@@ -1,16 +1,3 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Navigation } from '@/common/components/navigation';
-import CodeBlock from '@/common/components/documentation/CodeBlock';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/common/components/ui/card';
-import { Button } from '@/common/components/ui/button';
 import {
   Link as LinkIcon,
   FileText,
@@ -19,9 +6,20 @@ import {
   Search,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from '@/common/components/ui/card';
 import { Input } from '@/common/components/ui/input';
+import { Button } from '@/common/components/ui/button';
 import { Badge } from '@/common/components/ui/badge';
-import { GithubIcon } from '@/common/components/GithubIcon';
+import { GithubIcon, Navigation, CodeBlock } from '@/common/components';
 
 type Template = {
   id: string;

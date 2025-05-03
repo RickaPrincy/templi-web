@@ -40,7 +40,7 @@ import {
   AlertDialogTitle,
 } from '../ui/alert-dialog';
 import { Progress } from '../ui/progress';
-import { GithubIcon } from '../GithubIcon';
+import { GithubIcon } from '../github-icon';
 
 type TemplateKey = {
   label: string;

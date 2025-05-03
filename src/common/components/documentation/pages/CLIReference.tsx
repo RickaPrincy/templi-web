@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from '@/common/components/ui/card';
 import { Terminal } from 'lucide-react';
-import CodeBlock from '../CodeBlock';
+import { CodeBlock } from '../../code-block';
 
 export function CLIReference() {
   return (

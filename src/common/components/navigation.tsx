@@ -1,10 +1,10 @@
 import { Button } from '@/common/components/ui/button';
 import { Link } from 'react-router-dom';
-import { GithubIcon } from './GithubIcon';
-import { ToggleThemeButton } from './ToggleThemeButton';
+import { GithubIcon } from './github-icon';
+import { ToggleThemeButton } from './toggle-theme-button';
 import { useWhoami } from '@/security/hooks';
 import { whoamiCache } from '../utils/whoami-cache';
-import { Env } from '@/config/env';
+import { authProvider } from '@/providers';
 
 export const Navigation = () => {
   const whoami = useWhoami();
@@ -67,9 +67,7 @@ export const Navigation = () => {
                 variant="outline"
                 size="sm"
                 className="flex items-center gap-2"
-                onClick={() =>
-                  (window.location.href = `https://github.com/login/oauth/authorize?client_id=${Env.GITHUB_CLIENT_ID}`)
-                }
+                onClick={() => authProvider.login()}
               >
                 <GithubIcon />
                 Sign In with GitHub

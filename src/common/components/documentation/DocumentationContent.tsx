@@ -17,10 +17,10 @@ import {
   Download,
 } from 'lucide-react';
 import { DocumentationPagination } from './DocumentationPagination';
-import CodeBlock from './CodeBlock';
 import { motion } from 'framer-motion';
 import { CLIReference } from './pages/CLIReference';
 import { LibraryReference } from './pages/LibraryReference';
+import { CodeBlock } from '../code-block';
 
 interface DocumentationContentProps {
   currentPage: string;

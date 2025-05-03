@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Navigation } from '@/common/components/navigation';
 import {
   Card,
   CardContent,
@@ -17,7 +16,6 @@ import {
   TabsTrigger,
 } from '@/common/components/ui/tabs';
 import { Link as LinkIcon, ArrowLeft } from 'lucide-react';
-import CodeBlock from '@/common/components/documentation/CodeBlock';
 import { motion } from 'framer-motion';
 import { TemplateModal } from '@/common/components/examples/TemplateModal';
 import {
@@ -27,7 +25,7 @@ import {
   AccordionTrigger,
 } from '@/common/components/ui/accordion';
 import { Badge } from '@/common/components/ui/badge';
-import { GithubIcon } from '@/common/components/GithubIcon';
+import { Navigation, GithubIcon, CodeBlock } from '@/common/components';
 
 type Template = {
   id: string;

@@ -1,5 +1,5 @@
 import { CSSProperties, FC } from 'react';
-import { useTheme } from './ThemeProvider';
+import { useTheme } from './theme-provider';
 import githubIcon from '@/assets/images/icons/github.png';
 import githubWhiteIcon from '@/assets/images/icons/github-white.png';
 

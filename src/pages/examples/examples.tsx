@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { Navigation } from '@/common/components/navigation';
-import CodeBlock from '@/common/components/documentation/CodeBlock';
 import {
   Card,
   CardContent,
@@ -25,7 +23,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/common/components/ui/accordion';
-import { GithubIcon } from '@/common/components/GithubIcon';
+import { GithubIcon, CodeBlock, Navigation } from '@/common/components';
 
 type Template = {
   name: string;

@@ -9,7 +9,7 @@ interface CodeBlockProps {
   caption?: string;
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({
+export const CodeBlock: React.FC<CodeBlockProps> = ({
   code,
   language = 'bash',
   showLineNumbers = false,
@@ -59,5 +59,3 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     </div>
   );
 };
-
-export default CodeBlock;

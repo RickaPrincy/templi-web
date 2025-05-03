@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { Navigation } from '@/common/components/navigation';
+import { Navigation } from '@/common/components';
 import DocumentationContent from '@/common/components/documentation/DocumentationContent';
 import { DocumentationSidebar } from '@/common/components/documentation/DocumentationSidebar';
 import { SidebarProvider } from '@/common/components/ui/sidebar';

@@ -7,10 +7,10 @@ import {
   Outlet,
 } from 'react-router-dom';
 
+import { ThemeProvider } from '@/common/components';
 import { Toaster } from '@/common/components/ui/toaster';
 import { Toaster as Sonner } from '@/common/components/ui/sonner';
 import { TooltipProvider } from '@/common/components/ui/tooltip';
-import { ThemeProvider } from '@/common/components/ThemeProvider';
 import { AuthenticatedRoutes } from './security/components';
 
 import { Home } from './pages/home';
