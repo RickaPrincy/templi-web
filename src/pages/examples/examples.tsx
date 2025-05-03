@@ -10,7 +10,6 @@ import {
 import { Button } from '@/common/components/ui/button';
 import { Link as LinkIcon, FileText, FolderTree, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { TemplateModal } from '@/common/components/examples/TemplateModal';
 import {
   Tabs,
   TabsContent,
@@ -24,125 +23,12 @@ import {
   AccordionTrigger,
 } from '@/common/components/ui/accordion';
 import { GithubIcon, CodeBlock, Navigation } from '@/common/components';
-
-type Template = {
-  name: string;
-  description: string;
-  repoUrl: string;
-  path?: string;
-  command: string;
-  templateJson: any;
-  structure?: { [key: string]: string };
-};
+import { useTemplateStore } from '@/common/stores';
+import { TEMPLATES } from '@/common/constants/templates';
 
 export const Examples = () => {
-  const [selectedTemplate] = useState<Template | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [_, setActiveTab] = useState('overview');
-
-  const templateConfig = {
-    excludes: ['.git', 'images', '.env.template', 'README.md', 'templi.json'],
-    scripts: {
-      before: [],
-      after: [
-        'cd {{TEMPLI_OUTPUT_FOLDER}}; npm install; rm -rf .git; git init . ; git add --all; git commit -m "chore: init project with templi"',
-      ],
-    },
-    keys: [
-      {
-        label: 'Application name:',
-        name: 'app_name',
-        type: 'INPUT',
-      },
-      {
-        label: 'Author name:',
-        name: 'author',
-        type: 'INPUT',
-      },
-      {
-        label: 'Project description:',
-        name: 'description',
-        type: 'INPUT',
-        clean: false,
-        required: false,
-      },
-      {
-        label: 'Select license:',
-        name: 'license',
-        type: 'SELECT',
-        choices: ['MIT', 'ISC'],
-      },
-      {
-        label: 'Is it private?',
-        name: 'private',
-        type: 'BOOLEAN',
-        default: false,
-      },
-      {
-        label: 'Version number:',
-        name: 'version',
-        type: 'INPUT',
-      },
-    ],
-  };
-
-  const templates: Template[] = [
-    {
-      name: 'Express.js Template',
-      description:
-        'A modern Express.js application template with TypeScript support.',
-      repoUrl: 'https://github.com/RickaPrincy/templi-express-js.git',
-      command:
-        'templi generate -t https://github.com/RickaPrincy/templi-express-js.git -o ~/myproject',
-      templateJson: templateConfig,
-      structure: {
-        'src/': 'Source code directory',
-        'src/controllers/': 'API controllers',
-        'src/routes/': 'Express route definitions',
-        'src/models/': 'Data models',
-        'src/middleware/': 'Express middleware',
-        'config/': 'Application configuration',
-        'tests/': 'Unit and integration tests',
-      },
-    },
-    {
-      name: 'Poja CLI Template',
-      description: 'A modern CLI application template using Poja.',
-      repoUrl: 'https://github.com/RickaPrincy/templi-templates.git',
-      path: '/poja-cli',
-      command:
-        'templi generate -t https://github.com/RickaPrincy/templi-templates.git -p /poja-cli -o ~/poja-std22052',
-      templateJson: templateConfig,
-      structure: {
-        'src/': 'Source code directory',
-        'bin/': 'CLI executable scripts',
-        'lib/': 'Core library functions',
-        'docs/': 'Documentation',
-        'tests/': 'Test suite',
-      },
-    },
-    {
-      name: 'C++ Library Template',
-      description: 'A template for creating C++ libraries with modern CMake.',
-      repoUrl: 'https://github.com/RickaPrincy/templi-templates.git',
-      path: '/libc++',
-      command:
-        'templi generate -t https://github.com/RickaPrincy/templi-templates.git -p /libc++ -o ~/libc++',
-      templateJson: templateConfig,
-      structure: {
-        'include/': 'Public headers',
-        'src/': 'Implementation source files',
-        'test/': 'Test suite using GoogleTest',
-        'examples/': 'Example usages',
-        'cmake/': 'CMake modules',
-        'docs/': 'Documentation',
-      },
-    },
-  ];
-
-  const handleUseTemplate = (_template: Template) => {
-    //TODO
-  };
+  const setTemplate = useTemplateStore((state) => state.setTemplate);
 
   return (
     <div className="min-h-screen">
@@ -210,7 +96,7 @@ export const Examples = () => {
           </Card>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-            {templates.map((template) => (
+            {TEMPLATES.map((template) => (
               <Card
                 key={template.name}
                 className="transition-all duration-300 hover:shadow-md flex flex-col"
@@ -243,7 +129,7 @@ export const Examples = () => {
                           </AccordionTrigger>
                           <AccordionContent className="bg-slate-100 dark:bg-slate-900 p-2 rounded">
                             <pre className="text-xs overflow-x-auto">
-                              {JSON.stringify(template.templateJson, null, 2)}
+                              {JSON.stringify(template.config, null, 2)}
                             </pre>
                           </AccordionContent>
                         </AccordionItem>
@@ -274,7 +160,7 @@ export const Examples = () => {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-2 pt-2">
                   <Button
-                    onClick={() => handleUseTemplate(template)}
+                    onClick={() => setTemplate(template)}
                     className="w-full flex items-center gap-2"
                   >
                     <GithubIcon />
@@ -359,17 +245,6 @@ export const Examples = () => {
           </div>
         </motion.div>
       </main>
-
-      {selectedTemplate && (
-        <TemplateModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          templateName={selectedTemplate.name}
-          templateUrl={selectedTemplate.repoUrl}
-          templatePath={selectedTemplate.path}
-          templateConfig={selectedTemplate.templateJson}
-        />
-      )}
     </div>
   );
 };

@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Link as LinkIcon, ArrowLeft } from 'lucide-react';
+
 import {
   Card,
   CardContent,
@@ -15,9 +18,6 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/common/components/ui/tabs';
-import { Link as LinkIcon, ArrowLeft } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { TemplateModal } from '@/common/components/examples/TemplateModal';
 import {
   Accordion,
   AccordionContent,
@@ -26,367 +26,21 @@ import {
 } from '@/common/components/ui/accordion';
 import { Badge } from '@/common/components/ui/badge';
 import { Navigation, GithubIcon, CodeBlock } from '@/common/components';
-
-type Template = {
-  id: string;
-  name: string;
-  description: string;
-  repoUrl: string;
-  path?: string;
-  command: string;
-  templateJson: any;
-  structure?: { [key: string]: string };
-  categories: string[];
-};
-
-// Mock data for templates - in a real app, this would come from an API
-const templates: Template[] = [
-  {
-    id: 'express-js',
-    name: 'Express.js Template',
-    description:
-      'A modern Express.js application template with TypeScript support.',
-    repoUrl: 'https://github.com/RickaPrincy/templi-express-js.git',
-    command:
-      'templi generate -t https://github.com/RickaPrincy/templi-express-js.git -o ~/myproject',
-    templateJson: {
-      excludes: ['.git', 'images', '.env.template', 'README.md', 'templi.json'],
-      scripts: {
-        before: [],
-        after: [
-          'cd {{TEMPLI_OUTPUT_FOLDER}}; npm install; rm -rf .git; git init . ; git add --all; git commit -m "chore: init project with templi"',
-        ],
-      },
-      keys: [
-        {
-          label: 'Application name:',
-          name: 'app_name',
-          type: 'INPUT',
-        },
-        {
-          label: 'Author name:',
-          name: 'author',
-          type: 'INPUT',
-        },
-        {
-          label: 'Project description:',
-          name: 'description',
-          type: 'INPUT',
-          clean: false,
-          required: false,
-        },
-        {
-          label: 'Select license:',
-          name: 'license',
-          type: 'SELECT',
-          choices: ['MIT', 'ISC'],
-        },
-        {
-          label: 'Is it private?',
-          name: 'private',
-          type: 'BOOLEAN',
-          default: false,
-        },
-        {
-          label: 'Version number:',
-          name: 'version',
-          type: 'INPUT',
-        },
-      ],
-    },
-    structure: {
-      'src/': 'Source code directory',
-      'src/controllers/': 'API controllers',
-      'src/routes/': 'Express route definitions',
-      'src/models/': 'Data models',
-      'src/middleware/': 'Express middleware',
-      'config/': 'Application configuration',
-      'tests/': 'Unit and integration tests',
-    },
-    categories: ['JavaScript', 'Node.js', 'TypeScript', 'API'],
-  },
-  {
-    id: 'poja-cli',
-    name: 'Poja CLI Template',
-    description: 'A modern CLI application template using Poja.',
-    repoUrl: 'https://github.com/RickaPrincy/templi-templates.git',
-    path: '/poja-cli',
-    command:
-      'templi generate -t https://github.com/RickaPrincy/templi-templates.git -p /poja-cli -o ~/poja-std22052',
-    templateJson: {
-      excludes: ['.git', 'images', '.env.template', 'README.md', 'templi.json'],
-      scripts: {
-        before: [],
-        after: [
-          'cd {{TEMPLI_OUTPUT_FOLDER}}; npm install; rm -rf .git; git init . ; git add --all; git commit -m "chore: init project with templi"',
-        ],
-      },
-      keys: [
-        {
-          label: 'Application name:',
-          name: 'app_name',
-          type: 'INPUT',
-        },
-        {
-          label: 'Author name:',
-          name: 'author',
-          type: 'INPUT',
-        },
-        {
-          label: 'Project description:',
-          name: 'description',
-          type: 'INPUT',
-          clean: false,
-          required: false,
-        },
-        {
-          label: 'Select license:',
-          name: 'license',
-          type: 'SELECT',
-          choices: ['MIT', 'ISC'],
-        },
-        {
-          label: 'Is it private?',
-          name: 'private',
-          type: 'BOOLEAN',
-          default: false,
-        },
-        {
-          label: 'Version number:',
-          name: 'version',
-          type: 'INPUT',
-        },
-      ],
-    },
-    structure: {
-      'src/': 'Source code directory',
-      'bin/': 'CLI executable scripts',
-      'lib/': 'Core library functions',
-      'docs/': 'Documentation',
-      'tests/': 'Test suite',
-    },
-    categories: ['Java', 'CLI', 'Spring'],
-  },
-  {
-    id: 'cpp-library',
-    name: 'C++ Library Template',
-    description: 'A template for creating C++ libraries with modern CMake.',
-    repoUrl: 'https://github.com/RickaPrincy/templi-templates.git',
-    path: '/libc++',
-    command:
-      'templi generate -t https://github.com/RickaPrincy/templi-templates.git -p /libc++ -o ~/libc++',
-    templateJson: {
-      excludes: ['.git', 'images', '.env.template', 'README.md', 'templi.json'],
-      scripts: {
-        before: [],
-        after: [
-          'cd {{TEMPLI_OUTPUT_FOLDER}}; npm install; rm -rf .git; git init . ; git add --all; git commit -m "chore: init project with templi"',
-        ],
-      },
-      keys: [
-        {
-          label: 'Application name:',
-          name: 'app_name',
-          type: 'INPUT',
-        },
-        {
-          label: 'Author name:',
-          name: 'author',
-          type: 'INPUT',
-        },
-        {
-          label: 'Project description:',
-          name: 'description',
-          type: 'INPUT',
-          clean: false,
-          required: false,
-        },
-        {
-          label: 'Select license:',
-          name: 'license',
-          type: 'SELECT',
-          choices: ['MIT', 'ISC'],
-        },
-        {
-          label: 'Is it private?',
-          name: 'private',
-          type: 'BOOLEAN',
-          default: false,
-        },
-        {
-          label: 'Version number:',
-          name: 'version',
-          type: 'INPUT',
-        },
-      ],
-    },
-    structure: {
-      'include/': 'Public headers',
-      'src/': 'Implementation source files',
-      'test/': 'Test suite using GoogleTest',
-      'examples/': 'Example usages',
-      'cmake/': 'CMake modules',
-      'docs/': 'Documentation',
-    },
-    categories: ['C++', 'Library', 'CMake'],
-  },
-  {
-    id: 'react-app',
-    name: 'React Application',
-    description: 'A modern React application with Vite and TypeScript.',
-    repoUrl: 'https://github.com/RickaPrincy/templi-templates.git',
-    path: '/react-app',
-    command:
-      'templi generate -t https://github.com/RickaPrincy/templi-templates.git -p /react-app -o ~/my-react-app',
-    templateJson: {
-      excludes: ['.git', 'images', '.env.template', 'README.md', 'templi.json'],
-      scripts: {
-        before: [],
-        after: [
-          'cd {{TEMPLI_OUTPUT_FOLDER}}; npm install; rm -rf .git; git init . ; git add --all; git commit -m "chore: init project with templi"',
-        ],
-      },
-      keys: [
-        {
-          label: 'Application name:',
-          name: 'app_name',
-          type: 'INPUT',
-        },
-        {
-          label: 'Author name:',
-          name: 'author',
-          type: 'INPUT',
-        },
-        {
-          label: 'Project description:',
-          name: 'description',
-          type: 'INPUT',
-          clean: false,
-          required: false,
-        },
-        {
-          label: 'Select license:',
-          name: 'license',
-          type: 'SELECT',
-          choices: ['MIT', 'ISC'],
-        },
-        {
-          label: 'Is it private?',
-          name: 'private',
-          type: 'BOOLEAN',
-          default: false,
-        },
-        {
-          label: 'Version number:',
-          name: 'version',
-          type: 'INPUT',
-        },
-      ],
-    },
-    structure: {
-      'src/': 'Source code directory',
-      'src/components/': 'React components',
-      'src/hooks/': 'Custom React hooks',
-      'src/pages/': 'Page components',
-      'public/': 'Public assets',
-      'index.html': 'HTML entry point',
-    },
-    categories: ['JavaScript', 'React', 'TypeScript', 'Frontend'],
-  },
-  {
-    id: 'python-package',
-    name: 'Python Package',
-    description: 'A template for creating Python packages with modern tooling.',
-    repoUrl: 'https://github.com/RickaPrincy/templi-templates.git',
-    path: '/python-package',
-    command:
-      'templi generate -t https://github.com/RickaPrincy/templi-templates.git -p /python-package -o ~/my-python-package',
-    templateJson: {
-      excludes: ['.git', 'images', '.env.template', 'README.md', 'templi.json'],
-      scripts: {
-        before: [],
-        after: [
-          'cd {{TEMPLI_OUTPUT_FOLDER}}; npm install; rm -rf .git; git init . ; git add --all; git commit -m "chore: init project with templi"',
-        ],
-      },
-      keys: [
-        {
-          label: 'Application name:',
-          name: 'app_name',
-          type: 'INPUT',
-        },
-        {
-          label: 'Author name:',
-          name: 'author',
-          type: 'INPUT',
-        },
-        {
-          label: 'Project description:',
-          name: 'description',
-          type: 'INPUT',
-          clean: false,
-          required: false,
-        },
-        {
-          label: 'Select license:',
-          name: 'license',
-          type: 'SELECT',
-          choices: ['MIT', 'ISC'],
-        },
-        {
-          label: 'Is it private?',
-          name: 'private',
-          type: 'BOOLEAN',
-          default: false,
-        },
-        {
-          label: 'Version number:',
-          name: 'version',
-          type: 'INPUT',
-        },
-      ],
-    },
-    structure: {
-      'src/': 'Source code directory',
-      'tests/': 'Test suite',
-      'docs/': 'Documentation',
-      'examples/': 'Example usage',
-      'setup.py': 'Package setup script',
-      'pyproject.toml': 'Project configuration',
-    },
-    categories: ['Python', 'Package', 'CLI'],
-  },
-];
+import { TEMPLATES } from '@/common/constants/templates';
 
 export const BoilerplateDetails = () => {
-  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [template, setTemplate] = useState<Template | null>(null);
+  const { id } = useParams<{ id: string }>();
   const [_, setActiveTab] = useState('overview');
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const foundTemplate = templates.find((t) => t.id === id);
-    if (foundTemplate) {
-      setTemplate(foundTemplate);
-    } else {
-      navigate('/boilerplates');
-    }
-  }, [id, navigate]);
+  const template = TEMPLATES.find((t) => t.id === id);
 
   const handleUseTemplate = () => {
     //TODO:
   };
 
   if (!template) {
-    return (
-      <div className="min-h-screen">
-        <Navigation />
-        <main className="container max-w-5xl mx-auto px-4 py-8">
-          <div className="text-center">Loading template...</div>
-        </main>
-      </div>
-    );
+    return <Navigate to="/boilerplates" />;
   }
 
   return (
@@ -447,7 +101,7 @@ export const BoilerplateDetails = () => {
                       </AccordionTrigger>
                       <AccordionContent className="bg-slate-100 dark:bg-slate-900 p-2 rounded">
                         <pre className="text-xs overflow-x-auto">
-                          {JSON.stringify(template.templateJson, null, 2)}
+                          {JSON.stringify(template.config, null, 2)}
                         </pre>
                       </AccordionContent>
                     </AccordionItem>
@@ -533,17 +187,6 @@ export const BoilerplateDetails = () => {
           </div>
         </motion.div>
       </main>
-
-      {template && (
-        <TemplateModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          templateName={template.name}
-          templateUrl={template.repoUrl}
-          templatePath={template.path}
-          templateConfig={template.templateJson}
-        />
-      )}
     </div>
   );
 };

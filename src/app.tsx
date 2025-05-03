@@ -7,7 +7,7 @@ import {
   Outlet,
 } from 'react-router-dom';
 
-import { ThemeProvider } from '@/common/components';
+import { TemplateModal, ThemeProvider } from '@/common/components';
 import { Toaster } from '@/common/components/ui/toaster';
 import { Toaster as Sonner } from '@/common/components/ui/sonner';
 import { TooltipProvider } from '@/common/components/ui/tooltip';
@@ -28,6 +28,7 @@ export const App = () => (
         <BrowserRouter>
           <Toaster />
           <Sonner />
+          <TemplateModal />
           <Routes>
             <Route
               element={
