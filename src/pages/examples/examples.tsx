@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigation } from '@/common/components/Navigation';
+import { Navigation } from '@/common/components/navigation';
 import CodeBlock from '@/common/components/documentation/CodeBlock';
 import {
   Card,

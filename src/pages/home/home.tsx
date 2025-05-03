@@ -1,4 +1,4 @@
-import { Navigation } from '@/common/components/Navigation';
+import { Navigation } from '@/common/components/navigation';
 import { Features, QuickStart, Hero } from './components';
 
 export const Home = () => {

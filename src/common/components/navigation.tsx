@@ -1,11 +1,13 @@
 import { Button } from '@/common/components/ui/button';
 import { Link } from 'react-router-dom';
 import { GithubIcon } from './GithubIcon';
-import { useAuth } from '@/contexts/AuthContext';
 import { ToggleThemeButton } from './ToggleThemeButton';
+import { useWhoami } from '@/security/hooks';
+import { whoamiCache } from '../utils/whoami-cache';
+import { Env } from '@/config/env';
 
 export const Navigation = () => {
-  const { user, login, logout } = useAuth();
+  const whoami = useWhoami();
 
   return (
     <nav className="border-b">
@@ -40,16 +42,19 @@ export const Navigation = () => {
         </div>
 
         <div>
-          {user ? (
+          {whoami ? (
             <div className="flex items-center gap-5">
               <h2 className="text-sm text-muted-foreground hidden md:inline">
-                Signed in as {user.username}
+                Signed in as {whoami.name}
               </h2>
               <Button
                 variant="outline"
                 size="sm"
                 className="flex items-center gap-2"
-                onClick={logout}
+                onClick={() => {
+                  whoamiCache.invalidate();
+                  window.location.reload();
+                }}
               >
                 <GithubIcon />
                 Sign Out
@@ -62,7 +67,9 @@ export const Navigation = () => {
                 variant="outline"
                 size="sm"
                 className="flex items-center gap-2"
-                onClick={login}
+                onClick={() =>
+                  (window.location.href = `https://github.com/login/oauth/authorize?client_id=${Env.GITHUB_CLIENT_ID}`)
+                }
               >
                 <GithubIcon />
                 Sign In with GitHub
