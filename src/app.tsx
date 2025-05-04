@@ -7,7 +7,7 @@ import {
   Outlet,
 } from 'react-router-dom';
 
-import { TemplateModal, ThemeProvider } from '@/common/components';
+import { ThemeProvider } from '@/common/components';
 import { Toaster } from '@/common/components/ui/toaster';
 import { Toaster as Sonner } from '@/common/components/ui/sonner';
 import { TooltipProvider } from '@/common/components/ui/tooltip';
@@ -18,6 +18,7 @@ import { NotFound } from './pages/not-found';
 import { Documentation } from './pages/documentation';
 import { BoilerplateDetails, Boilerplates } from './pages/boilerplates';
 import { AuthCallback } from './security/components/auth-callback';
+import { TemplateModal } from './common/components/template-modal';
 
 const queryClient = new QueryClient();
 

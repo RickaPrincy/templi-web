@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Link as LinkIcon, ArrowLeft } from 'lucide-react';
@@ -27,17 +26,16 @@ import {
 import { Badge } from '@/common/components/ui/badge';
 import { Navigation, GithubIcon, CodeBlock } from '@/common/components';
 import { TEMPLATES } from '@/common/constants/templates';
+import { useTemplateStore } from '@/common/stores';
+import { useGenerator } from '@/common/hooks/use-generator';
 
 export const BoilerplateDetails = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  const [_, setActiveTab] = useState('overview');
+  const setTemplate = useTemplateStore((state) => state.setTemplate);
 
   const template = TEMPLATES.find((t) => t.id === id);
-
-  const handleUseTemplate = () => {
-    //TODO:
-  };
+  const generator = useGenerator(template);
 
   if (!template) {
     return <Navigate to="/boilerplates" />;
@@ -78,11 +76,7 @@ export const BoilerplateDetails = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <Tabs
-                defaultValue="overview"
-                className="w-full"
-                onValueChange={setActiveTab}
-              >
+              <Tabs defaultValue="overview" className="w-full">
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="structure">Structure</TabsTrigger>
@@ -122,13 +116,13 @@ export const BoilerplateDetails = () => {
                   </div>
                 </TabsContent>
                 <TabsContent value="command" className="py-4">
-                  <CodeBlock language="bash" code={template.command} />
+                  <CodeBlock language="bash" code={generator.generate()} />
                 </TabsContent>
               </Tabs>
             </CardContent>
             <CardFooter className="flex flex-col gap-2 pt-2">
               <Button
-                onClick={handleUseTemplate}
+                onClick={() => setTemplate(template)}
                 className="w-full flex items-center gap-2"
               >
                 <GithubIcon theme="dark" />
@@ -136,11 +130,7 @@ export const BoilerplateDetails = () => {
               </Button>
               <Button asChild variant="outline" size="sm">
                 <a
-                  href={
-                    template.path
-                      ? `${template.repoUrl.replace('.git', '')}/tree/main${template.path}`
-                      : template.repoUrl.replace('.git', '')
-                  }
+                  href={generator.linkUrl()}
                   target="_blank"
                   className="w-full flex items-center gap-2"
                 >
@@ -150,41 +140,6 @@ export const BoilerplateDetails = () => {
               </Button>
             </CardFooter>
           </Card>
-
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-6">
-              How to Use This Template
-            </h2>
-            <Card>
-              <CardContent className="pt-6">
-                <ol className="list-decimal pl-5 space-y-4">
-                  <li>
-                    <strong>Install Templi</strong>
-                    <p>
-                      Before using this template, make sure you have Templi
-                      installed.
-                    </p>
-                  </li>
-                  <li>
-                    <strong>Generate the Project</strong>
-                    <p>Run the following command to generate the project:</p>
-                    <CodeBlock language="bash" code={template.command} />
-                  </li>
-                  <li>
-                    <strong>Navigate and Run</strong>
-                    <p>
-                      After generation, navigate to the project directory and
-                      start it:
-                    </p>
-                    <CodeBlock
-                      language="bash"
-                      code={`cd ~/${template.name.toLowerCase().replace(/\s+/g, '-')}\nnpm start`}
-                    />
-                  </li>
-                </ol>
-              </CardContent>
-            </Card>
-          </div>
         </motion.div>
       </main>
     </div>

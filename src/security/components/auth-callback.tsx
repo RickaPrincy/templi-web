@@ -10,7 +10,7 @@ export const AuthCallback = () => {
     whoamiCache.replace({
       token,
     } as any);
-  }, []);
+  }, [token]);
 
   return <Navigate to="/" />;
 };

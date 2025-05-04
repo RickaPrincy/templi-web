@@ -1,13 +1,6 @@
-import {
-  Link as LinkIcon,
-  FileText,
-  FolderTree,
-  Info,
-  Search,
-} from 'lucide-react';
+import { FileText, FolderTree, Info, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import {
   Card,
@@ -15,18 +8,15 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from '@/common/components/ui/card';
 import { Input } from '@/common/components/ui/input';
-import { Button } from '@/common/components/ui/button';
 import { Badge } from '@/common/components/ui/badge';
-import { GithubIcon, Navigation, CodeBlock } from '@/common/components';
+import { GithubIcon, Navigation } from '@/common/components';
 
 import { TEMPLATES, TEMPLATES_CATEGORIES } from '@/common/constants/templates';
-import { Template } from '@/common/utils/types';
+import { BoilerplateItem } from './components/boilereplate-item';
 
 export const Boilerplates = () => {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
@@ -41,8 +31,6 @@ export const Boilerplates = () => {
 
     return matchesSearch && matchesCategory;
   });
-
-  const handleUseTemplate = (_template: Template) => {};
 
   return (
     <div className="min-h-screen">
@@ -59,10 +47,10 @@ export const Boilerplates = () => {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>How to Use Templates</CardTitle>
+              <CardTitle>How to Use Templates With Github</CardTitle>
               <CardDescription>
                 Templates allow you to quickly scaffold new projects with
-                predefined structures and configurations.
+                predefined structures and configurations using github directly.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -89,19 +77,19 @@ export const Boilerplates = () => {
                   <div className="flex flex-col items-center p-4 border rounded-lg">
                     <FileText className="h-8 w-8 mb-2" />
                     <h3 className="font-medium text-center">
-                      Configure Template
+                      Customize Your Template
                     </h3>
                     <p className="text-sm text-center text-muted-foreground">
-                      Customize parameters in the template
+                      Fill in any required fields or parameters for your new
+                      project.
                     </p>
                   </div>
                   <div className="flex flex-col items-center p-4 border rounded-lg">
                     <FolderTree className="h-8 w-8 mb-2" />
-                    <h3 className="font-medium text-center">
-                      Generate Project
-                    </h3>
+                    <h3 className="font-medium text-center">Done</h3>
                     <p className="text-sm text-center text-muted-foreground">
-                      Create a new repository from template
+                      A new project has been created in your account based on
+                      the template you selected."**
                     </p>
                   </div>
                 </div>
@@ -151,100 +139,10 @@ export const Boilerplates = () => {
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
               {filteredTemplates.map((template) => (
-                <Card
-                  key={template.id}
-                  className="transition-all duration-300 hover:shadow-md flex flex-col cursor-pointer"
-                  onClick={() => navigate(`/boilerplates/${template.id}`)}
-                >
-                  <CardHeader>
-                    <CardTitle>{template.name}</CardTitle>
-                    <CardDescription className="mb-5">
-                      {template.description}
-                    </CardDescription>
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {template.categories.map((category) => (
-                        <Badge
-                          key={category}
-                          variant="secondary"
-                          className="text-xs"
-                        >
-                          {category}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardHeader>
-                  <CardFooter
-                    className="flex flex-col gap-2 pt-2"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleUseTemplate(template);
-                      }}
-                      className="w-full flex items-center gap-2"
-                    >
-                      <GithubIcon theme="dark" />
-                      Use Template
-                    </Button>
-                    <Button asChild variant="outline" size="sm">
-                      <a
-                        href={
-                          template.path
-                            ? `${template.repoUrl.replace('.git', '')}/tree/main${template.path}`
-                            : template.repoUrl.replace('.git', '')
-                        }
-                        target="_blank"
-                        className="w-full flex items-center gap-2"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <LinkIcon className="h-4 w-4" />
-                        View on GitHub
-                      </a>
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <BoilerplateItem key={template.id} template={template} />
               ))}
             </div>
           )}
-
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold mb-6">
-              Example Boilerplate Usage with CLI
-            </h2>
-            <Card>
-              <CardContent className="pt-6">
-                <ol className="list-decimal pl-5 space-y-4">
-                  <li>
-                    <strong>Install Templi</strong>
-                    <p>
-                      Before using this boilerplate, make sure you have Templi
-                      installed.
-                    </p>
-                  </li>
-                  <li>
-                    <strong>Generate the Project</strong>
-                    <p>Run the following command to generate the project:</p>
-                    <CodeBlock
-                      language="bash"
-                      code="templi generate -t https://github.com/RickaPrincy/templi-express-js.git -o ~/myproject"
-                    />
-                  </li>
-                  <li>
-                    <strong>Navigate and Run</strong>
-                    <p>
-                      After generation, navigate to the project directory and
-                      start it:
-                    </p>
-                    <CodeBlock
-                      language="bash"
-                      code="cd ~/myproject\nnpm start"
-                    />
-                  </li>
-                </ol>
-              </CardContent>
-            </Card>
-          </div>
         </motion.div>
       </main>
     </div>

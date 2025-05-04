@@ -21,8 +21,7 @@ export type Template = {
   id: string;
   name: string;
   description: string;
-  repoUrl: string;
-  command: string;
+  url: string;
   path?: string;
   config: TemplateConfig;
   categories: string[];
