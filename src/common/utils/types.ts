@@ -17,13 +17,10 @@ export type TemplateConfig = {
   keys: TemplateKey[];
 };
 
-export type Template = {
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  path?: string;
-  config: TemplateConfig;
-  categories: string[];
-  structure?: { [key: string]: string };
+export const asTemplateConfig = (config: string) => {
+  try {
+    return JSON.parse(config) as TemplateConfig;
+  } catch (e) {
+    return null; //TODO: refactor;
+  }
 };

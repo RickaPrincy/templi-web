@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Template } from '../utils/types';
+import { Template } from '@/gen/templi-web-api-client';
 
 export type UseTemplateStore = {
   template: Template | null;

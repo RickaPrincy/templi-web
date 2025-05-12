@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Navigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Link as LinkIcon, ArrowLeft } from 'lucide-react';
 
@@ -23,22 +23,28 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/common/components/ui/accordion';
-import { Badge } from '@/common/components/ui/badge';
 import { Navigation, GithubIcon, CodeBlock } from '@/common/components';
-import { TEMPLATES } from '@/common/constants/templates';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
+import { useQuery } from '@tanstack/react-query';
+import { resourcesProvider } from '@/providers/resources-provider';
+import { useGetConfiguration } from '@/common/hooks/providers';
 
 export const BoilerplateDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const setTemplate = useTemplateStore((state) => state.setTemplate);
 
-  const template = TEMPLATES.find((t) => t.id === id);
+  const { data: template, isLoading } = useQuery({
+    queryKey: ['templates', id],
+    queryFn: () => resourcesProvider.getTemplateById(id),
+  });
   const generator = useGenerator(template);
+  const config = useGetConfiguration(template);
 
-  if (!template) {
-    return <Navigate to="/boilerplates" />;
+  if (isLoading) {
+    //TODO: loader
+    return null;
   }
 
   return (
@@ -67,13 +73,6 @@ export const BoilerplateDetails = () => {
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
               <CardDescription>{template.description}</CardDescription>
-              <div className="flex flex-wrap gap-1 mt-2">
-                {template.categories.map((category) => (
-                  <Badge key={category} variant="secondary" className="text-xs">
-                    {category}
-                  </Badge>
-                ))}
-              </div>
             </CardHeader>
             <CardContent>
               <Tabs defaultValue="overview" className="w-full">
@@ -95,25 +94,11 @@ export const BoilerplateDetails = () => {
                       </AccordionTrigger>
                       <AccordionContent className="bg-slate-100 dark:bg-slate-900 p-2 rounded">
                         <pre className="text-xs overflow-x-auto">
-                          {JSON.stringify(template.config, null, 2)}
+                          {JSON.stringify(config, null, 2)}
                         </pre>
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
-                </TabsContent>
-                <TabsContent value="structure" className="py-4">
-                  <div className="space-y-2">
-                    {template.structure &&
-                      Object.entries(template.structure).map(([path, desc]) => (
-                        <div
-                          key={path}
-                          className="flex justify-between text-sm"
-                        >
-                          <code className="font-mono">{path}</code>
-                          <span className="text-muted-foreground">{desc}</span>
-                        </div>
-                      ))}
-                  </div>
                 </TabsContent>
                 <TabsContent value="command" className="py-4">
                   <CodeBlock language="bash" code={generator.generate()} />

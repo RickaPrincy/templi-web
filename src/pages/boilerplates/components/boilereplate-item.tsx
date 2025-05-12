@@ -1,7 +1,6 @@
 import { Link as LinkIcon } from 'lucide-react';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from '@/common/components/ui/badge';
 import { Button } from '@/common/components/ui/button';
 import {
   Card,
@@ -10,7 +9,7 @@ import {
   CardDescription,
   CardFooter,
 } from '@/common/components/ui/card';
-import { Template } from '@/common/utils/types';
+import { Template } from '@/gen/templi-web-api-client';
 import { GithubIcon } from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
@@ -31,13 +30,6 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
         <CardDescription className="mb-5">
           {template.description}
         </CardDescription>
-        <div className="flex flex-wrap gap-1 mt-2">
-          {template.categories.map((category) => (
-            <Badge key={category} variant="secondary" className="text-xs">
-              {category}
-            </Badge>
-          ))}
-        </div>
       </CardHeader>
       <CardFooter className="flex flex-col gap-2 pt-2">
         <Button

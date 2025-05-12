@@ -70,6 +70,142 @@ export interface Dummy {
 /**
  * 
  * @export
+ * @interface GenerateTemplate
+ */
+export interface GenerateTemplate {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateTemplate
+     */
+    'repositoryName': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GenerateTemplate
+     */
+    'isPrivate': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateTemplate
+     */
+    'installationId': string;
+    /**
+     * 
+     * @type {Array<Value>}
+     * @memberof GenerateTemplate
+     */
+    'values': Array<Value>;
+}
+/**
+ * 
+ * @export
+ * @interface GithubInstallation
+ */
+export interface GithubInstallation {
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubInstallation
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubInstallation
+     */
+    'orgName': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GithubInstallation
+     */
+    'isOrg': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubInstallation
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubInstallation
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface Template
+ */
+export interface Template {
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'configUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface Value
+ */
+export interface Value {
+    /**
+     * 
+     * @type {string}
+     * @memberof Value
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof Value
+     */
+    'value': object;
+}
+/**
+ * 
+ * @export
  * @interface Whoami
  */
 export interface Whoami {
@@ -285,6 +421,442 @@ export class HealthApi extends BaseAPI {
 
 
 /**
+ * ResourcesApi - axios parameter creator
+ * @export
+ */
+export const ResourcesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {Array<Template>} template 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        crupdateTemplates: async (template: Array<Template>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'template' is not null or undefined
+            assertParamExists('crupdateTemplates', 'template', template)
+            const localVarPath = `/templates`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(template, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {GenerateTemplate} generateTemplate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateTemplate: async (id: string, generateTemplate: GenerateTemplate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('generateTemplate', 'id', id)
+            // verify required parameter 'generateTemplate' is not null or undefined
+            assertParamExists('generateTemplate', 'generateTemplate', generateTemplate)
+            const localVarPath = `/templates/{id}/generate`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(generateTemplate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInstallationsByUserId: async (id: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getInstallationsByUserId', 'id', id)
+            const localVarPath = `/users/{id}/installations`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTemplateById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTemplateById', 'id', id)
+            const localVarPath = `/templates/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} [name] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTemplates: async (name?: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/templates`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ResourcesApi - functional programming interface
+ * @export
+ */
+export const ResourcesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ResourcesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {Array<Template>} template 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async crupdateTemplates(template: Array<Template>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Template>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.crupdateTemplates(template, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ResourcesApi.crupdateTemplates']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {GenerateTemplate} generateTemplate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async generateTemplate(id: string, generateTemplate: GenerateTemplate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateTemplate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.generateTemplate(id, generateTemplate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ResourcesApi.generateTemplate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInstallationsByUserId(id: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GithubInstallation>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInstallationsByUserId(id, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ResourcesApi.getInstallationsByUserId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTemplateById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Template>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplateById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ResourcesApi.getTemplateById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} [name] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTemplates(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Template>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplates(name, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ResourcesApi.getTemplates']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ResourcesApi - factory interface
+ * @export
+ */
+export const ResourcesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ResourcesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {Array<Template>} template 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        crupdateTemplates(template: Array<Template>, options?: RawAxiosRequestConfig): AxiosPromise<Array<Template>> {
+            return localVarFp.crupdateTemplates(template, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {GenerateTemplate} generateTemplate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateTemplate(id: string, generateTemplate: GenerateTemplate, options?: RawAxiosRequestConfig): AxiosPromise<GenerateTemplate> {
+            return localVarFp.generateTemplate(id, generateTemplate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInstallationsByUserId(id: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<GithubInstallation>> {
+            return localVarFp.getInstallationsByUserId(id, page, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTemplateById(id: string, options?: RawAxiosRequestConfig): AxiosPromise<Template> {
+            return localVarFp.getTemplateById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} [name] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTemplates(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<Template>> {
+            return localVarFp.getTemplates(name, page, pageSize, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ResourcesApi - object-oriented interface
+ * @export
+ * @class ResourcesApi
+ * @extends {BaseAPI}
+ */
+export class ResourcesApi extends BaseAPI {
+    /**
+     * 
+     * @summary 
+     * @param {Array<Template>} template 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResourcesApi
+     */
+    public crupdateTemplates(template: Array<Template>, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).crupdateTemplates(template, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
+     * @param {string} id 
+     * @param {GenerateTemplate} generateTemplate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResourcesApi
+     */
+    public generateTemplate(id: string, generateTemplate: GenerateTemplate, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).generateTemplate(id, generateTemplate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
+     * @param {string} id 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResourcesApi
+     */
+    public getInstallationsByUserId(id: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).getInstallationsByUserId(id, page, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResourcesApi
+     */
+    public getTemplateById(id: string, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).getTemplateById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
+     * @param {string} [name] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResourcesApi
+     */
+    public getTemplates(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).getTemplates(name, page, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * SecurityApi - axios parameter creator
  * @export
  */
@@ -293,12 +865,18 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @param {string} code 
+         * @param {string} installationId 
+         * @param {string} setupAction 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerHandleGithubAppCallback: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authControllerHandleGithubAppCallback: async (code: string, installationId: string, setupAction: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
             assertParamExists('authControllerHandleGithubAppCallback', 'code', code)
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('authControllerHandleGithubAppCallback', 'installationId', installationId)
+            // verify required parameter 'setupAction' is not null or undefined
+            assertParamExists('authControllerHandleGithubAppCallback', 'setupAction', setupAction)
             const localVarPath = `/auth/github/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -313,6 +891,14 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
 
             if (code !== undefined) {
                 localVarQueryParameter['code'] = code;
+            }
+
+            if (installationId !== undefined) {
+                localVarQueryParameter['installation_id'] = installationId;
+            }
+
+            if (setupAction !== undefined) {
+                localVarQueryParameter['setup_action'] = setupAction;
             }
 
 
@@ -373,11 +959,13 @@ export const SecurityApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} code 
+         * @param {string} installationId 
+         * @param {string} setupAction 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerHandleGithubAppCallback(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerHandleGithubAppCallback(code, options);
+        async authControllerHandleGithubAppCallback(code: string, installationId: string, setupAction: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerHandleGithubAppCallback(code, installationId, setupAction, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SecurityApi.authControllerHandleGithubAppCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -407,11 +995,13 @@ export const SecurityApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @param {string} code 
+         * @param {string} installationId 
+         * @param {string} setupAction 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerHandleGithubAppCallback(code: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.authControllerHandleGithubAppCallback(code, options).then((request) => request(axios, basePath));
+        authControllerHandleGithubAppCallback(code: string, installationId: string, setupAction: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.authControllerHandleGithubAppCallback(code, installationId, setupAction, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -435,12 +1025,14 @@ export class SecurityApi extends BaseAPI {
     /**
      * 
      * @param {string} code 
+     * @param {string} installationId 
+     * @param {string} setupAction 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public authControllerHandleGithubAppCallback(code: string, options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).authControllerHandleGithubAppCallback(code, options).then((request) => request(this.axios, this.basePath));
+    public authControllerHandleGithubAppCallback(code: string, installationId: string, setupAction: string, options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).authControllerHandleGithubAppCallback(code, installationId, setupAction, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

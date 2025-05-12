@@ -1,6 +1,7 @@
-import { Template } from './types';
+import { Template } from '@/gen/templi-web-api-client';
 import { toSnakeCase } from './typos';
 
+//TODO: path
 export class Generator {
   constructor(private readonly template: Template) {}
 
@@ -10,14 +11,10 @@ export class Generator {
 
   generate() {
     const baseCommand = `templi generate -t ${this.template.url} -o ${this.normalizedName()}`;
-    if (this.template.path) {
-      return baseCommand + ` -p ${this.template.path}`;
-    }
     return baseCommand;
   }
 
   linkUrl() {
-    const suffix = this.template.path ? `/${this.template.path}` : '';
-    return `${this.template.url.replace('.git', '')}/tree/main${suffix}`;
+    return `${this.template.url}/tree/main`;
   }
 }

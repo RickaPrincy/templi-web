@@ -1,11 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import { ThemeProvider } from '@/common/components';
 import { Toaster } from '@/common/components/ui/toaster';
@@ -44,10 +38,6 @@ export const App = () => (
               <Route
                 path="/boilerplates/:id"
                 element={<BoilerplateDetails />}
-              />
-              <Route
-                path="/examples"
-                element={<Navigate to="/boilerplates" replace />}
               />
             </Route>
             <Route path="/auth/github/callback" element={<AuthCallback />} />

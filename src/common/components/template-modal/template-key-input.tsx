@@ -19,7 +19,11 @@ export const TemplateKeyInput: FC<{
   return (
     <>
       {keyvalue.type === 'INPUT' && (
-        <Input placeholder={keyvalue.label} {...field} />
+        <Input
+          required={keyvalue.required}
+          placeholder={keyvalue.label}
+          {...field}
+        />
       )}
       {keyvalue.type === 'SELECT' && (
         <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -43,7 +47,7 @@ export const TemplateKeyInput: FC<{
             onCheckedChange={field.onChange}
           />
           <label htmlFor={keyvalue.name} className="text-sm">
-            Enable {keyvalue.label}
+            {keyvalue.label}
           </label>
         </div>
       )}

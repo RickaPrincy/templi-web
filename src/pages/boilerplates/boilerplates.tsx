@@ -1,6 +1,5 @@
-import { FileText, FolderTree, Info, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { FileText, FolderTree, Info, Search } from 'lucide-react';
 
 import {
   Card,
@@ -10,26 +9,20 @@ import {
   CardDescription,
 } from '@/common/components/ui/card';
 import { Input } from '@/common/components/ui/input';
-import { Badge } from '@/common/components/ui/badge';
 import { GithubIcon, Navigation } from '@/common/components';
-
-import { TEMPLATES, TEMPLATES_CATEGORIES } from '@/common/constants/templates';
 import { BoilerplateItem } from './components/boilereplate-item';
+import { useGetList } from '@/common/hooks/providers';
+import { resourcesProvider } from '@/providers/resources-provider';
 
 export const Boilerplates = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-
-  const filteredTemplates = TEMPLATES.filter((template) => {
-    const matchesSearch =
-      searchQuery === '' ||
-      template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      template.description.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesCategory =
-      activeCategory === null || template.categories.includes(activeCategory);
-
-    return matchesSearch && matchesCategory;
+  const {
+    data: templates,
+    filter,
+    setFilter,
+  } = useGetList({
+    queryKey: ['templates'],
+    queryFn: ({ pagination, filter }) =>
+      resourcesProvider.getTemplates(filter, pagination),
   });
 
   return (
@@ -103,34 +96,13 @@ export const Boilerplates = () => {
               <Input
                 placeholder="Search templates..."
                 className="pl-9"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={filter?.name}
+                onChange={(e) => setFilter({ name: e.target.value })}
               />
-            </div>
-
-            <div className="flex flex-wrap gap-2 items-center">
-              <span className="text-sm font-medium">Filter by:</span>
-              <Badge
-                variant={activeCategory === null ? 'default' : 'outline'}
-                className="cursor-pointer"
-                onClick={() => setActiveCategory(null)}
-              >
-                All
-              </Badge>
-              {TEMPLATES_CATEGORIES.map((category) => (
-                <Badge
-                  key={category}
-                  variant={activeCategory === category ? 'default' : 'outline'}
-                  className="cursor-pointer"
-                  onClick={() => setActiveCategory(category)}
-                >
-                  {category}
-                </Badge>
-              ))}
             </div>
           </div>
 
-          {filteredTemplates.length === 0 ? (
+          {templates.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground">
                 No templates found matching your criteria.
@@ -138,7 +110,7 @@ export const Boilerplates = () => {
             </div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-              {filteredTemplates.map((template) => (
+              {templates.map((template) => (
                 <BoilerplateItem key={template.id} template={template} />
               ))}
             </div>
