@@ -1270,7 +1270,7 @@ void Templi::generate_with_templi_config(std::string template_path,
 	TempliConfig templi_config(template_path);
 
 	std::for_each(templi_config.m_keys.begin(),
-		templi_config.m_keys.end(),
+		templi_config.m_placeholders.end(),
 		[&](Key &key) { values.insert(std::make_pair(key.m_name, get_key_value(key))); });
 
 	Templi::execute_scripts(values, templi_config.m_before);
