@@ -20,6 +20,7 @@ export class Generator {
   }
 
   getRawConfigUrl() {
+    //TODO: review
     const regex = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/?$/;
     const match = this.template.url.match(regex);
 

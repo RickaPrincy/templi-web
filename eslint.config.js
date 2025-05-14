@@ -25,6 +25,7 @@ export default tseslint.config(
       ],
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      'no-useless-escape': 'off',
       'no-unused-vars': 'off', // because we want to allow all unused vars that start with "_"
       '@typescript-eslint/no-unused-vars': [
         'error',

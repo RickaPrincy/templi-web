@@ -94,7 +94,7 @@ export function TemplateModal() {
         className: 'text-green-500',
       });
       setTemplate(null);
-    } catch (e) {
+    } catch {
       toast({
         title: 'Error occured when try to generate your project',
         className: 'text-red-500',

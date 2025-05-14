@@ -20,7 +20,7 @@ export type TemplateConfig = {
 export const asTemplateConfig = (config: string) => {
   try {
     return JSON.parse(config) as TemplateConfig;
-  } catch (e) {
+  } catch {
     return null;
   }
 };
