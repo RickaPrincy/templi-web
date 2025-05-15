@@ -1,13 +1,30 @@
 import { Button } from '@/common/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams, useRoutes } from 'react-router-dom';
 import { GithubIcon } from './github-icon';
 import { ToggleThemeButton } from './toggle-theme-button';
 import { useWhoami } from '@/security/hooks';
 import { whoamiCache } from '../utils/whoami-cache';
 import { authProvider } from '@/providers';
 
+const links = [
+  {
+    href: '/docs',
+    name: 'Documentation',
+  },
+  {
+    href: '/boilerplates',
+    name: 'Boilerplates',
+  },
+  {
+    href: 'https://github.com/RickaPrincy/Templi',
+    name: 'GitHub',
+    target: '_blank',
+  },
+];
+
 export const Navigation = () => {
   const whoami = useWhoami();
+  const location = useLocation();
 
   return (
     <nav className="border-b">
@@ -19,25 +36,20 @@ export const Navigation = () => {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link
-              to="/docs"
-              className="text-foreground/60 transition-colors hover:text-foreground"
-            >
-              Documentation
-            </Link>
-            <Link
-              to="/boilerplates"
-              className="text-foreground/60 transition-colors hover:text-foreground"
-            >
-              Boilerplates
-            </Link>
-            <a
-              href="https://github.com/RickaPrincy/Templi"
-              target="_blank"
-              className="text-foreground/60 transition-colors hover:text-foreground"
-            >
-              GitHub
-            </a>
+            {links.map((link) => {
+              const isActive = location.pathname == link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  target={link?.target || ''}
+                  to={link.href}
+                  className={`text-foreground/60 transition-colors hover:text-foreground ${isActive ? '!text-foreground' : ''}`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
         </div>
 
