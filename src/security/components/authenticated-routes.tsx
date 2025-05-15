@@ -4,6 +4,7 @@ import { FC, PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { whoamiCache } from '@/common/utils/whoami-cache';
 import { securityApi } from '@/providers';
 import { unwrap } from '@/common/utils/unwrap';
+import { Loader } from 'lucide-react';
 
 const TO_SIGNOUT_STATUS = [401, 403];
 export const AuthenticatedRoutes: FC<PropsWithChildren> = ({ children }) => {
@@ -32,8 +33,8 @@ export const AuthenticatedRoutes: FC<PropsWithChildren> = ({ children }) => {
   }, [location]);
 
   return isLoading ? (
-    <div className="w-full flex justify-center mt-20">
-      <p className="text-[30px]">Loading...</p>
+    <div className="w-full h-screen flex justify-center items-center">
+      <Loader className="h-10 w-10 animate-spin text-gray-600" />
     </div>
   ) : (
     <>
