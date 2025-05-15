@@ -25,7 +25,7 @@ import {
 } from '@/common/components/ui/form';
 import { Checkbox } from '@/common/components/ui/checkbox';
 import { GithubIcon } from '../github-icon';
-import { GenerateTemplate } from '@/gen/templi-web-api-client';
+import { GenerateProjectPayload } from '@/gen/templi-web-api-client';
 import { TemplateKeyInput } from './template-key-input';
 import { useTemplateStore } from '../../stores';
 import { useGetConfiguration } from '@/common/hooks/providers';
@@ -33,6 +33,8 @@ import { useWhoami } from '@/security/hooks';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { resourcesProvider } from '@/providers/resources-provider';
 import { Env } from '@/config/env';
+import { useState } from 'react';
+import { useToast } from '../ui/use-toast';
 
 export type FormValues = {
   repositoryName: string;
@@ -43,6 +45,8 @@ export type FormValues = {
 
 export function TemplateModal() {
   const whoami = useWhoami();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const { template, setTemplate } = useTemplateStore();
   const { data: config } = useGetConfiguration(template);
   const { data: installations } = useQuery({
@@ -53,8 +57,8 @@ export function TemplateModal() {
       ),
     queryKey: ['installations'],
   });
-  const { mutateAsync: generateProject, error } = useMutation({
-    mutationFn: (data: GenerateTemplate) =>
+  const { mutateAsync: generateProject } = useMutation({
+    mutationFn: (data: GenerateProjectPayload) =>
       resourcesProvider.generateWithTemplate(data, { templateId: template.id }),
     mutationKey: ['templates'],
   });
@@ -74,15 +78,31 @@ export function TemplateModal() {
       repositoryName,
       ...values
     } = formValues;
-    await generateProject({
-      isPrivate,
-      installationId,
-      repositoryName,
-      values: Object.entries(values).map(([name, value]) => ({ name, value })),
-    });
-    setTemplate(null);
+    try {
+      setIsLoading(true);
+      await generateProject({
+        isPrivate,
+        installationId,
+        repositoryName,
+        values: Object.entries(values).map(([name, value]) => ({
+          name,
+          value,
+        })),
+      });
+      toast({
+        title: 'Project generated for the specified Org/Account',
+        className: 'text-green-500',
+      });
+      setTemplate(null);
+    } catch {
+      toast({
+        title: 'Error occured when try to generate your project',
+        className: 'text-red-500',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
-  console.log(error);
 
   return (
     <Dialog open={Boolean(template)} onOpenChange={() => setTemplate(null)}>
@@ -159,8 +179,12 @@ export function TemplateModal() {
                 </FormItem>
               )}
             />
+
+            <p className="text-[20px] font-bold mt-[100px] mb-5 border-t pt-4 border-gray-300 text-gray-800">
+              Template Placeholders
+            </p>
             {config &&
-              config.keys.map((keyvalue) => (
+              config.placeholders.map((keyvalue) => (
                 <FormField
                   key={keyvalue.name}
                   control={form.control}
@@ -185,11 +209,16 @@ export function TemplateModal() {
               <Button
                 type="button"
                 variant="outline"
+                disabled={isLoading}
                 onClick={() => setTemplate(null)}
               >
                 Cancel
               </Button>
-              <Button type="submit" className="flex items-center gap-2">
+              <Button
+                disabled={isLoading}
+                type="submit"
+                className="flex items-center gap-2"
+              >
                 <GithubIcon theme="dark" />
                 Generate Project
               </Button>

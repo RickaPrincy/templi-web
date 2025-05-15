@@ -40,7 +40,7 @@ export const BoilerplateDetails = () => {
     queryFn: () => resourcesProvider.getTemplateById(id),
   });
   const generator = useGenerator(template);
-  const config = useGetConfiguration(template);
+  const { data: config } = useGetConfiguration(template);
 
   if (isLoading) {
     //TODO: loader

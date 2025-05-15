@@ -1,4 +1,4 @@
-import { GenerateTemplate, Template } from '@/gen/templi-web-api-client';
+import { GenerateProjectPayload, Template } from '@/gen/templi-web-api-client';
 import { Pagination } from './types';
 import { resourcesApi } from './api';
 import { unwrap } from '@/common/utils/unwrap';
@@ -17,11 +17,11 @@ export const resourcesProvider = {
     return unwrap(() => resourcesApi().crupdateTemplates(templates));
   },
   async generateWithTemplate(
-    generateTemplate: GenerateTemplate,
+    payload: GenerateProjectPayload,
     meta?: Record<string, any>
   ) {
     return unwrap(() =>
-      resourcesApi().generateTemplate(meta?.templateId, generateTemplate)
+      resourcesApi().generateProject(meta?.templateId, payload)
     );
   },
   async getInstallationId(meta?: Record<string, any>, pagination?: Pagination) {
