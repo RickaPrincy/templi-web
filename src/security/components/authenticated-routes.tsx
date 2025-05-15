@@ -31,6 +31,12 @@ export const AuthenticatedRoutes: FC<PropsWithChildren> = ({ children }) => {
       <p className="text-[30px]">Loading...</p>
     </div>
   ) : (
-    <>{children}</>
+    <>
+      <div
+        className={`${location.pathname && location.pathname == '/docs' ? 'ml-[255px]' : ''}`}
+      >
+        {children}
+      </div>
+    </>
   );
 };
