@@ -75,7 +75,7 @@ export function DocumentationPagination({
               transition={{ duration: 0.2 }}
               onClick={() => handleNavigate(`#${prevPage.id}`)}
             >
-              <PaginationPrevious className="flex flex-col items-start gap-1 border border-border">
+              <PaginationPrevious className="flex items-center gap-1 border border-border cursor-pointer">
                 <span className="text-xs text-muted-foreground">Previous</span>
                 <span className="font-semibold">{prevPage.title}</span>
                 {currentPageDesc.prev && (
@@ -95,7 +95,7 @@ export function DocumentationPagination({
               transition={{ duration: 0.2 }}
               onClick={() => handleNavigate(`#${nextPage.id}`)}
             >
-              <PaginationNext className="flex flex-col items-end gap-1 border border-border bg-[#20252e] text-white hover:bg-[#2A324A]">
+              <PaginationNext className="flex items-center gap-1 border border-border bg-[#20252e] text-white cursor-pointer hover:bg-[#2A324A]  hover:text-white">
                 <span className="text-xs text-muted-foreground">Next</span>
                 <span className="font-semibold">{nextPage.title}</span>
                 {currentPageDesc.next && (

@@ -209,7 +209,7 @@ const Sidebar = React.forwardRef<
         </Sheet>
       );
     }
-
+    return null;
     return (
       <div
         ref={ref}
