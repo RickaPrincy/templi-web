@@ -70,7 +70,7 @@ const IntroductionPage = () => (
       available as both a library and a CLI.
     </p>
 
-    <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200 mb-8">
+    <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200 mb-8 dark:bg-transparent">
       <Book className="h-10 w-10 text-blue-500" />
       <div>
         <h3 className="text-lg font-medium">What is Templi?</h3>
@@ -142,7 +142,7 @@ const InstallationPage = () => (
       Installation
     </h1>
 
-    <div className="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-200 mb-8">
+    <div className="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-200 mb-8  dark:bg-transparent">
       <Download className="h-10 w-10 text-amber-500" />
       <p>
         Templi can be installed globally as a CLI tool or as a library in your
@@ -295,7 +295,7 @@ cd my-express-template`}
       </Card>
     </div>
 
-    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
+    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8  dark:bg-transparent">
       <h3 className="text-xl font-semibold mb-2">Working with Binary Files</h3>
       <p className="mb-4">
         If your template contains binary files like images, you should exclude
@@ -320,7 +320,7 @@ cd my-express-template`}
       </p>
     </div>
 
-    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
+    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8  dark:bg-transparent">
       <h3 className="text-xl font-semibold mb-2">
         Example: Express.js Template
       </h3>
@@ -575,7 +575,7 @@ const ConfiguringBoilerplatePage = () => (
       </div>
     </div>
 
-    <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 mb-8">
+    <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 mb-8  dark:bg-transparent">
       <h3 className="text-xl font-semibold mb-2">
         Creating Configuration Automatically
       </h3>
@@ -648,7 +648,7 @@ const UsingBoilerplatePage = () => (
       </CardContent>
     </Card>
 
-    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
+    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8  dark:bg-transparent">
       <h3 className="text-xl font-semibold mb-2">Interactive Prompts</h3>
       <p className="mb-4">
         When generating a project, Templi will prompt you for the values of
