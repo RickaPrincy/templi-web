@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useMemo, useState } from 'react';
 
 import { whoamiCache } from '@/common/utils/whoami-cache';
 import { securityApi } from '@/providers';
@@ -9,6 +9,11 @@ const TO_SIGNOUT_STATUS = [401, 403];
 export const AuthenticatedRoutes: FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
+
+  const isOnDocsPage = useMemo(
+    () => location.pathname && location.pathname == '/docs',
+    [location.pathname]
+  );
 
   useEffect(() => {
     (async () => {
@@ -32,11 +37,7 @@ export const AuthenticatedRoutes: FC<PropsWithChildren> = ({ children }) => {
     </div>
   ) : (
     <>
-      <div
-        className={`${location.pathname && location.pathname == '/docs' ? 'ml-[255px]' : ''}`}
-      >
-        {children}
-      </div>
+      <div className={`${isOnDocsPage ? 'ml-[255px]' : ''}`}>{children}</div>
     </>
   );
 };
