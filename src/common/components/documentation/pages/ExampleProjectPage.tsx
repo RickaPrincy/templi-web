@@ -253,7 +253,7 @@ export const ExampleProjectPage = () => (
   [ DONE ]: Project generated successfully`}
             caption="Post-generation output"
           />
-          <p className="mt-4 bg-green-50 p-3 rounded-md border border-green-200">
+          <p className="mt-4 bg-green-50 p-3 rounded-md border border-green-200 dark:bg-transparent">
             You now have a fully functional Express.js application, initialized
             as a Git repository and ready for development!
           </p>
