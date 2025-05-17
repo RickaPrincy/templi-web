@@ -2,11 +2,13 @@ import { create } from 'zustand';
 import { Template } from '@/gen/templi-web-api-client';
 
 export type UseTemplateStore = {
+  isPersisted: boolean;
   template: Template | null;
-  setTemplate: (template: Template | null) => void;
+  setTemplate: (template: Template | null, isPersisted?: boolean) => void;
 };
 
 export const useTemplateStore = create<UseTemplateStore>((set) => ({
   template: null,
-  setTemplate: (template) => set({ template }),
+  isPersisted: true,
+  setTemplate: (template, isPersisted = true) => set({ template, isPersisted }),
 }));

@@ -28,7 +28,10 @@ import {
 import { Checkbox } from '@/common/components/ui/checkbox';
 import { GithubIcon } from '../github-icon';
 import { TemplatePlaceHoldersInputs } from './template-placeholders-inputs';
-import { GenerateWithPersistedTemplate } from '@/gen/templi-web-api-client';
+import {
+  GenerateProjectPayload,
+  GenerateWithPersistedTemplate,
+} from '@/gen/templi-web-api-client';
 import { useTemplateStore } from '../../stores';
 import { useWhoami } from '@/security/hooks';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -43,11 +46,11 @@ export type GenerateProjectFormValues = {
   [key: string]: any;
 };
 
-export function TemplateModal() {
+export const TemplateModal = () => {
   const whoami = useWhoami();
   const { toast } = useToast();
   const [isGenerationLoading, setIsGenerationLoading] = useState(false);
-  const { template, setTemplate } = useTemplateStore();
+  const { template, isPersisted, setTemplate } = useTemplateStore();
 
   const { data: installations } = useQuery({
     queryFn: () =>
@@ -55,12 +58,18 @@ export function TemplateModal() {
     queryKey: ['installations', JSON.stringify(whoami)],
   });
 
-  const { mutateAsync: generateProject } = useMutation({
+  const { mutateAsync: generateProjectWithTemplate } = useMutation({
     mutationFn: (data: GenerateWithPersistedTemplate) =>
       templateProvider.generateWithTemplate({
         meta: { templateId: template.id },
         payload: data,
       }),
+    mutationKey: ['templates'],
+  });
+
+  const { mutateAsync: generateProject } = useMutation({
+    mutationFn: (data: GenerateProjectPayload) =>
+      templateProvider.generateProject({ payload: data }),
     mutationKey: ['templates'],
   });
 
@@ -72,16 +81,16 @@ export function TemplateModal() {
     },
   });
 
-  const onSubmit = async (formValues: GenerateProjectFormValues) => {
+  const generate = async (formValues: GenerateProjectFormValues) => {
     const {
       isPrivateRepository: isPrivate,
       installationId,
       repositoryName,
       ...values
     } = formValues;
-    try {
-      setIsGenerationLoading(true);
-      await generateProject({
+
+    if (isPersisted) {
+      await generateProjectWithTemplate({
         isPrivate,
         installationId,
         repositoryName,
@@ -90,15 +99,35 @@ export function TemplateModal() {
           value,
         })),
       });
+      return;
+    }
+
+    await generateProject({
+      scope: template.scope,
+      templateUrl: template.url,
+      isPrivate,
+      installationId,
+      repositoryName,
+      values: Object.entries(values).map(([name, value]) => ({
+        name,
+        value,
+      })),
+    });
+  };
+
+  const onSubmit = async (formValues: GenerateProjectFormValues) => {
+    try {
+      setIsGenerationLoading(true);
+      await generate(formValues);
       toast({
-        title: 'Project generated for the specified Org/Account',
-        className: 'text-green-500',
+        title: 'Project generated for the selected Org/Account',
+        className: 'bg-green-500 text-white',
       });
       setTemplate(null);
     } catch {
       toast({
-        title: 'Error occured when try to generate your project',
-        className: 'text-red-500',
+        title: 'Error occurred while trying to generate your project',
+        className: 'text-white bg-red-500',
       });
     } finally {
       setIsGenerationLoading(false);
@@ -204,4 +233,4 @@ export function TemplateModal() {
       </DialogContent>
     </Dialog>
   );
-}
+};
