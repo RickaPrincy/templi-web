@@ -78,6 +78,18 @@ export interface GenerateProjectPayload {
      * @type {string}
      * @memberof GenerateProjectPayload
      */
+    'templateUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateProjectPayload
+     */
+    'scope': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateProjectPayload
+     */
     'repositoryName': string;
     /**
      * 
@@ -93,10 +105,60 @@ export interface GenerateProjectPayload {
     'installationId': string;
     /**
      * 
-     * @type {Array<Value>}
+     * @type {Array<GenerateProjectPayloadValue>}
      * @memberof GenerateProjectPayload
      */
-    'values': Array<Value>;
+    'values': Array<GenerateProjectPayloadValue>;
+}
+/**
+ * 
+ * @export
+ * @interface GenerateProjectPayloadValue
+ */
+export interface GenerateProjectPayloadValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateProjectPayloadValue
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof GenerateProjectPayloadValue
+     */
+    'value': object;
+}
+/**
+ * 
+ * @export
+ * @interface GenerateWithPersistedTemplate
+ */
+export interface GenerateWithPersistedTemplate {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateWithPersistedTemplate
+     */
+    'repositoryName': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GenerateWithPersistedTemplate
+     */
+    'isPrivate': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateWithPersistedTemplate
+     */
+    'installationId': string;
+    /**
+     * 
+     * @type {Array<GenerateProjectPayloadValue>}
+     * @memberof GenerateWithPersistedTemplate
+     */
+    'values': Array<GenerateProjectPayloadValue>;
 }
 /**
  * 
@@ -183,25 +245,6 @@ export interface Template {
      * @memberof Template
      */
     'updatedAt': string;
-}
-/**
- * 
- * @export
- * @interface Value
- */
-export interface Value {
-    /**
-     * 
-     * @type {string}
-     * @memberof Value
-     */
-    'name': string;
-    /**
-     * 
-     * @type {object}
-     * @memberof Value
-     */
-    'value': object;
 }
 /**
  * 
@@ -430,13 +473,54 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary 
          * @param {Array<Template>} template 
+         * @param {string} [xApiKey] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crupdateTemplates: async (template: Array<Template>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        crupdateTemplates: async (template: Array<Template>, xApiKey?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'template' is not null or undefined
             assertParamExists('crupdateTemplates', 'template', template)
             const localVarPath = `/templates`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (xApiKey != null) {
+                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(template, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
+         * @param {GenerateProjectPayload} generateProjectPayload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateProject: async (generateProjectPayload: GenerateProjectPayload, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'generateProjectPayload' is not null or undefined
+            assertParamExists('generateProject', 'generateProjectPayload', generateProjectPayload)
+            const localVarPath = `/generate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -459,7 +543,7 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(template, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(generateProjectPayload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -470,15 +554,15 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary 
          * @param {string} id 
-         * @param {GenerateProjectPayload} generateProjectPayload 
+         * @param {GenerateWithPersistedTemplate} generateWithPersistedTemplate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        generateProject: async (id: string, generateProjectPayload: GenerateProjectPayload, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        generateProjectWithTemplate: async (id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('generateProject', 'id', id)
-            // verify required parameter 'generateProjectPayload' is not null or undefined
-            assertParamExists('generateProject', 'generateProjectPayload', generateProjectPayload)
+            assertParamExists('generateProjectWithTemplate', 'id', id)
+            // verify required parameter 'generateWithPersistedTemplate' is not null or undefined
+            assertParamExists('generateProjectWithTemplate', 'generateWithPersistedTemplate', generateWithPersistedTemplate)
             const localVarPath = `/templates/{id}/generate`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -492,6 +576,10 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -499,7 +587,7 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(generateProjectPayload, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(generateWithPersistedTemplate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -647,11 +735,12 @@ export const ResourcesApiFp = function(configuration?: Configuration) {
          * 
          * @summary 
          * @param {Array<Template>} template 
+         * @param {string} [xApiKey] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async crupdateTemplates(template: Array<Template>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Template>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.crupdateTemplates(template, options);
+        async crupdateTemplates(template: Array<Template>, xApiKey?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Template>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.crupdateTemplates(template, xApiKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ResourcesApi.crupdateTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -659,15 +748,28 @@ export const ResourcesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
-         * @param {string} id 
          * @param {GenerateProjectPayload} generateProjectPayload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async generateProject(id: string, generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateProjectPayload>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.generateProject(id, generateProjectPayload, options);
+        async generateProject(generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateProjectPayload>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.generateProject(generateProjectPayload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ResourcesApi.generateProject']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {GenerateWithPersistedTemplate} generateWithPersistedTemplate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async generateProjectWithTemplate(id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateWithPersistedTemplate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.generateProjectWithTemplate(id, generateWithPersistedTemplate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ResourcesApi.generateProjectWithTemplate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -727,22 +829,33 @@ export const ResourcesApiFactory = function (configuration?: Configuration, base
          * 
          * @summary 
          * @param {Array<Template>} template 
+         * @param {string} [xApiKey] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crupdateTemplates(template: Array<Template>, options?: RawAxiosRequestConfig): AxiosPromise<Array<Template>> {
-            return localVarFp.crupdateTemplates(template, options).then((request) => request(axios, basePath));
+        crupdateTemplates(template: Array<Template>, xApiKey?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<Template>> {
+            return localVarFp.crupdateTemplates(template, xApiKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
+         * @param {GenerateProjectPayload} generateProjectPayload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateProject(generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): AxiosPromise<GenerateProjectPayload> {
+            return localVarFp.generateProject(generateProjectPayload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 
          * @param {string} id 
-         * @param {GenerateProjectPayload} generateProjectPayload 
+         * @param {GenerateWithPersistedTemplate} generateWithPersistedTemplate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        generateProject(id: string, generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): AxiosPromise<GenerateProjectPayload> {
-            return localVarFp.generateProject(id, generateProjectPayload, options).then((request) => request(axios, basePath));
+        generateProjectWithTemplate(id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options?: RawAxiosRequestConfig): AxiosPromise<GenerateWithPersistedTemplate> {
+            return localVarFp.generateProjectWithTemplate(id, generateWithPersistedTemplate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -792,25 +905,38 @@ export class ResourcesApi extends BaseAPI {
      * 
      * @summary 
      * @param {Array<Template>} template 
+     * @param {string} [xApiKey] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResourcesApi
      */
-    public crupdateTemplates(template: Array<Template>, options?: RawAxiosRequestConfig) {
-        return ResourcesApiFp(this.configuration).crupdateTemplates(template, options).then((request) => request(this.axios, this.basePath));
+    public crupdateTemplates(template: Array<Template>, xApiKey?: string, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).crupdateTemplates(template, xApiKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
+     * @param {GenerateProjectPayload} generateProjectPayload 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResourcesApi
+     */
+    public generateProject(generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).generateProject(generateProjectPayload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 
      * @param {string} id 
-     * @param {GenerateProjectPayload} generateProjectPayload 
+     * @param {GenerateWithPersistedTemplate} generateWithPersistedTemplate 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResourcesApi
      */
-    public generateProject(id: string, generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig) {
-        return ResourcesApiFp(this.configuration).generateProject(id, generateProjectPayload, options).then((request) => request(this.axios, this.basePath));
+    public generateProjectWithTemplate(id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).generateProjectWithTemplate(id, generateWithPersistedTemplate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

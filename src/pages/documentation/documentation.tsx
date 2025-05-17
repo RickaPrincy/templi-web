@@ -1,10 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
 import { Navigation } from '@/common/components';
-import DocumentationContent from '@/common/components/documentation/DocumentationContent';
-import { DocumentationSidebar } from '@/common/components/documentation/DocumentationSidebar';
 import { SidebarProvider } from '@/common/components/ui/sidebar';
 import { useLayoutEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { DocumentationContent, DocumentationSidebar } from './components';
 
 export const Documentation = () => {
   const location = useLocation();
@@ -24,7 +23,7 @@ export const Documentation = () => {
   }, [location.hash, navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="ml-[255px] min-h-screen flex flex-col">
       <Navigation />
       <SidebarProvider defaultOpen={true}>
         <div className="flex-1 flex w-full">

@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import {
   Select,
   SelectContent,
@@ -7,31 +8,30 @@ import {
 } from '@/common/components/ui/select';
 import { Input } from '@/common/components/ui/input';
 import { Checkbox } from '@/common/components/ui/checkbox';
-import { TemplateKey } from '@/common/utils/types';
-import { FC } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
-import { FormValues } from './template-modal';
+import { GenerateProjectFormValues } from './template-modal';
+import { TemplatePlaceholder } from '@/common/utils/types';
 
-export const TemplateKeyInput: FC<{
-  field: ControllerRenderProps<FormValues, string>;
-  keyvalue: TemplateKey;
-}> = ({ keyvalue, field }) => {
+export const TemplatePlaceholderInputItem: FC<{
+  field: ControllerRenderProps<GenerateProjectFormValues, string>;
+  placeholder: TemplatePlaceholder;
+}> = ({ placeholder, field }) => {
   return (
     <>
-      {keyvalue.type === 'INPUT' && (
+      {placeholder.type === 'INPUT' && (
         <Input
-          required={keyvalue.required}
-          placeholder={keyvalue.label}
+          required={placeholder.required}
+          placeholder={placeholder.label}
           {...field}
         />
       )}
-      {keyvalue.type === 'SELECT' && (
+      {placeholder.type === 'SELECT' && (
         <Select onValueChange={field.onChange} defaultValue={field.value}>
           <SelectTrigger>
             <SelectValue placeholder="Select an option" />
           </SelectTrigger>
           <SelectContent>
-            {keyvalue.choices?.map((choice) => (
+            {placeholder.choices?.map((choice) => (
               <SelectItem key={choice} value={choice}>
                 {choice}
               </SelectItem>
@@ -39,15 +39,15 @@ export const TemplateKeyInput: FC<{
           </SelectContent>
         </Select>
       )}
-      {keyvalue.type === 'BOOLEAN' && (
+      {placeholder.type === 'BOOLEAN' && (
         <div className="flex items-center space-x-2">
           <Checkbox
-            id={keyvalue.name}
+            id={placeholder.name}
             checked={field.value}
             onCheckedChange={field.onChange}
           />
-          <label htmlFor={keyvalue.name} className="text-sm">
-            {keyvalue.label}
+          <label htmlFor={placeholder.name} className="text-sm">
+            {placeholder.label}
           </label>
         </div>
       )}

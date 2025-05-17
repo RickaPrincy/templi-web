@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/common/components/ui/card';
 import { Terminal, Library, Download } from 'lucide-react';
-import { CodeBlock } from '../../code-block';
+import { CodeBlock } from '@/common/components';
 
 export const InstallationPage = () => (
   <section>

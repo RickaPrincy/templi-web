@@ -1,35 +1,38 @@
-import { DocumentationPagination } from './DocumentationPagination';
 import { motion } from 'framer-motion';
-import { CLIReference } from './pages/CLIReference';
-import { LibraryReference } from './pages/LibraryReference';
+import {
+  CLIReference,
+  ConfiguringBoilerplatePage,
+  CreatingBoilerplatePage,
+  ExampleProjectPage,
+  InstallationPage,
+  IntroductionPage,
+  LibraryReference,
+  UsingBoilerplatePage,
+} from './pages';
+import { DocumentationPagination } from './documentation-pagination';
 
-import { ConfiguringBoilerplatePage } from './pages/ConfiguringBoilerplatePage';
-import { CreatingBoilerplatePage } from './pages/CreatingBoilerplatePage';
-import { ExampleProjectPage } from './pages/ExampleProjectPage';
-import { InstallationPage } from './pages/InstallationPage';
-import { IntroductionPage } from './pages/IntroductionPage';
-import { UsingBoilerplatePage } from './pages/UsingBoilerplatePage';
-
-interface DocumentationContentProps {
+type DocumentationContentProps = {
   currentPage: string;
-}
+};
 
-const pageAnimationVariants = {
+const PAGE_ANIMATION_VARIANTS = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
 };
 
-const DocumentationContent = ({ currentPage }: DocumentationContentProps) => {
+export const DocumentationContent = ({
+  currentPage,
+}: DocumentationContentProps) => {
   return (
     <main className="flex-1 container max-w-5xl mx-auto px-4 py-8 overflow-y-auto">
       <motion.div
-        className="prose prose-blue max-w-none"
+        exit="exit"
         key={currentPage}
         initial="hidden"
         animate="visible"
-        exit="exit"
-        variants={pageAnimationVariants}
+        className="prose prose-blue max-w-none"
+        variants={PAGE_ANIMATION_VARIANTS}
       >
         {currentPage === 'introduction' && <IntroductionPage />}
         {currentPage === 'installation' && <InstallationPage />}
@@ -47,5 +50,3 @@ const DocumentationContent = ({ currentPage }: DocumentationContentProps) => {
     </main>
   );
 };
-
-export default DocumentationContent;

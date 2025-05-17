@@ -1,5 +1,5 @@
 import { Button } from '@/common/components/ui/button';
-import { Link, useLocation, useParams, useRoutes } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GithubIcon } from './github-icon';
 import { ToggleThemeButton } from './toggle-theme-button';
 import { useWhoami } from '@/security/hooks';
@@ -7,6 +7,10 @@ import { whoamiCache } from '../utils/whoami-cache';
 import { authProvider } from '@/providers';
 
 const links = [
+  {
+    href: '/',
+    name: 'Home',
+  },
   {
     href: '/docs',
     name: 'Documentation',

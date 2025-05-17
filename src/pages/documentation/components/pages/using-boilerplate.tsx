@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from '@/common/components/ui/card';
 import { Terminal, Library } from 'lucide-react';
-import { CodeBlock } from '../../code-block';
+import { CodeBlock } from '@/common/components';
 
 export const UsingBoilerplatePage = () => (
   <section>

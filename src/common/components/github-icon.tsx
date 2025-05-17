@@ -4,15 +4,21 @@ import githubIcon from '@/assets/images/icons/github.png';
 import githubWhiteIcon from '@/assets/images/icons/github-white.png';
 
 export const GithubIcon: FC<{
+  reverse?: boolean;
   style?: CSSProperties;
   theme?: 'light' | 'dark';
-}> = ({ style = {}, theme: providedTheme }) => {
+}> = ({ style = {}, reverse = false, theme: providedTheme }) => {
   const { theme } = useTheme();
   const themeValue = providedTheme ?? theme;
+  const reversedTheme = reverse
+    ? themeValue === 'light'
+      ? 'dark'
+      : 'light'
+    : themeValue;
 
   return (
     <img
-      src={themeValue === 'light' ? githubIcon : githubWhiteIcon}
+      src={reversedTheme === 'light' ? githubIcon : githubWhiteIcon}
       className="w-4"
       style={style}
       alt="Github"

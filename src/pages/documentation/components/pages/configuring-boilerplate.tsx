@@ -1,3 +1,4 @@
+import { CodeBlock } from '@/common/components';
 import {
   Card,
   CardContent,
@@ -5,7 +6,6 @@ import {
   CardTitle,
 } from '@/common/components/ui/card';
 import { FileJson, File, Code, Wrench } from 'lucide-react';
-import { CodeBlock } from '../../code-block';
 
 export const ConfiguringBoilerplatePage = () => (
   <section>

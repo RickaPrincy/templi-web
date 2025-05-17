@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
 import {
   Dialog,
   DialogContent,
@@ -25,18 +27,16 @@ import {
 } from '@/common/components/ui/form';
 import { Checkbox } from '@/common/components/ui/checkbox';
 import { GithubIcon } from '../github-icon';
-import { GenerateProjectPayload } from '@/gen/templi-web-api-client';
-import { TemplateKeyInput } from './template-key-input';
+import { TemplatePlaceHoldersInputs } from './template-placeholders-inputs';
+import { GenerateWithPersistedTemplate } from '@/gen/templi-web-api-client';
 import { useTemplateStore } from '../../stores';
-import { useGetConfiguration } from '@/common/hooks/providers';
 import { useWhoami } from '@/security/hooks';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { resourcesProvider } from '@/providers/resources-provider';
-import { Env } from '@/config/env';
-import { useState } from 'react';
+import { githubInstallationProvider, templateProvider } from '@/providers';
 import { useToast } from '../ui/use-toast';
+import { Env } from '@/config/env';
 
-export type FormValues = {
+export type GenerateProjectFormValues = {
   repositoryName: string;
   installationId: string;
   isPrivateRepository: boolean;
@@ -46,24 +46,25 @@ export type FormValues = {
 export function TemplateModal() {
   const whoami = useWhoami();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isGenerationLoading, setIsGenerationLoading] = useState(false);
   const { template, setTemplate } = useTemplateStore();
-  const { data: config } = useGetConfiguration(template);
+
   const { data: installations } = useQuery({
     queryFn: () =>
-      resourcesProvider.getInstallationId(
-        { userId: whoami?.id },
-        { page: 1, pageSize: 10 }
-      ),
-    queryKey: ['installations'],
+      githubInstallationProvider.findAll({ meta: { userId: whoami?.id! } }),
+    queryKey: ['installations', JSON.stringify(whoami)],
   });
+
   const { mutateAsync: generateProject } = useMutation({
-    mutationFn: (data: GenerateProjectPayload) =>
-      resourcesProvider.generateWithTemplate(data, { templateId: template.id }),
+    mutationFn: (data: GenerateWithPersistedTemplate) =>
+      templateProvider.generateWithTemplate({
+        meta: { templateId: template.id },
+        payload: data,
+      }),
     mutationKey: ['templates'],
   });
 
-  const form = useForm<FormValues>({
+  const form = useForm<GenerateProjectFormValues>({
     defaultValues: {
       repositoryName: '',
       installationId: '',
@@ -71,7 +72,7 @@ export function TemplateModal() {
     },
   });
 
-  const onSubmit = async (formValues: FormValues) => {
+  const onSubmit = async (formValues: GenerateProjectFormValues) => {
     const {
       isPrivateRepository: isPrivate,
       installationId,
@@ -79,7 +80,7 @@ export function TemplateModal() {
       ...values
     } = formValues;
     try {
-      setIsLoading(true);
+      setIsGenerationLoading(true);
       await generateProject({
         isPrivate,
         installationId,
@@ -100,7 +101,7 @@ export function TemplateModal() {
         className: 'text-red-500',
       });
     } finally {
-      setIsLoading(false);
+      setIsGenerationLoading(false);
     }
   };
 
@@ -160,7 +161,7 @@ export function TemplateModal() {
                 }
                 className="flex items-center gap-2"
               >
-                <GithubIcon theme="dark" />
+                <GithubIcon reverse />
                 Install GitHub Org/Account
               </Button>
             </div>
@@ -172,54 +173,29 @@ export function TemplateModal() {
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={field.onChange}
+                      onCheckedChange={field.onChange.bind(field)}
                     />
                   </FormControl>
                   <FormLabel>Private Repository</FormLabel>
                 </FormItem>
               )}
             />
-
-            <p className="text-[20px] font-bold mt-[100px] mb-5 border-t pt-4 border-gray-300 text-gray-800">
-              Template Placeholders
-            </p>
-            {config &&
-              config.placeholders.map((keyvalue) => (
-                <FormField
-                  key={keyvalue.name}
-                  control={form.control}
-                  name={keyvalue.name}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {keyvalue.label}{' '}
-                        {keyvalue.required && (
-                          <span className="text-gray-500">Optional</span>
-                        )}
-                      </FormLabel>
-                      <FormControl>
-                        <TemplateKeyInput keyvalue={keyvalue} field={field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              ))}
-
+            <TemplatePlaceHoldersInputs />
             <DialogFooter className="mt-6">
               <Button
                 type="button"
                 variant="outline"
-                disabled={isLoading}
+                disabled={isGenerationLoading}
                 onClick={() => setTemplate(null)}
               >
                 Cancel
               </Button>
               <Button
-                disabled={isLoading}
+                disabled={isGenerationLoading}
                 type="submit"
                 className="flex items-center gap-2"
               >
-                <GithubIcon theme="dark" />
+                <GithubIcon reverse />
                 Generate Project
               </Button>
             </DialogFooter>

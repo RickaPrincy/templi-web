@@ -12,7 +12,7 @@ import { useSidebar } from '@/common/components/ui/sidebar';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const documentationPages = [
+export const DOCUMENTATION_PAGES = [
   {
     id: 'introduction',
     title: 'Introduction',
@@ -93,7 +93,7 @@ export function DocumentationSidebar({
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {documentationPages.map((page) => {
+          {DOCUMENTATION_PAGES.map((page) => {
             const Icon = page.icon;
             return (
               <SidebarMenuItem
@@ -119,7 +119,7 @@ export function DocumentationSidebar({
       </SidebarContent>
       <SidebarFooter>
         <p className="text-muted-foreground text-xs">
-          &copy; {new Date().getFullYear()} RickaPrincy. All rights reserved.
+          &copy; 2025 RickaPrincy. All rights reserved.
         </p>
       </SidebarFooter>
     </Sidebar>

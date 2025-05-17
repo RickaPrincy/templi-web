@@ -9,20 +9,21 @@ import {
   CardDescription,
 } from '@/common/components/ui/card';
 import { Input } from '@/common/components/ui/input';
-import { GithubIcon, Navigation } from '@/common/components';
+import { GithubIcon, Navigation, TempliLoader } from '@/common/components';
 import { BoilerplateItem } from './components/boilereplate-item';
 import { useGetList } from '@/common/hooks/providers';
-import { resourcesProvider } from '@/providers/resources-provider';
+import { templateProvider } from '@/providers';
 
 export const Boilerplates = () => {
   const {
+    isLoading,
     data: templates,
     filter,
     setFilter,
   } = useGetList({
     queryKey: ['templates'],
     queryFn: ({ pagination, filter }) =>
-      resourcesProvider.getTemplates(filter, pagination),
+      templateProvider.getTemplates({ filter: filter as any, pagination }),
   });
 
   return (
@@ -102,6 +103,7 @@ export const Boilerplates = () => {
             </div>
           </div>
 
+          {isLoading && <TempliLoader />}
           {templates.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground">

@@ -23,11 +23,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/common/components/ui/accordion';
-import { Navigation, GithubIcon, CodeBlock } from '@/common/components';
+import {
+  Navigation,
+  GithubIcon,
+  CodeBlock,
+  TempliLoader,
+} from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
 import { useQuery } from '@tanstack/react-query';
-import { resourcesProvider } from '@/providers/resources-provider';
+import { templateProvider } from '@/providers';
 import { useGetConfiguration } from '@/common/hooks/providers';
 
 export const BoilerplateDetails = () => {
@@ -37,14 +42,14 @@ export const BoilerplateDetails = () => {
 
   const { data: template, isLoading } = useQuery({
     queryKey: ['templates', id],
-    queryFn: () => resourcesProvider.getTemplateById(id),
+    queryFn: () => templateProvider.getTemplateById(id),
   });
   const generator = useGenerator(template);
-  const { data: config } = useGetConfiguration(template);
+  const { data: config, isLoading: isConfigurationLoading } =
+    useGetConfiguration(template);
 
   if (isLoading) {
-    //TODO: loader
-    return null;
+    return <TempliLoader />;
   }
 
   return (
@@ -78,7 +83,6 @@ export const BoilerplateDetails = () => {
               <Tabs defaultValue="overview" className="w-full">
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="structure">Structure</TabsTrigger>
                   <TabsTrigger value="command">Command</TabsTrigger>
                 </TabsList>
                 <TabsContent value="overview" className="py-4">
@@ -94,7 +98,11 @@ export const BoilerplateDetails = () => {
                       </AccordionTrigger>
                       <AccordionContent className="bg-slate-100 dark:bg-slate-900 p-2 rounded">
                         <pre className="text-xs overflow-x-auto">
-                          {JSON.stringify(config, null, 2)}
+                          {isConfigurationLoading ? (
+                            <TempliLoader />
+                          ) : (
+                            JSON.stringify(config, null, 2)
+                          )}
                         </pre>
                       </AccordionContent>
                     </AccordionItem>
@@ -110,7 +118,7 @@ export const BoilerplateDetails = () => {
                 onClick={() => setTemplate(template)}
                 className="w-full flex items-center gap-2"
               >
-                <GithubIcon theme="dark" />
+                <GithubIcon reverse />
                 Use Template
               </Button>
               <Button asChild variant="outline" size="sm">

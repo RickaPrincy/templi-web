@@ -1,4 +1,3 @@
-import { documentationPages } from './DocumentationSidebar';
 import {
   Pagination,
   PaginationContent,
@@ -8,6 +7,7 @@ import {
 } from '@/common/components/ui/pagination';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { DOCUMENTATION_PAGES } from './documentation-sidebar';
 
 type DocumentationPaginationProps = {
   currentPage: string;
@@ -47,14 +47,14 @@ const pageDescriptions: Record<string, PageDescription> = {
 export function DocumentationPagination({
   currentPage,
 }: DocumentationPaginationProps) {
-  const currentIndex = documentationPages.findIndex(
+  const currentIndex = DOCUMENTATION_PAGES.findIndex(
     (page) => page.id === currentPage
   );
   const prevPage =
-    currentIndex > 0 ? documentationPages[currentIndex - 1] : null;
+    currentIndex > 0 ? DOCUMENTATION_PAGES[currentIndex - 1] : null;
   const nextPage =
-    currentIndex < documentationPages.length - 1
-      ? documentationPages[currentIndex + 1]
+    currentIndex < DOCUMENTATION_PAGES.length - 1
+      ? DOCUMENTATION_PAGES[currentIndex + 1]
       : null;
   const navigate = useNavigate();
 

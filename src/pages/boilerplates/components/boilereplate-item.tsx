@@ -39,7 +39,7 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
           }}
           className="w-full flex items-center gap-2"
         >
-          <GithubIcon theme="dark" />
+          <GithubIcon reverse />
           Use Template
         </Button>
         <Button asChild variant="outline" size="sm">

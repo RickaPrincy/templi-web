@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from '@/common/components/ui/card';
 import { FileJson, Terminal, Folder, File, Code, Wrench } from 'lucide-react';
-import { CodeBlock } from '../../code-block';
+import { CodeBlock } from '@/common/components';
 
 export const ExampleProjectPage = () => (
   <section>

@@ -32,8 +32,8 @@ export const App = () => (
                 </AuthenticatedRoutes>
               }
             >
-              <Route path="/" element={<Home />} />
               <Route path="/docs" element={<Documentation />} />
+              <Route path="/" element={<Home />} />
               <Route path="/boilerplates" element={<Boilerplates />} />
               <Route
                 path="/boilerplates/:id"
