@@ -4,14 +4,14 @@ import { toSnakeCase } from './typos';
 const TEMPLI_CONFIG_NAME = 'templi.json';
 
 export class Generator {
-  constructor(private readonly template: Template) {}
+  constructor(private readonly template: Template) { }
 
   normalizedName() {
     return toSnakeCase(this.template.name);
   }
 
   generate() {
-    const baseCommand = `templi generate -t ${this.template.url}.git -o ${this.normalizedName()}`;
+    const baseCommand = `templi generate -t ${this.template.url}.git ${this.template.scope ? `-s ${this.template.scope}` : ''} -o ${this.normalizedName()}`;
     return baseCommand;
   }
 
