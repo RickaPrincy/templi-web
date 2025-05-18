@@ -33,7 +33,7 @@ export const TemplatePlaceHoldersInputs = () => {
               <FormItem>
                 <FormLabel>
                   {placeholder.label}{' '}
-                  {placeholder.required && (
+                  {placeholder.required === false && (
                     <span className="text-gray-500">Optional</span>
                   )}
                 </FormLabel>

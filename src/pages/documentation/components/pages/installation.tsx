@@ -1,81 +1,155 @@
 import { Card, CardContent } from '@/common/components/ui/card';
-import { Terminal, Library, Download } from 'lucide-react';
+import {
+  Terminal,
+  Library,
+  Download,
+  Package,
+  AlertTriangle,
+} from 'lucide-react';
 import { CodeBlock } from '@/common/components';
 
 export const InstallationPage = () => (
   <section>
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-      Installation
+      Installation Templi CLI
     </h1>
 
-    <div className="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-200 mb-8  dark:bg-transparent">
+    <div className="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-200 mb-8 dark:bg-transparent">
       <Download className="h-10 w-10 text-amber-500" />
       <p>
-        Templi can be installed globally as a CLI tool or as a library in your
-        project.
+        Templi can be installed using prebuilt binaries, as a system library, or
+        as a Git submodule.
+      </p>
+    </div>
+    <div className="flex items-center gap-4 p-4 bg-red-50 rounded-lg border border-amber-200 mb-8 dark:bg-transparent">
+      <AlertTriangle className="h-10 w-10 text-red-500" />
+      <p>
+        Only install the Templi CLI if you plan to create your own boilerplates
+        or use templates via the CLI. If you're just using templates from
+        GitHub, the web integration is sufficient.
       </p>
     </div>
 
     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
       <Terminal className="h-6 w-6" />
-      CLI Installation
+      Arch Linux
     </h2>
-
     <Card className="mb-8">
       <CardContent className="pt-6">
-        <p className="mb-4">Install Templi globally using npm:</p>
+        <p className="mb-4">Install via AUR using yay:</p>
         <CodeBlock
           language="bash"
-          code="npm install -g templi"
-          caption="Global installation command"
+          code={`# Install CLI and library\nyay -Sy templi_cli\n\n# Or install only the library\nyay -Sy libtempli`}
+          caption="Arch Linux installation with yay"
         />
-        <p className="mt-4 text-muted-foreground">
-          This makes the <code>templi</code> command available throughout your
-          system.
-        </p>
       </CardContent>
     </Card>
 
     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+      <Package className="h-6 w-6" />
+      Binaries
+    </h2>
+    <Card>
+      <CardContent className="pt-6">
+        <p className="mb-4">
+          For x86_64 Linux, precompiled binaries may be available on the{' '}
+          <a
+            href="https://github.com/RickaPrincy/Templi/releases"
+            className="underline text-blue-600"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub Releases page
+          </a>
+        </p>
+        <p className="mt-4">
+          For Windows and other systems, building manually is required.
+        </p>
+      </CardContent>
+    </Card>
+
+    <h2 className="mt-10 text-2xl font-semibold mb-6 flex items-center gap-2">
       <Library className="h-6 w-6" />
-      Library Installation
+      Others systems
     </h2>
 
     <Card className="mb-8">
       <CardContent className="pt-6">
-        <p className="mb-4">Install Templi as a dependency in your project:</p>
-        <CodeBlock
-          language="bash"
-          code="npm install templi"
-          caption="Local installation command"
-        />
-        <p className="mt-4 text-muted-foreground">
-          Then import and use it in your code:
+        <p className="mb-4">
+          For other Linux distributions and platforms, Templi needs to be built
+          manually.
+        </p>
+
+        <p className="font-semibold mb-2">Requirements:</p>
+        <ul className="list-disc list-inside mb-4">
+          <li>
+            <a href="https://github.com/Kitware/CMake" className="underline">
+              CMake (3.27+)
+            </a>
+          </li>
+          <li>C++ compiler with C++17 support</li>
+          <li>
+            <a href="https://github.com/RickaPrincy/rcli" className="underline">
+              rcli
+            </a>
+          </li>
+        </ul>
+
+        <p className="mt-6 font-semibold mb-5">
+          You should build Templi like a standard CMake project. Here's an
+          example of how to do it:
         </p>
         <CodeBlock
-          language="javascript"
-          code={`const { Templi } = require('templi');
-  
-  // Now use Templi in your code
-  const templi = new Templi();`}
-          caption="Basic usage example"
+          language="bash"
+          code={`git clone -b v4.1.1 https://github.com/RickaPrincy/Templi.git
+cd Templi
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -S .. -B .
+sudo make install
+cd ../..
+rm -rf Templi`}
+        />
+
+        <p className="mt-6 font-semibold text-red-500">
+          ⚠️ Troubleshooting Missing Libraries
+        </p>
+        <p className="mb-2">
+          If libraries are not found after building manually, add the following
+          to your shell config:
+        </p>
+
+        <CodeBlock
+          language="bash"
+          code={`export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH`}
+          caption="Update LD_LIBRARY_PATH"
         />
       </CardContent>
     </Card>
 
-    <h2 className="text-2xl font-semibold mb-6">Verifying Installation</h2>
+    <h2 className="text-2xl font-semibold mb-6">Using Templi as a Submodule</h2>
 
-    <Card>
+    <Card className="mb-8">
       <CardContent className="pt-6">
-        <p className="mb-4">Check that Templi is installed correctly:</p>
+        <p className="mb-4">To include Templi directly in your project:</p>
+
         <CodeBlock
           language="bash"
-          code="templi --version"
-          caption="Check installed version"
+          code={`git submodule add https://github.com/RickaPrincy/Templi external/Templi`}
+          caption="Add the submodule"
         />
-        <p className="mt-4 text-muted-foreground">
-          This should display the installed version of Templi.
-        </p>
+
+        <CodeBlock
+          language="bash"
+          code={`git submodule init\ngit submodule update`}
+          caption="Initialize and update submodule"
+        />
+
+        <CodeBlock
+          language="cmake"
+          code={`add_subdirectory(path/to/templi)\ntarget_link_libraries(your-target Templi)`}
+          caption="Link in CMake"
+        />
       </CardContent>
     </Card>
   </section>

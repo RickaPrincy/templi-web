@@ -48,11 +48,6 @@ export const DOCUMENTATION_PAGES = [
     title: 'Library Reference',
     icon: Code,
   },
-  {
-    id: 'example-project',
-    title: 'Example Project',
-    icon: File,
-  },
 ] as const;
 
 type DocumentationSidebarProps = {

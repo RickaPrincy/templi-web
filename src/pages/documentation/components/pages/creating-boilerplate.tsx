@@ -35,7 +35,7 @@ export const CreatingBoilerplatePage = () => (
         <CardContent>
           <CodeBlock
             language="bash"
-            code={`mkdir my-express-template
+            code={`  mkdir my-express-template
   cd my-express-template`}
             caption="Create a directory for your template"
           />
@@ -65,51 +65,6 @@ export const CreatingBoilerplatePage = () => (
           />
         </CardContent>
       </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>3. Configure Templi for Your Template</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="mb-4">
-            Run the configure command in your template directory:
-          </p>
-          <CodeBlock
-            language="bash"
-            code="templi configure -t ./my-express-template"
-            caption="Generate templi.json configuration"
-          />
-          <p className="mt-4">
-            This will generate a <code>templi.json</code> file for your
-            template.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
-
-    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8  dark:bg-transparent">
-      <h3 className="text-xl font-semibold mb-2">Working with Binary Files</h3>
-      <p className="mb-4">
-        If your template contains binary files like images, you should exclude
-        them in the <code>templi.json</code> file to prevent Templi from trying
-        to parse them as text:
-      </p>
-      <CodeBlock
-        language="json"
-        code={`{
-    "excludes": [
-      "images/logo.png",
-      "assets/fonts/*",
-      "*.jpg",
-      "*.png"
-    ]
-  }`}
-        caption="Example excludes configuration for binary files"
-      />
-      <p className="mt-4">
-        You should create or edit the <code>templi.json</code> file to exclude
-        binary files before running the configuration command.
-      </p>
     </div>
 
     <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8  dark:bg-transparent">
@@ -145,7 +100,7 @@ export const CreatingBoilerplatePage = () => (
             </div>
             <div className="flex items-center gap-2">
               <File className="h-4 w-4" />
-              <span>server.js</span>
+              <span>{'{{filename}}'}.js</span>
             </div>
             <div className="flex items-center gap-2">
               <Folder className="h-4 w-4" />

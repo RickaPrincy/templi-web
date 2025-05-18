@@ -33,7 +33,7 @@ export function CLIReference() {
               <p className="mb-3">Generates a new project from a template.</p>
               <CodeBlock
                 language="bash"
-                code={`templi generate -t <template_path> -o <output_path> [-p <path_suffix>]`}
+                code={`templi generate -t <template_path> -o <output_path> [-s <scope>] [-PLACEHOLDER_NAME <PLACEHOLDER_VALUE>]*`}
                 caption="Generate command syntax"
               />
               <p className="mt-4 mb-2">Options:</p>
@@ -47,8 +47,14 @@ export function CLIReference() {
                   project
                 </li>
                 <li>
-                  <code>-p, --path-suffix</code>: Optional subfolder path for
-                  monorepo templates
+                  <code>-s, --scope</code>: Optional subfolder name for monorepo
+                  templates
+                </li>
+                <li>
+                  <code>-PLACEHOLDER_NAME &lt;PLACEHOLDER_VALUE&gt;</code>{' '}
+                  (optional): Provide placeholder values directly in the CLI to
+                  avoid being prompted during generation. This option can be
+                  repeated for multiple placeholders.
                 </li>
               </ul>
             </div>

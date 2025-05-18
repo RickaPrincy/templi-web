@@ -29,7 +29,7 @@ export const Hero = () => {
         transition={{ delay: 0.4, duration: 0.5 }}
       >
         A powerful tool that streamlines boilerplate creation and usage,
-        available as both a library and CLI.
+        available as both a library and a CLI, with GitHub web integration.
       </motion.p>
       <motion.div
         className="mt-10 flex justify-center gap-x-6"

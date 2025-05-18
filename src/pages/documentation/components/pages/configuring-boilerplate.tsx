@@ -23,6 +23,48 @@ export const ConfiguringBoilerplatePage = () => (
       The templi.json File
     </h2>
 
+    <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 mb-8  dark:bg-transparent">
+      <h3 className="text-xl font-semibold mb-2">
+        Creating Configuration Automatically
+      </h3>
+      <p>
+        Instead of writing <code>templi.json</code> manually, you can generate
+        it using the configure command:
+      </p>
+      <CodeBlock
+        language="bash"
+        code="templi configure -t ./myexpress-template"
+        caption="Automatic configuration generation"
+      />
+      <p className="mt-4">
+        This will analyze your template and create a <code>templi.json</code>{' '}
+        configuration file with detected placeholders.
+      </p>
+    </div>
+
+    <div className="bg-red-50 p-6 rounded-lg border border-blue-200 mb-8  dark:bg-transparent">
+      <h3 className="text-xl font-semibold mb-2">Working with Binary Files</h3>
+      <p className="mb-4">
+        If your template contains binary files like images, you should exclude
+        them in the <code>templi.json</code> file to prevent Templi from trying
+        to parse them as text:
+      </p>
+      <CodeBlock
+        language="json"
+        code={`{
+    "excludes": [
+      "images/logo.png",
+      "assets/fonts/arial.ttf"
+    ]
+  }`}
+        caption="Example excludes configuration for binary files"
+      />
+      <p className="mt-4">
+        You should create or edit the <code>templi.json</code> file to exclude
+        binary files before running the configuration command.
+      </p>
+    </div>
+
     <Card className="mb-8">
       <CardHeader>
         <CardTitle>Configuration Structure</CardTitle>
@@ -182,30 +224,6 @@ export const ConfiguringBoilerplatePage = () => (
           </CardContent>
         </Card>
       </div>
-    </div>
-
-    <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 mb-8  dark:bg-transparent">
-      <h3 className="text-xl font-semibold mb-2">
-        Creating Configuration Automatically
-      </h3>
-      <p>
-        Instead of writing <code>templi.json</code> manually, you can generate
-        it using the configure command:
-      </p>
-      <CodeBlock
-        language="bash"
-        code="templi configure -t ./my-template"
-        caption="Automatic configuration generation"
-      />
-      <p className="mt-4">
-        This will analyze your template and create a <code>templi.json</code>{' '}
-        configuration file with detected placeholders.
-      </p>
-      <img
-        src="/lovable-uploads/1148d55d-1d22-4078-b146-4f452db89e3b.png"
-        alt="Templi configure command output"
-        className="mt-4 rounded-md border border-amber-300 shadow-sm"
-      />
     </div>
   </section>
 );

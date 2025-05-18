@@ -1,5 +1,6 @@
 import { Navigation } from '@/common/components';
 import { Features, QuickStart, Hero } from './components';
+import { Demo } from '@/common/components/demo';
 
 export const Home = () => {
   return (
@@ -7,6 +8,7 @@ export const Home = () => {
       <Navigation />
       <main>
         <Hero />
+        <Demo />
         <Features />
         <QuickStart />
       </main>

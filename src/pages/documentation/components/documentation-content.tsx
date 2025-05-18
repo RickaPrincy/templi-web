@@ -3,7 +3,6 @@ import {
   CLIReference,
   ConfiguringBoilerplatePage,
   CreatingBoilerplatePage,
-  ExampleProjectPage,
   InstallationPage,
   IntroductionPage,
   LibraryReference,
@@ -43,7 +42,6 @@ export const DocumentationContent = ({
         {currentPage === 'using-boilerplate' && <UsingBoilerplatePage />}
         {currentPage === 'cli-reference' && <CLIReference />}
         {currentPage === 'library-reference' && <LibraryReference />}
-        {currentPage === 'example-project' && <ExampleProjectPage />}
 
         <DocumentationPagination currentPage={currentPage} />
       </motion.div>

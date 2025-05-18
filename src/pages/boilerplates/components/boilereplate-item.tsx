@@ -22,7 +22,7 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
   return (
     <Card
       key={template.id}
-      className="transition-all duration-300 hover:shadow-md flex flex-col cursor-pointer"
+      className="transition-all duration-300 hover:shadow-md flex justify-between flex-col cursor-pointer"
       onClick={() => navigate(`/boilerplates/${template.id}`)}
     >
       <CardHeader>

@@ -20,14 +20,14 @@ export const TemplatePlaceholderInputItem: FC<{
     <>
       {placeholder.type === 'INPUT' && (
         <Input
-          required={placeholder.required === false}
+          required={placeholder.required !== false}
           placeholder={placeholder.label}
           {...field}
         />
       )}
       {placeholder.type === 'SELECT' && (
         <Select
-          required={placeholder.required === false}
+          required={placeholder.required !== false}
           onValueChange={field.onChange}
           defaultValue={field.value}
         >

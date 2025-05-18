@@ -6,6 +6,7 @@ import {
 } from '@/common/components/ui/card';
 import { Package, Book } from 'lucide-react';
 import { CodeBlock } from '@/common/components';
+import { Demo } from '@/common/components/demo';
 
 export const IntroductionPage = () => (
   <section>
@@ -38,47 +39,14 @@ export const IntroductionPage = () => (
       <CardContent>
         <CodeBlock
           language="text"
-          code={`Name: templi
-  Version: 4.0.0
+          code={`  Name: templi
+  Version: 4.1.1
   Description: Generate a project easily
   Author: RickaPrincy
   Github: <https://github.com/RickaPrincy/Templi>`}
         />
       </CardContent>
     </Card>
-
-    <div className="grid md:grid-cols-2 gap-6 mb-8">
-      <Card className="transition-all duration-300 hover:shadow-lg">
-        <CardHeader>
-          <CardTitle>Key Features</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>
-              Simple template configuration with <code>templi.json</code>
-            </li>
-            <li>Powerful templating with placeholders</li>
-            <li>Pre and post-generation scripts</li>
-            <li>Supports both CLI and library usage</li>
-            <li>Easy configuration with interactive prompts</li>
-          </ul>
-        </CardContent>
-      </Card>
-
-      <Card className="transition-all duration-300 hover:shadow-lg">
-        <CardHeader>
-          <CardTitle>Use Cases</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>Create standardized project structures</li>
-            <li>Scaffold microservices with consistent patterns</li>
-            <li>Build starter templates for your team</li>
-            <li>Automate repetitive project setup tasks</li>
-            <li>Share project templates with your organization</li>
-          </ul>
-        </CardContent>
-      </Card>
-    </div>
+    <Demo />
   </section>
 );

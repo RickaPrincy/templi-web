@@ -4,7 +4,7 @@ import { toSnakeCase } from './typos';
 const TEMPLI_CONFIG_NAME = 'templi.json';
 
 export class Generator {
-  constructor(private readonly template: Template) { }
+  constructor(private readonly template: Template) {}
 
   normalizedName() {
     return toSnakeCase(this.template.name);
