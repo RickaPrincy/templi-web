@@ -20,13 +20,17 @@ export const TemplatePlaceholderInputItem: FC<{
     <>
       {placeholder.type === 'INPUT' && (
         <Input
-          required={placeholder.required}
+          required={placeholder.required === false}
           placeholder={placeholder.label}
           {...field}
         />
       )}
       {placeholder.type === 'SELECT' && (
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <Select
+          required={placeholder.required === false}
+          onValueChange={field.onChange}
+          defaultValue={field.value}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select an option" />
           </SelectTrigger>

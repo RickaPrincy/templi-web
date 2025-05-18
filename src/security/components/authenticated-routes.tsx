@@ -3,10 +3,9 @@ import { FC, PropsWithChildren, useEffect, useState } from 'react';
 
 import { TempliLoader } from '@/common/components';
 import { whoamiCache } from '@/common/utils/whoami-cache';
-import { securityApi } from '@/providers';
+import { securityApi, TO_SIGNOUT_STATUS } from '@/providers';
 import { unwrap } from '@/common/utils/unwrap';
 
-const TO_SIGNOUT_STATUS = [401, 403];
 export const AuthenticatedRoutes: FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);

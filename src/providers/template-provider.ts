@@ -5,7 +5,9 @@ import {
 import { Pagination } from './types';
 import { resourcesApi } from './api';
 import { unwrap } from '@/common/utils/unwrap';
+import { authProvider } from './auth-provider';
 
+export const TO_SIGNOUT_STATUS = [401, 403];
 export const templateProvider = {
   async getTemplates(args: {
     filter?: { name: string };
@@ -25,13 +27,29 @@ export const templateProvider = {
     meta: { templateId: string };
   }) {
     const { meta, payload } = args;
-    return unwrap(() =>
-      resourcesApi().generateProjectWithTemplate(meta.templateId, payload)
-    );
+    try {
+      return await unwrap(() =>
+        resourcesApi().generateProjectWithTemplate(meta.templateId, payload)
+      );
+    } catch (error) {
+      const status = error?.status;
+      if (TO_SIGNOUT_STATUS.includes(status)) {
+        authProvider.logout();
+      }
+      throw error;
+    }
   },
   async generateProject(args: { payload: GenerateProjectPayload }) {
     const { payload } = args;
-    return unwrap(() => resourcesApi().generateProject(payload));
+    try {
+      return await unwrap(() => resourcesApi().generateProject(payload));
+    } catch (error) {
+      const status = error?.status;
+      if (TO_SIGNOUT_STATUS.includes(status)) {
+        authProvider.logout();
+      }
+      throw error;
+    }
   },
   async getTemplateById(id: string) {
     return unwrap(() => resourcesApi().getTemplateById(id));

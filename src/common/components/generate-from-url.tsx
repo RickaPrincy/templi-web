@@ -67,7 +67,11 @@ export const GenerateFromUrl = () => {
                   <FormItem>
                     <FormLabel>Template Url</FormLabel>
                     <FormControl>
-                      <Input required placeholder="my-project" {...field} />
+                      <Input
+                        required
+                        placeholder="https://github.com/RickaPrincy/templi-express-js"
+                        {...field}
+                      />
                     </FormControl>
                   </FormItem>
                 )}

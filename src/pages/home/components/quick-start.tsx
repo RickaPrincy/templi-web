@@ -6,19 +6,7 @@ export const QuickStart = () => {
       <h2 className="text-3xl font-bold tracking-tight text-center mb-8">
         Quick Start Guide
       </h2>
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Installation</h3>
-          <div className="bg-zinc-950 rounded-lg p-4">
-            <pre className="text-white overflow-x-auto">
-              <code>{`# Arch Linux
-yay -Sy templi_cli
-
-# Other Systems
-bash <(curl -s https://raw.githubusercontent.com/RickaPrincy/Templi/main/install.sh)`}</code>
-            </pre>
-          </div>
-        </Card>
+      <div className="grid gap-6 md:grid-cols-1">
         <Card className="p-6">
           <h3 className="text-lg font-semibold mb-4">Basic Usage</h3>
           <div className="bg-zinc-950 rounded-lg p-4">
