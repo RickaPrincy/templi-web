@@ -153,7 +153,7 @@ export const TemplateModal = () => {
                 <FormItem>
                   <FormLabel>Repository Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="my-project" {...field} />
+                    <Input required placeholder="my-project" {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -164,6 +164,7 @@ export const TemplateModal = () => {
                 name="installationId"
                 render={({ field }) => (
                   <Select
+                    required
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
