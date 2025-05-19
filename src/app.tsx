@@ -32,7 +32,6 @@ export const App = () => (
                 </AuthenticatedRoutes>
               }
             >
-              <Route path="/docs" element={<Documentation />} />
               <Route path="/" element={<Home />} />
               <Route path="/boilerplates" element={<Boilerplates />} />
               <Route
@@ -40,6 +39,7 @@ export const App = () => (
                 element={<BoilerplateDetails />}
               />
             </Route>
+            <Route path="/docs" element={<Documentation />} />
             <Route path="/auth/github/callback" element={<AuthCallback />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
