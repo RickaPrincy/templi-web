@@ -13,11 +13,25 @@ import { Template } from '@/gen/templi-web-api-client';
 import { GithubIcon } from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
+import { useIsAuthenticated } from '@/security/hooks/use-is-authenticated';
 
 export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
   const navigate = useNavigate();
+  const isAutheticated = useIsAuthenticated();
   const setTemplate = useTemplateStore((state) => state.setTemplate);
   const generator = useGenerator(template);
+
+  const handleUseTemplateClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+
+    if (isAutheticated) {
+      setTemplate(template);
+    } else {
+      console.log('User is not authenticated. ');
+    }
+  };
 
   return (
     <Card
@@ -33,10 +47,7 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
       </CardHeader>
       <CardFooter className="flex flex-col gap-2 pt-2">
         <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            setTemplate(template);
-          }}
+          onClick={handleUseTemplateClick}
           className="w-full flex items-center gap-2"
         >
           <GithubIcon reverse />
