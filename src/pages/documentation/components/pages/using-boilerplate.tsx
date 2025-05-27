@@ -94,7 +94,7 @@ Templi::generate("./my-template", "./output",
 
     <h2 className="text-2xl font-semibold mb-6">Output Result</h2>
     <Card>
-      <CardContent className="bg-green-50 pt-6">
+      <CardContent className="bg-transparent pt-6">
         <p>
           The generated project will have all placeholders replaced with the
           provided values and any scripts defined in <code>templi.json</code>{' '}
