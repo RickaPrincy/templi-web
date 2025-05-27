@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/common/components/ui/button';
 import { GithubIcon } from '@/common/components';
@@ -15,6 +15,12 @@ export const AuthRequiredModal: FC<AuthRequiredModalProps> = ({
   onClose,
   templateName,
 }) => {
+  const handleBackdropClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -23,6 +29,7 @@ export const AuthRequiredModal: FC<AuthRequiredModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={handleBackdropClick}
         >
           <motion.div
             className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md dark:text-black"
@@ -30,6 +37,7 @@ export const AuthRequiredModal: FC<AuthRequiredModalProps> = ({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            onClick={(e) => e.stopPropagation()} // Empêche la fermeture si on clique dans le modal
           >
             <h2 className="text-xl font-semibold mb-4">
               Authentication Required
