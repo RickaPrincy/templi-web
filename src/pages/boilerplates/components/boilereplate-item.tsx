@@ -1,5 +1,5 @@
 import { Link as LinkIcon } from 'lucide-react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/common/components/ui/button';
 import {
@@ -14,56 +14,93 @@ import { GithubIcon } from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
 import { useIsAuthenticated } from '@/security/hooks/use-is-authenticated';
+import { authProvider } from '@/providers';
 
 export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
   const navigate = useNavigate();
-  const isAutheticated = useIsAuthenticated();
+  const isAuthenticated = useIsAuthenticated();
   const setTemplate = useTemplateStore((state) => state.setTemplate);
   const generator = useGenerator(template);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleUseTemplateClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
-
-    if (isAutheticated) {
+    if (isAuthenticated) {
       setTemplate(template);
     } else {
-      console.log('User is not authenticated. ');
+      setIsModalOpen(true);
     }
   };
 
   return (
-    <Card
-      key={template.id}
-      className="transition-all duration-300 hover:shadow-md flex justify-between flex-col cursor-pointer"
-      onClick={() => navigate(`/boilerplates/${template.id}`)}
-    >
-      <CardHeader>
-        <CardTitle>{template.name}</CardTitle>
-        <CardDescription className="mb-5">
-          {template.description}
-        </CardDescription>
-      </CardHeader>
-      <CardFooter className="flex flex-col gap-2 pt-2">
-        <Button
-          onClick={handleUseTemplateClick}
-          className="w-full flex items-center gap-2"
-        >
-          <GithubIcon reverse />
-          Use Template
-        </Button>
-        <Button asChild variant="outline" size="sm">
-          <a
-            target="_blank"
-            href={generator.linkUrl()}
+    <>
+      <Card
+        key={template.id}
+        className="transition-all duration-300 hover:shadow-md flex justify-between flex-col cursor-pointer"
+        onClick={() => navigate(`/boilerplates/${template.id}`)}
+      >
+        <CardHeader>
+          <CardTitle>{template.name}</CardTitle>
+          <CardDescription className="mb-5">
+            {template.description}
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="flex flex-col gap-2 pt-2">
+          <Button
+            onClick={handleUseTemplateClick}
             className="w-full flex items-center gap-2"
           >
-            <LinkIcon className="h-4 w-4" />
-            View on GitHub
-          </a>
-        </Button>
-      </CardFooter>
-    </Card>
+            <GithubIcon reverse />
+            Use Template
+          </Button>
+          <Button asChild variant="outline" size="sm">
+            <a
+              target="_blank"
+              href={generator.linkUrl()}
+              className="w-full flex items-center gap-2"
+            >
+              <LinkIcon className="h-4 w-4" />
+              View on GitHub
+            </a>
+          </Button>
+        </CardFooter>
+      </Card>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md dark:text-black">
+            <h2 className="text-xl font-semibold mb-4 ">
+              Authentication Required
+            </h2>
+            <p className="mb-4">
+              You must be <strong>logged in</strong> to use the{' '}
+              <strong>{template.name}</strong> template.
+            </p>
+            <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-white text-black hover:bg-gray-100 dark:bg-[#1c1f26] dark:text-white dark:hover:bg-[#2a2e39]"
+                onClick={() => authProvider.login()}
+              >
+                <GithubIcon />
+                Sign In with GitHub
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
