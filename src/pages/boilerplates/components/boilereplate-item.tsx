@@ -14,8 +14,7 @@ import { GithubIcon } from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
 import { useIsAuthenticated } from '@/security/hooks/use-is-authenticated';
-import { authProvider } from '@/providers';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AuthRequiredModal } from './auth-required-modal';
 
 export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
   const navigate = useNavigate();
@@ -70,51 +69,11 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
         </CardFooter>
       </Card>
 
-      {/* Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md dark:text-black"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            >
-              <h2 className="text-xl font-semibold mb-4">
-                Authentication Required
-              </h2>
-              <p className="mb-4">
-                You must be <strong>logged in</strong> to use the{' '}
-                <strong>{template.name}</strong> template.
-              </p>
-              <div className="flex justify-end gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-white text-black hover:bg-gray-100 dark:bg-[#1c1f26] dark:text-white dark:hover:bg-[#2a2e39]"
-                  onClick={() => authProvider.login()}
-                >
-                  <GithubIcon />
-                  Sign In with GitHub
-                </Button>
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Close
-                </Button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AuthRequiredModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        templateName={template.name}
+      />
     </>
   );
 };
