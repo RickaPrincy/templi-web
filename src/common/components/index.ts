@@ -6,3 +6,4 @@ export * from './theme-provider';
 export * from './template-modal';
 export * from './loader';
 export * from './generate-from-url';
+export * from './service-unavalaible';

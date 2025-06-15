@@ -14,6 +14,7 @@ const createEnv = <T extends string>(envs: T[]): Record<T, string> => {
 
 export const Env = createEnv([
   'API_URL',
+  'SERVICE_UNAVALAIBLE',
   'GITHUB_CLIENT_ID',
   'GITHUB_APP_NAME',
 ]);
