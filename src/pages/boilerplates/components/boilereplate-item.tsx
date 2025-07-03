@@ -1,5 +1,5 @@
 import { Link as LinkIcon } from 'lucide-react';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/common/components/ui/button';
 import {
@@ -10,30 +10,14 @@ import {
   CardFooter,
 } from '@/common/components/ui/card';
 import { Template } from '@/gen/templi-web-api-client';
-import { GithubIcon } from '@/common/components';
+import { AuthenticationRequired, GithubIcon } from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
-import { useIsAuthenticated } from '@/security/hooks/use-is-authenticated';
-import { AuthRequiredModal } from './auth-required-modal';
 
 export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
   const navigate = useNavigate();
-  const isAuthenticated = useIsAuthenticated();
   const setTemplate = useTemplateStore((state) => state.setTemplate);
   const generator = useGenerator(template);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleUseTemplateClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.stopPropagation();
-    if (isAuthenticated) {
-      setTemplate(template);
-    } else {
-      setIsModalOpen(true);
-    }
-  };
 
   return (
     <>
@@ -49,13 +33,18 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
           </CardDescription>
         </CardHeader>
         <CardFooter className="flex flex-col gap-2 pt-2">
-          <Button
-            onClick={handleUseTemplateClick}
-            className="w-full flex items-center gap-2"
-          >
-            <GithubIcon reverse />
-            Use Template
-          </Button>
+          <AuthenticationRequired
+            handleClick={() => setTemplate(template)}
+            render={(handleUseTemplateClick) => (
+              <Button
+                onClick={handleUseTemplateClick}
+                className="w-full flex items-center gap-2"
+              >
+                <GithubIcon reverse />
+                Use Template
+              </Button>
+            )}
+          />
           <Button asChild variant="outline" size="sm">
             <a
               target="_blank"
@@ -68,12 +57,6 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
           </Button>
         </CardFooter>
       </Card>
-
-      <AuthRequiredModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        templateName={template.name}
-      />
     </>
   );
 };

@@ -15,6 +15,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form';
 import { Input } from './ui/input';
 import { GithubIcon } from './github-icon';
 import { Template } from '@/gen/templi-web-api-client';
+import { AuthenticationRequired } from './authentication-required';
 
 type FormValue = {
   scope?: string;
@@ -46,9 +47,14 @@ export const GenerateFromUrl = () => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>
-        <Plus /> Generate From Url
-      </Button>
+      <AuthenticationRequired
+        handleClick={() => setOpen(true)}
+        render={(handleClick) => (
+          <Button onClick={handleClick}>
+            <Plus /> Generate From Url
+          </Button>
+        )}
+      />
       <Dialog open={open} onOpenChange={() => setOpen(false)}>
         <DialogContent className="sm:max-w-[1000px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>

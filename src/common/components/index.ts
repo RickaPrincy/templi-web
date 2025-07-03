@@ -7,3 +7,5 @@ export * from './template-modal';
 export * from './loader';
 export * from './generate-from-url';
 export * from './service-unavalaible';
+export * from './auth-required-modal';
+export * from './authentication-required';

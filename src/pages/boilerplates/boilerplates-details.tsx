@@ -28,6 +28,7 @@ import {
   GithubIcon,
   CodeBlock,
   TempliLoader,
+  AuthenticationRequired,
 } from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
@@ -114,13 +115,18 @@ export const BoilerplateDetails = () => {
               </Tabs>
             </CardContent>
             <CardFooter className="flex flex-col gap-2 pt-2">
-              <Button
-                onClick={() => setTemplate(template)}
-                className="w-full flex items-center gap-2"
-              >
-                <GithubIcon reverse />
-                Use Template
-              </Button>
+              <AuthenticationRequired
+                handleClick={() => setTemplate(template)}
+                render={(handleClick) => (
+                  <Button
+                    onClick={handleClick}
+                    className="w-full flex items-center gap-2"
+                  >
+                    <GithubIcon reverse />
+                    Use Template
+                  </Button>
+                )}
+              />
               <Button asChild variant="outline" size="sm">
                 <a
                   href={generator.linkUrl()}

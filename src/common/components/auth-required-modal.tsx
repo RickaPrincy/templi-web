@@ -1,35 +1,27 @@
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/common/components/ui/button';
 import { GithubIcon } from '@/common/components';
 import { authProvider } from '@/providers';
 
-interface AuthRequiredModalProps {
-  isOpen: boolean;
+type AuthRequiredModalProps = {
+  open: boolean;
   onClose: () => void;
-  templateName: string;
-}
+};
 
 export const AuthRequiredModal: FC<AuthRequiredModalProps> = ({
-  isOpen,
+  open,
   onClose,
-  templateName,
 }) => {
-  const handleBackdropClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   return (
     <AnimatePresence>
-      {isOpen && (
+      {open && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={handleBackdropClick}
+          onClick={onClose}
         >
           <motion.div
             className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md dark:text-black"
@@ -37,14 +29,13 @@ export const AuthRequiredModal: FC<AuthRequiredModalProps> = ({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            onClick={(e) => e.stopPropagation()} // Empêche la fermeture si on clique dans le modal
+            onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl font-semibold mb-4">
               Authentication Required
             </h2>
             <p className="mb-4">
-              You must be <strong>logged in</strong> to use the{' '}
-              <strong>{templateName}</strong> template.
+              You must be <strong>logged in</strong> first.
             </p>
             <div className="flex justify-end gap-2">
               <Button
