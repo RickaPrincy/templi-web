@@ -3,7 +3,7 @@ const createEnv = <T extends string>(envs: T[]): Record<T, string> => {
     (acc, envName) => {
       const envValue = process.env[envName];
       if (envValue === undefined) {
-        console.warn(`Env.${envName} may be missing.`);
+        throw new Error(`Env.${envName} is missing.`);
       }
       acc[envName] = envValue as string;
       return acc;
@@ -17,4 +17,7 @@ export const Env = createEnv([
   'SERVICE_UNAVALAIBLE',
   'GITHUB_CLIENT_ID',
   'GITHUB_APP_NAME',
+  'EMAILJS_PUBLIC_KEY',
+  'EMAILJS_SERVICE_ID',
+  'EMAILJS_TEMPLATE_ID',
 ]);

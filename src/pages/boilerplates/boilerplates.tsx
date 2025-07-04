@@ -13,6 +13,7 @@ import {
   GenerateFromUrl,
   GithubIcon,
   Navigation,
+  SubmitYourTemplate,
   TempliLoader,
 } from '@/common/components';
 import { BoilerplateItem } from './components/boilereplate-item';
@@ -40,9 +41,12 @@ export const Boilerplates = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-            Boilerplate Templates
-          </h1>
+          <div className="flex items-center mb-8 gap-10">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
+              Boilerplate Templates
+            </h1>
+            <SubmitYourTemplate />
+          </div>
 
           <Card className="mb-8">
             <CardHeader>
