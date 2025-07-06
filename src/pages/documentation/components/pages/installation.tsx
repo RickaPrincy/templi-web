@@ -47,7 +47,7 @@ export const InstallationPage = () => (
 
     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
       <Package className="h-6 w-6" />
-      Binaries
+      Other Linux distros
     </h2>
     <Card>
       <CardContent className="pt-6">

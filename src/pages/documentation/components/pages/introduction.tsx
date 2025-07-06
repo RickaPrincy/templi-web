@@ -40,7 +40,7 @@ export const IntroductionPage = () => (
         <CodeBlock
           language="text"
           code={`  Name: templi
-  Version: 4.1.1
+  Version: 4.1.2
   Description: Generate a project easily
   Author: RickaPrincy
   Github: <https://github.com/RickaPrincy/Templi>`}

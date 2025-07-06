@@ -142,5 +142,28 @@ export const CreatingBoilerplatePage = () => (
         />
       </CardContent>
     </Card>
+
+    <h1 className="mt-10 text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
+      Configuring a Boilerplate
+    </h1>
+
+    <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 mb-8  dark:bg-transparent">
+      <h3 className="text-xl font-semibold mb-2">
+        Creating Configuration Automatically
+      </h3>
+      <p>
+        Instead of writing <code>templi.json</code> manually, you can generate
+        it using the configure command:
+      </p>
+      <CodeBlock
+        language="bash"
+        code="templi configure -t ./myexpress-template"
+        caption="Automatic configuration generation"
+      />
+      <p className="mt-4">
+        This will analyze your template and create a <code>templi.json</code>{' '}
+        configuration file with detected placeholders.
+      </p>
+    </div>
   </section>
 );

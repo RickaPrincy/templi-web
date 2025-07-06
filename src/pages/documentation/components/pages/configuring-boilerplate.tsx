@@ -87,24 +87,25 @@ export const ConfiguringBoilerplatePage = () => (
       {
         "name": "project_name",
         "label": "Application name:",
-        "type": "INPUT",
-        "default": "my-app",
-        "required": true,
-        "clean": true
+        "type": "TEXT",
+        "validators": [
+          {"pattern": "required"} 
+        ]
       },
       {
         "name": "author_name",
         "label": "Author name:",
-        "type": "INPUT",
-        "default": "RickaPrincy",
-        "required": true
+        "type": "TEXT",
+        "validators": [
+          {"pattern": "optional"} ,
+          {"pattern": "[a-zA-Z]", message: "Must be lowercase"}
+        ]
       },
       {
         "name": "license",
         "label": "Select license:",
         "type": "SELECT",
-        "default": "1",
-        "options": {
+        "choices": {
           "1": "MIT",
           "2": "ISC"
         },
@@ -190,21 +191,16 @@ export const ConfiguringBoilerplatePage = () => (
     {
       "name": "project_name",
       "label": "Application name:",
-      "type": "INPUT",
-      "default": "my-app",
-      "required": true,
-      "clean": true
+      "type": "TEXT",
+      "validators": [
+        {"pattern": "your_regex_pattern", "message": "error_message"}
+      ]
     },
     {
-      "name": "is_private",
-      "label": "Is it private?",
+      "name": "license",
+      "label": "License",
       "type": "SELECT",
-      "default": "n",
-      "options": {
-        "y": true,
-        "n": false
-      },
-      "required": true
+      "choices": ["MIT", "NOT_MIT"]
     }
   ]`}
               caption="Keys configuration example"
@@ -212,7 +208,7 @@ export const ConfiguringBoilerplatePage = () => (
             <p className="mt-4">Available key types:</p>
             <ul className="list-disc pl-5 space-y-2 mt-2">
               <li>
-                <code>INPUT</code>: Text input
+                <code>TEXT</code>: Text input
               </li>
               <li>
                 <code>SELECT</code>: Option selection
