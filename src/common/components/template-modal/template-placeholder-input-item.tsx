@@ -9,8 +9,8 @@ import {
 import { Input } from '@/common/components/ui/input';
 import { Checkbox } from '@/common/components/ui/checkbox';
 import { ControllerRenderProps } from 'react-hook-form';
-import { GenerateProjectFormValues } from './template-modal';
 import { TemplatePlaceholder } from '@/common/utils/types';
+import { GenerateProjectFormValues } from './utils/use-generate-form';
 
 export const TemplatePlaceholderInputItem: FC<{
   field: ControllerRenderProps<GenerateProjectFormValues, string>;
@@ -18,19 +18,11 @@ export const TemplatePlaceholderInputItem: FC<{
 }> = ({ placeholder, field }) => {
   return (
     <>
-      {placeholder.type === 'INPUT' && (
-        <Input
-          required={placeholder.required !== false}
-          placeholder={placeholder.label}
-          {...field}
-        />
+      {placeholder.type === 'TEXT' && (
+        <Input placeholder={placeholder.label} {...field} />
       )}
       {placeholder.type === 'SELECT' && (
-        <Select
-          required={placeholder.required !== false}
-          onValueChange={field.onChange}
-          defaultValue={field.value}
-        >
+        <Select onValueChange={field.onChange} defaultValue={field.value}>
           <SelectTrigger>
             <SelectValue placeholder="Select an option" />
           </SelectTrigger>

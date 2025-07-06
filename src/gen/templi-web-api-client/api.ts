@@ -132,6 +132,19 @@ export interface GenerateProjectPayloadValue {
 /**
  * 
  * @export
+ * @interface GenerateProjectResponse
+ */
+export interface GenerateProjectResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateProjectResponse
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
  * @interface GenerateWithPersistedTemplate
  */
 export interface GenerateWithPersistedTemplate {
@@ -752,7 +765,7 @@ export const ResourcesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async generateProject(generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateProjectPayload>> {
+        async generateProject(generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.generateProject(generateProjectPayload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ResourcesApi.generateProject']?.[localVarOperationServerIndex]?.url;
@@ -766,7 +779,7 @@ export const ResourcesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async generateProjectWithTemplate(id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateWithPersistedTemplate>> {
+        async generateProjectWithTemplate(id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.generateProjectWithTemplate(id, generateWithPersistedTemplate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ResourcesApi.generateProjectWithTemplate']?.[localVarOperationServerIndex]?.url;
@@ -843,7 +856,7 @@ export const ResourcesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        generateProject(generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): AxiosPromise<GenerateProjectPayload> {
+        generateProject(generateProjectPayload: GenerateProjectPayload, options?: RawAxiosRequestConfig): AxiosPromise<GenerateProjectResponse> {
             return localVarFp.generateProject(generateProjectPayload, options).then((request) => request(axios, basePath));
         },
         /**
@@ -854,7 +867,7 @@ export const ResourcesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        generateProjectWithTemplate(id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options?: RawAxiosRequestConfig): AxiosPromise<GenerateWithPersistedTemplate> {
+        generateProjectWithTemplate(id: string, generateWithPersistedTemplate: GenerateWithPersistedTemplate, options?: RawAxiosRequestConfig): AxiosPromise<GenerateProjectResponse> {
             return localVarFp.generateProjectWithTemplate(id, generateWithPersistedTemplate, options).then((request) => request(axios, basePath));
         },
         /**

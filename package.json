@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "@hookform/resolvers": "^3.9.0",
+    "@hookform/resolvers": "^3.10.0",
     "@octokit/app": "^15.1.6",
     "@octokit/rest": "^21.1.1",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -67,7 +67,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.3",
-    "zod": "^3.23.8",
+    "zod": "^3.25.74",
     "zustand": "^5.0.4"
   },
   "devDependencies": {

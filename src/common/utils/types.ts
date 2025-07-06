@@ -1,11 +1,14 @@
+export type TemplatePlaceholderValidator = {
+  pattern: string;
+  message?: string;
+};
+
 export type TemplatePlaceholder = {
   label: string;
   name: string;
-  type: 'INPUT' | 'SELECT' | 'BOOLEAN';
+  type: 'TEXT' | 'SELECT' | 'BOOLEAN';
   choices?: string[];
-  default?: any;
-  required?: boolean;
-  remove_spaces?: boolean;
+  validators: TemplatePlaceholderValidator[];
 };
 
 export type TemplateConfig = {

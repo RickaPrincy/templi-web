@@ -21,10 +21,11 @@ import {
 import { useToast } from '@/common/components/ui/use-toast';
 import { GithubIcon } from './github-icon';
 import { AuthenticationRequired } from './authentication-required';
-import { emailjsProvider } from '@/providers';
+import { emailjsProvider, securityApi } from '@/providers';
 import { useWhoami } from '@/security/hooks';
+import { unwrap } from '../utils/unwrap';
 
-export type SubmitPackageForm = {
+export type SubmitBoilerplateForm = {
   template_url: string;
   template_name: string;
   template_description: string;
@@ -40,7 +41,7 @@ export const SubmitYourTemplate = () => {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
-  const form = useForm<SubmitPackageForm>({
+  const form = useForm<SubmitBoilerplateForm>({
     defaultValues: {
       template_url: '',
       template_name: '',
@@ -53,16 +54,21 @@ export const SubmitYourTemplate = () => {
     },
   });
 
-  const onSubmit = async (values: SubmitPackageForm) => {
+  const onSubmit = async (values: SubmitBoilerplateForm) => {
     try {
+      // Try whoami to test if it's a valid user
+      // Note: it still fails if there's an interceptor on getWhoami.
+      // However, it takes a little time and works,
+      // so we'll keep it here for now.
+      const connectedWhoami = await unwrap(() => securityApi().whoami());
       await emailjsProvider.send({
         ...values,
-        user_id: whoami?.id,
-        user_name: whoami?.name,
-        user_email: whoami?.email,
+        user_id: connectedWhoami?.id,
+        user_name: connectedWhoami?.name,
+        user_email: connectedWhoami?.email,
       });
       toast({
-        title: 'Package submitted successfully!',
+        title: 'Boilerplate submitted successfully!',
         className: 'bg-green-500 text-white',
       });
       setOpen(false);
@@ -80,7 +86,7 @@ export const SubmitYourTemplate = () => {
         handleClick={() => setOpen(true)}
         render={(handleClick) => (
           <Button onClick={handleClick} className="flex items-center gap-2">
-            <GithubIcon reverse /> Submit a Package
+            <GithubIcon reverse /> Submit a Boilerplate
           </Button>
         )}
       />
@@ -218,7 +224,7 @@ export const SubmitYourTemplate = () => {
                   Cancel
                 </Button>
                 <Button type="submit" className="flex items-center gap-2">
-                  <GithubIcon reverse /> Submit Package
+                  <GithubIcon reverse /> Submit Boilerplate
                 </Button>
               </DialogFooter>
             </form>
