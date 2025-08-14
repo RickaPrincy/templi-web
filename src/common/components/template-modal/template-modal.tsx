@@ -107,7 +107,7 @@ const TemplateModalContent: FC<{ templateConfig: TemplateConfig }> = ({
       ...values
     } = formValues;
 
-    if (!isPersisted) {
+    if (isPersisted) {
       const response = await generateProjectWithTemplate({
         isPrivate,
         installationId,
