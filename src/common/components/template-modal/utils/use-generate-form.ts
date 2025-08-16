@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { buildGenerateProjectSchema } from './schema';
 import { TemplateConfig } from '@/common/utils/types';
+import { generateProjectCache } from '@/common/utils/generate-project-cache';
+import { Template } from '@/gen/templi-web-api-client';
 
 export type GenerateProjectFormValues = {
   repositoryName: string;
@@ -11,31 +13,48 @@ export type GenerateProjectFormValues = {
   [key: string]: any;
 };
 
-export const useGenerateForm = (templateConfig: TemplateConfig) => {
+export const useGenerateForm = (
+  template: Template,
+  templateConfig: TemplateConfig
+) => {
   const formSchema = useMemo(
     () => buildGenerateProjectSchema(templateConfig),
     [JSON.stringify(templateConfig)]
   );
+  const { values: cacheValues = {} } = generateProjectCache.get() ?? {};
+
   const form = useForm<GenerateProjectFormValues>({
     defaultValues: {
-      repositoryName: '',
-      installationId: '',
-      isPrivateRepository: true,
+      repositoryName: cacheValues.repositoryName ?? '',
+      installationId: cacheValues.installationId ?? '',
+      isPrivateRepository: cacheValues.isPrivateRepository ?? true,
       ...Object.fromEntries(
         templateConfig.placeholders.map((placeholder) => {
           if (placeholder.type === 'TEXT') {
-            return [placeholder.name, ''];
+            return [placeholder.name, cacheValues[placeholder.name] ?? ''];
           }
 
           if (placeholder.type === 'SELECT') {
-            return [placeholder.name, placeholder.choices?.[0] ?? undefined];
+            return [
+              placeholder.name,
+              cacheValues[placeholder.name] ??
+                placeholder.choices?.[0] ??
+                undefined,
+            ];
           }
 
-          return [placeholder.name, false];
+          return [placeholder.name, cacheValues[placeholder.name] ?? false];
         })
       ),
     },
     resolver: zodResolver(formSchema),
+  });
+
+  form.watch((values) => {
+    generateProjectCache.replace({
+      template,
+      values,
+    });
   });
 
   return form;

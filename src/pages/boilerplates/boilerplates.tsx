@@ -19,8 +19,12 @@ import {
 import { BoilerplateItem } from './components/boilereplate-item';
 import { useGetList } from '@/common/hooks/providers';
 import { templateProvider } from '@/providers';
+import { useEffect } from 'react';
+import { useTemplateStore } from '@/common/stores';
+import { generateProjectCache } from '@/common/utils/generate-project-cache';
 
 export const Boilerplates = () => {
+  const setTemplate = useTemplateStore((state) => state.setTemplate);
   const {
     isLoading,
     data: templates,
@@ -31,6 +35,12 @@ export const Boilerplates = () => {
     queryFn: ({ pagination, filter }) =>
       templateProvider.getTemplates({ filter: filter as any, pagination }),
   });
+
+  useEffect(() => {
+    if (generateProjectCache.isPresent()) {
+      setTemplate(generateProjectCache.get().template);
+    }
+  }, [generateProjectCache.isPresent()]);
 
   return (
     <div className="min-h-screen">

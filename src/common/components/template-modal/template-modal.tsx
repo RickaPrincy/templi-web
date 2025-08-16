@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -43,14 +43,20 @@ import {
   GenerateProjectFormValues,
   useGenerateForm,
 } from './utils/use-generate-form';
+import { generateProjectCache } from '@/common/utils/generate-project-cache';
 
 export const TemplateModal = () => {
   const { template, setTemplate } = useTemplateStore();
   const { data: templateConfig, isLoading: isConfigurationLoading } =
     useGetConfiguration(template);
 
+  const closeModal = () => {
+    setTemplate(null);
+    generateProjectCache.invalidate();
+  };
+
   return (
-    <Dialog open={Boolean(template)} onOpenChange={() => setTemplate(null)}>
+    <Dialog open={Boolean(template)} onOpenChange={closeModal}>
       <DialogContent className="sm:max-w-[1000px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Generate {template?.name} Project</DialogTitle>
@@ -58,23 +64,26 @@ export const TemplateModal = () => {
             Configure your new project based on this template.
           </DialogDescription>
         </DialogHeader>
-        {isConfigurationLoading ? (
-          <TempliLoader />
-        ) : (
-          <TemplateModalContent templateConfig={templateConfig} />
+        {isConfigurationLoading && <TempliLoader />}
+        {!isConfigurationLoading && template && (
+          <TemplateModalContent
+            closeModal={closeModal}
+            templateConfig={templateConfig}
+          />
         )}
       </DialogContent>
     </Dialog>
   );
 };
 
-const TemplateModalContent: FC<{ templateConfig: TemplateConfig }> = ({
-  templateConfig,
-}) => {
+const TemplateModalContent: FC<{
+  templateConfig: TemplateConfig;
+  closeModal: () => void;
+}> = ({ templateConfig, closeModal }) => {
   const whoami = useWhoami();
   const { toast } = useToast();
   const [isGenerationLoading, setIsGenerationLoading] = useState(false);
-  const { template, isPersisted, setTemplate } = useTemplateStore();
+  const { template, isPersisted } = useTemplateStore();
 
   const { data: installations } = useQuery({
     queryFn: () =>
@@ -97,7 +106,7 @@ const TemplateModalContent: FC<{ templateConfig: TemplateConfig }> = ({
     mutationKey: ['templates'],
   });
 
-  const form = useGenerateForm(templateConfig);
+  const form = useGenerateForm(template, templateConfig);
 
   const generate = async (formValues: GenerateProjectFormValues) => {
     const {
@@ -136,14 +145,13 @@ const TemplateModalContent: FC<{ templateConfig: TemplateConfig }> = ({
 
   const onSubmit = async (formValues: GenerateProjectFormValues) => {
     try {
-      console.log('formValues', formValues);
       setIsGenerationLoading(true);
       await generate(formValues);
       toast({
         title: 'Project generated for the selected Org/Account',
         className: 'bg-green-500 text-white',
       });
-      setTemplate(null);
+      closeModal();
     } catch {
       toast({
         title: 'Error occurred while trying to generate your project',
@@ -153,6 +161,15 @@ const TemplateModalContent: FC<{ templateConfig: TemplateConfig }> = ({
       setIsGenerationLoading(false);
     }
   };
+
+  const formValues = form.watch();
+
+  useEffect(() => {
+    generateProjectCache.replace({
+      template,
+      values: formValues,
+    });
+  }, [JSON.stringify(template)]);
 
   return (
     <Form {...form}>
@@ -228,8 +245,8 @@ const TemplateModalContent: FC<{ templateConfig: TemplateConfig }> = ({
           <Button
             type="button"
             variant="outline"
+            onClick={closeModal}
             disabled={isGenerationLoading}
-            onClick={() => setTemplate(null)}
           >
             Cancel
           </Button>

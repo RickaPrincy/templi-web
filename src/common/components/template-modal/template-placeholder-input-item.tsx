@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import {
   Select,
   SelectContent,
@@ -16,13 +16,30 @@ export const TemplatePlaceholderInputItem: FC<{
   field: ControllerRenderProps<GenerateProjectFormValues, string>;
   placeholder: TemplatePlaceholder;
 }> = ({ placeholder, field }) => {
+  const isRequired = useMemo(
+    () =>
+      placeholder.validators === undefined ||
+      !!placeholder.validators.find(
+        (validator) => validator.pattern !== 'optional'
+      ),
+    [placeholder.name]
+  );
+
   return (
     <>
       {placeholder.type === 'TEXT' && (
-        <Input placeholder={placeholder.label} {...field} />
+        <Input
+          required={isRequired}
+          placeholder={placeholder.label}
+          {...field}
+        />
       )}
       {placeholder.type === 'SELECT' && (
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <Select
+          required={isRequired}
+          onValueChange={field.onChange}
+          defaultValue={field.value}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select an option" />
           </SelectTrigger>
