@@ -1,5 +1,5 @@
 import { Navigation } from '@/common/components';
-import { Features, QuickStart, Hero } from './components';
+import { Features, QuickStartComparison, Hero } from './components';
 import { Demo } from '@/common/components/demo';
 
 export const Home = () => {
@@ -8,9 +8,9 @@ export const Home = () => {
       <Navigation />
       <main>
         <Hero />
+        <QuickStartComparison />
         <Demo />
         <Features />
-        <QuickStart />
       </main>
       <footer className="border-t py-6 md:py-0">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
