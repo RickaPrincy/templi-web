@@ -14,14 +14,63 @@ import {
   GithubIcon,
   Navigation,
   SubmitYourTemplate,
-  TempliLoader,
 } from '@/common/components';
 import { BoilerplateItem } from './components/boilereplate-item';
 import { useGetList } from '@/common/hooks/providers';
 import { templateProvider } from '@/providers';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useTemplateStore } from '@/common/stores';
 import { generateProjectCache } from '@/common/utils/generate-project-cache';
+
+const STATIC_TAG_FILTER = [
+  'backend',
+  'cmake',
+  'cpp',
+  'express',
+  'java',
+  'javascript',
+  'jpa',
+  'library',
+  'nestjs',
+  'node',
+];
+
+type TagFilterProps = {
+  tags: string[];
+  selected: string[];
+  onChange: (newSelected: string[]) => void;
+};
+
+export const TagFilter: FC<TagFilterProps> = ({ tags, selected, onChange }) => {
+  const toggle = (tag: string) => {
+    if (selected.includes(tag)) {
+      onChange(selected.filter((t) => t !== tag));
+    } else {
+      onChange([...selected, tag]);
+    }
+  };
+
+  return (
+    <div className="flex flex-wrap gap-2 mt-2 mb-5">
+      {tags.map((tag) => {
+        const isSelected = selected.includes(tag);
+        return (
+          <button
+            key={tag}
+            onClick={() => toggle(tag)}
+            className={`rounded-full border px-3 py-[6px] text-sm transition ${
+              isSelected
+                ? 'border-primary bg-primary text-white shadow'
+                : 'border-muted text-muted-foreground hover:bg-muted/50'
+            }`}
+          >
+            {tag}
+          </button>
+        );
+      })}
+    </div>
+  );
+};
 
 export const Boilerplates = () => {
   const setTemplate = useTemplateStore((state) => state.setTemplate);
@@ -43,7 +92,7 @@ export const Boilerplates = () => {
   }, [generateProjectCache.isPresent()]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen mb-10">
       <Navigation />
       <main className="container max-w-5xl mx-auto px-4 py-8">
         <motion.div
@@ -122,7 +171,22 @@ export const Boilerplates = () => {
             </div>
             <GenerateFromUrl />
           </div>
-          {isLoading && <TempliLoader />}
+          <TagFilter
+            tags={STATIC_TAG_FILTER}
+            selected={filter?.tags ?? []}
+            onChange={(newTags) =>
+              setFilter((f) => ({
+                ...f,
+                tags: newTags,
+              }))
+            }
+          />
+          {isLoading && (
+            <div className="w-full h-[4px] overflow-hidden rounded-md mb-5 bg-blue-800">
+              <div className="h-full w-full animate-pulse bg-blue-50" />
+            </div>
+          )}
+
           {templates.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground">

@@ -213,6 +213,37 @@ export interface GithubInstallation {
 /**
  * 
  * @export
+ * @interface Tag
+ */
+export interface Tag {
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
  * @interface Template
  */
 export interface Template {
@@ -258,6 +289,12 @@ export interface Template {
      * @memberof Template
      */
     'updatedAt': string;
+    /**
+     * 
+     * @type {Array<Tag>}
+     * @memberof Template
+     */
+    'tags': Array<Tag>;
 }
 /**
  * 
@@ -658,6 +695,51 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary 
+         * @param {string} [name] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTags: async (name?: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tags`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -693,12 +775,13 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary 
          * @param {string} [name] 
+         * @param {Array<string>} [tags] 
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTemplates: async (name?: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTemplates: async (name?: string, tags?: Array<string>, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/templates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -713,6 +796,10 @@ export const ResourcesApiAxiosParamCreator = function (configuration?: Configura
 
             if (name !== undefined) {
                 localVarQueryParameter['name'] = name;
+            }
+
+            if (tags) {
+                localVarQueryParameter['tags'] = tags;
             }
 
             if (page !== undefined) {
@@ -803,6 +890,21 @@ export const ResourcesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
+         * @param {string} [name] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTags(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Tag>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTags(name, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ResourcesApi.getTags']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -817,13 +919,14 @@ export const ResourcesApiFp = function(configuration?: Configuration) {
          * 
          * @summary 
          * @param {string} [name] 
+         * @param {Array<string>} [tags] 
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTemplates(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Template>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplates(name, page, pageSize, options);
+        async getTemplates(name?: string, tags?: Array<string>, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Template>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplates(name, tags, page, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ResourcesApi.getTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -885,6 +988,18 @@ export const ResourcesApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary 
+         * @param {string} [name] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTags(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<Tag>> {
+            return localVarFp.getTags(name, page, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -896,13 +1011,14 @@ export const ResourcesApiFactory = function (configuration?: Configuration, base
          * 
          * @summary 
          * @param {string} [name] 
+         * @param {Array<string>} [tags] 
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTemplates(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<Template>> {
-            return localVarFp.getTemplates(name, page, pageSize, options).then((request) => request(axios, basePath));
+        getTemplates(name?: string, tags?: Array<string>, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<Template>> {
+            return localVarFp.getTemplates(name, tags, page, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -969,6 +1085,20 @@ export class ResourcesApi extends BaseAPI {
     /**
      * 
      * @summary 
+     * @param {string} [name] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResourcesApi
+     */
+    public getTags(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).getTags(name, page, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -982,14 +1112,15 @@ export class ResourcesApi extends BaseAPI {
      * 
      * @summary 
      * @param {string} [name] 
+     * @param {Array<string>} [tags] 
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResourcesApi
      */
-    public getTemplates(name?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
-        return ResourcesApiFp(this.configuration).getTemplates(name, page, pageSize, options).then((request) => request(this.axios, this.basePath));
+    public getTemplates(name?: string, tags?: Array<string>, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return ResourcesApiFp(this.configuration).getTemplates(name, tags, page, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

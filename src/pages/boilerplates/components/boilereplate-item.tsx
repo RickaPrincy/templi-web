@@ -30,6 +30,18 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
         <CardDescription className="mb-5">
           {template.description}
         </CardDescription>
+
+        {/* TAGS */}
+        <div className="flex flex-wrap gap-2">
+          {(template.tags ?? []).slice(0, 3).map((tag) => (
+            <span
+              key={tag?.id}
+              className="rounded-full  my-2 border px-2 py-[2px] text-xs bg-muted text-muted-foreground"
+            >
+              {tag.name}
+            </span>
+          ))}
+        </div>
       </CardHeader>
       <CardFooter className="flex flex-col gap-2 pt-2">
         <AuthenticationRequired

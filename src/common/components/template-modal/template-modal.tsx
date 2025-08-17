@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react';
+import { Loader } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -220,6 +221,7 @@ const TemplateModalContent: FC<{
               (window.location.href = `https://github.com/apps/${Env.GITHUB_APP_NAME}/installations/new?redirect_uri=${Env.API_URL}/auth/github/callback`)
             }
             className="flex items-center gap-2"
+            disabled={isGenerationLoading}
           >
             <GithubIcon reverse />
             Install GitHub Org/Account
@@ -255,7 +257,11 @@ const TemplateModalContent: FC<{
             type="submit"
             className="flex items-center gap-2"
           >
-            <GithubIcon reverse />
+            {isGenerationLoading ? (
+              <Loader className="animate-spin" />
+            ) : (
+              <GithubIcon reverse />
+            )}
             Generate Project
           </Button>
         </DialogFooter>

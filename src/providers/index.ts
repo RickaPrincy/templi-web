@@ -5,3 +5,4 @@ export * from './auth-provider';
 export * from './template-provider';
 export * from './github-installation-provider';
 export * from './emailjs-provider';
+export * from './tag-provider';

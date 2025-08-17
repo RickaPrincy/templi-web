@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { buildGenerateProjectSchema } from './schema';
 import { TemplateConfig } from '@/common/utils/types';
-import { generateProjectCache } from '@/common/utils/generate-project-cache';
 import { Template } from '@/gen/templi-web-api-client';
+import { generateProjectCache } from '@/common/utils/generate-project-cache';
 
 export type GenerateProjectFormValues = {
   repositoryName: string;

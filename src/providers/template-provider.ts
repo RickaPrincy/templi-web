@@ -10,13 +10,14 @@ import { authProvider } from './auth-provider';
 export const TO_SIGNOUT_STATUS = [401, 403];
 export const templateProvider = {
   async getTemplates(args: {
-    filter?: { name: string };
+    filter?: { name: string; tags?: string[] };
     pagination?: Pagination;
   }) {
     const { pagination, filter } = args;
     return unwrap(() =>
       resourcesApi().getTemplates(
         filter?.name || undefined,
+        filter?.tags ?? [],
         pagination?.page,
         pagination?.pageSize
       )
