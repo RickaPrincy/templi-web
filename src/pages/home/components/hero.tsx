@@ -56,7 +56,7 @@ const TypingText = ({
 
 export const Hero = () => {
   return (
-    <div className="container px-4 pt-16 pb-12 text-center lg:pt-32 relative">
+    <div className="container mb-[150px] px-4 pt-16 pb-12 text-center lg:pt-32 relative">
       {/* Title */}
       <motion.h1
         className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight sm:text-7xl"

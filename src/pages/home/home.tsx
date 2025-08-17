@@ -1,12 +1,28 @@
 import { Navigation } from '@/common/components';
 import { Features, QuickStartComparison, Hero } from './components';
 import { Demo } from '@/common/components/demo';
+import { Orb } from './components/orb';
 
 export const Home = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <main>
+      <main className="w-full">
+        <div
+          style={{
+            width: '100%',
+            height: '700px',
+            position: 'absolute',
+            opacity: 0.5,
+          }}
+        >
+          <Orb
+            hue={0}
+            hoverIntensity={1}
+            rotateOnHover={true}
+            forceHoverState={false}
+          />
+        </div>
         <Hero />
         <QuickStartComparison />
         <Demo />
