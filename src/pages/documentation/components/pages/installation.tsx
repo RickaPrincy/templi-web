@@ -1,32 +1,35 @@
 import { Card, CardContent } from '@/common/components/ui/card';
-import {
-  Terminal,
-  Library,
-  Download,
-  Package,
-  AlertTriangle,
-} from 'lucide-react';
+import { Terminal, Library, Package, AlertTriangle, Info } from 'lucide-react';
 import { CodeBlock } from '@/common/components';
+import { Link } from 'react-router-dom';
 
 export const InstallationPage = () => (
   <section>
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-      Installation Templi CLI
+      Installing Templi CLI
     </h1>
 
+    <div className="flex items-start gap-4 p-6 bg-red-100 rounded-lg border-2 border-red-500 mb-8 dark:bg-transparent">
+      <AlertTriangle className="h-12 w-12 text-red-600 flex-shrink-0" />
+      <div>
+        <p className="text-lg font-semibold text-red-700 mb-2">Important:</p>
+        <p className="text-red-700">
+          Only install the Templi CLI if you want to generate projects without
+          using the web interface, or if you plan to create your own templates.
+          If you just want to explore, you should{' '}
+          <Link to={'/templates'} className="underline">
+            visit the templates you want to use
+          </Link>{' '}
+          directly. The web interface is sufficient for that.
+        </p>
+      </div>
+    </div>
+
     <div className="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-200 mb-8 dark:bg-transparent">
-      <Download className="h-10 w-10 text-amber-500" />
+      <Info className="h-10 w-10 text-amber-500" />
       <p>
         Templi can be installed using prebuilt binaries, as a system library, or
         as a Git submodule.
-      </p>
-    </div>
-    <div className="flex items-center gap-4 p-4 bg-red-50 rounded-lg border border-amber-200 mb-8 dark:bg-transparent">
-      <AlertTriangle className="h-10 w-10 text-red-500" />
-      <p>
-        Only install the Templi CLI if you plan to create your own boilerplates
-        or use templates via the CLI. If you're just using templates from
-        GitHub, the web integration is sufficient.
       </p>
     </div>
 

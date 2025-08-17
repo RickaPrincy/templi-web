@@ -18,7 +18,7 @@ import { AuthenticatedRoutes } from './security/components';
 import { Home } from './pages/home';
 import { NotFound } from './pages/not-found';
 import { Documentation } from './pages/documentation';
-import { BoilerplateDetails, Boilerplates } from './pages/boilerplates';
+import { TemplateDetails, Templates } from './pages/templates';
 import { AuthCallback } from './security/components/auth-callback';
 import { TemplateModal } from './common/components/template-modal';
 import { generateProjectCache } from './common/utils/generate-project-cache';
@@ -38,12 +38,12 @@ const AppContent = () => {
   const pathname = location.pathname;
 
   useEffect(() => {
-    if (pathname === 'boilerplates' || pathname === '/auth/github/callback') {
+    if (pathname === 'templates' || pathname === '/auth/github/callback') {
       return;
     }
 
     if (generateProjectCache.isPresent()) {
-      navigate('/boilerplates');
+      navigate('/templates');
     }
   }, [location.pathname]);
 
@@ -61,8 +61,8 @@ const AppContent = () => {
           }
         >
           <Route path="/" element={<Home />} />
-          <Route path="/boilerplates" element={<Boilerplates />} />
-          <Route path="/boilerplates/:id" element={<BoilerplateDetails />} />
+          <Route path="/templates" element={<Templates />} />
+          <Route path="/templates/:id" element={<TemplateDetails />} />
         </Route>
         <Route path="/docs" element={<Documentation />} />
         <Route path="/auth/github/callback" element={<AuthCallback />} />

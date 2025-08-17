@@ -25,7 +25,7 @@ import { emailjsProvider, securityApi } from '@/providers';
 import { useWhoami } from '@/security/hooks';
 import { unwrap } from '../utils/unwrap';
 
-export type SubmitBoilerplateForm = {
+export type SubmitTemplateForm = {
   template_url: string;
   template_name: string;
   template_description: string;
@@ -41,7 +41,7 @@ export const SubmitYourTemplate = () => {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
-  const form = useForm<SubmitBoilerplateForm>({
+  const form = useForm<SubmitTemplateForm>({
     defaultValues: {
       template_url: '',
       template_name: '',
@@ -54,7 +54,7 @@ export const SubmitYourTemplate = () => {
     },
   });
 
-  const onSubmit = async (values: SubmitBoilerplateForm) => {
+  const onSubmit = async (values: SubmitTemplateForm) => {
     try {
       // Try whoami to test if it's a valid user
       // Note: it still fails if there's an interceptor on getWhoami.
@@ -68,7 +68,7 @@ export const SubmitYourTemplate = () => {
         user_email: connectedWhoami?.email,
       });
       toast({
-        title: 'Boilerplate submitted successfully!',
+        title: 'Template submitted successfully!',
         className: 'bg-green-500 text-white',
       });
       setOpen(false);
@@ -86,7 +86,7 @@ export const SubmitYourTemplate = () => {
         handleClick={() => setOpen(true)}
         render={(handleClick) => (
           <Button onClick={handleClick} className="flex items-center gap-2">
-            <GithubIcon reverse /> Submit a Boilerplate
+            <GithubIcon reverse /> Submit a Template
           </Button>
         )}
       />
@@ -224,7 +224,7 @@ export const SubmitYourTemplate = () => {
                   Cancel
                 </Button>
                 <Button type="submit" className="flex items-center gap-2">
-                  <GithubIcon reverse /> Submit Boilerplate
+                  <GithubIcon reverse /> Submit Template
                 </Button>
               </DialogFooter>
             </form>

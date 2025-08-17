@@ -9,7 +9,7 @@ const features = [
   {
     title: 'Easy Configuration',
     description:
-      "Generate templi.json easily with the CLI command 'templi configure' to set up your boilerplate configuration.",
+      "Generate templi.json easily with the CLI command 'templi configure' to set up your template configuration.",
   },
   {
     title: 'Dynamic Templates',

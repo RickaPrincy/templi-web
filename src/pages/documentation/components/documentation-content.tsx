@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import {
   CLIReference,
-  ConfiguringBoilerplatePage,
-  CreatingBoilerplatePage,
+  ConfiguringTemplatePage,
+  CreatingTemplatePage,
   InstallationPage,
   IntroductionPage,
   LibraryReference,
-  UsingBoilerplatePage,
+  UsingTemplatePage,
 } from './pages';
 import { DocumentationPagination } from './documentation-pagination';
 
@@ -35,11 +35,9 @@ export const DocumentationContent = ({
       >
         {currentPage === 'introduction' && <IntroductionPage />}
         {currentPage === 'installation' && <InstallationPage />}
-        {currentPage === 'creating-boilerplate' && <CreatingBoilerplatePage />}
-        {currentPage === 'configuring-boilerplate' && (
-          <ConfiguringBoilerplatePage />
-        )}
-        {currentPage === 'using-boilerplate' && <UsingBoilerplatePage />}
+        {currentPage === 'creating-template' && <CreatingTemplatePage />}
+        {currentPage === 'configuring-template' && <ConfiguringTemplatePage />}
+        {currentPage === 'using-template' && <UsingTemplatePage />}
         {currentPage === 'cli-reference' && <CLIReference />}
         {currentPage === 'library-reference' && <LibraryReference />}
 

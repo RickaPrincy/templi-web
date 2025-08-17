@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Templi
- * Templi is a tool that simplifies boilerplate creation and usage, available as both a library and a CLI.
+ * Templi is a tool that simplifies template creation and usage, available as both a library and a CLI.
  *
  * The version of the OpenAPI document: 0.0.1
  * 

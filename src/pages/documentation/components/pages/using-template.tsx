@@ -9,10 +9,10 @@ import { CodeBlock } from '@/common/components';
 
 import promptImage from '../../assets/images/prompt.png';
 
-export const UsingBoilerplatePage = () => (
+export const UsingTemplatePage = () => (
   <section>
     <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-      Using Your Boilerplate
+      Using Your Template
     </h1>
 
     <p className="text-lg text-muted-foreground mb-6">

@@ -36,7 +36,7 @@ import { useQuery } from '@tanstack/react-query';
 import { templateProvider } from '@/providers';
 import { useGetConfiguration } from '@/common/hooks/providers';
 
-export const BoilerplateDetails = () => {
+export const TemplateDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const setTemplate = useTemplateStore((state) => state.setTemplate);
@@ -64,11 +64,11 @@ export const BoilerplateDetails = () => {
         >
           <Button
             variant="ghost"
-            onClick={() => navigate('/boilerplates')}
+            onClick={() => navigate('/templates')}
             className="mb-4 flex items-center gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Boilerplates
+            Back to Templates
           </Button>
 
           <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">

@@ -24,18 +24,18 @@ export const DOCUMENTATION_PAGES = [
     icon: Terminal,
   },
   {
-    id: 'creating-boilerplate',
-    title: 'Creating a Boilerplate',
+    id: 'creating-template',
+    title: 'Creating a Template',
     icon: File,
   },
   {
-    id: 'configuring-boilerplate',
-    title: 'Configuring a Boilerplate',
+    id: 'configuring-template',
+    title: 'Configuring a Template',
     icon: FileJson,
   },
   {
-    id: 'using-boilerplate',
-    title: 'Using Your Boilerplate',
+    id: 'using-template',
+    title: 'Using Your Template',
     icon: Terminal,
   },
   {
@@ -82,7 +82,7 @@ export function DocumentationSidebar({
   };
 
   return (
-    <Sidebar className="md:block hidden border-r">
+    <Sidebar className="md:block bg-sidebar p-3 hidden border-r">
       <SidebarHeader className="mt-1 pl-2 mb-5">
         <h4 className="text-foreground font-semibold">Documentation</h4>
       </SidebarHeader>

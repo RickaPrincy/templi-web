@@ -14,7 +14,7 @@ import { AuthenticationRequired, GithubIcon } from '@/common/components';
 import { useTemplateStore } from '@/common/stores';
 import { useGenerator } from '@/common/hooks/use-generator';
 
-export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
+export const TemplateItem: FC<{ template: Template }> = ({ template }) => {
   const navigate = useNavigate();
   const setTemplate = useTemplateStore((state) => state.setTemplate);
   const generator = useGenerator(template);
@@ -23,7 +23,7 @@ export const BoilerplateItem: FC<{ template: Template }> = ({ template }) => {
     <Card
       key={template.id}
       className="transition-all duration-300 hover:scale-[1.02] hover:shadow-md flex justify-between flex-col cursor-pointer"
-      onClick={() => navigate(`/boilerplates/${template.id}`)}
+      onClick={() => navigate(`/templates/${template.id}`)}
     >
       <CardHeader>
         <CardTitle>{template.name}</CardTitle>

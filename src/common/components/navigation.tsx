@@ -16,8 +16,8 @@ const links = [
     name: 'Documentation',
   },
   {
-    href: '/boilerplates',
-    name: 'Boilerplates',
+    href: '/templates',
+    name: 'Templates',
   },
   {
     href: 'https://github.com/RickaPrincy/Templi',

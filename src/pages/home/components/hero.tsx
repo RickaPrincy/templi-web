@@ -11,7 +11,7 @@ export const Hero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Simplify boilerplate{' '}
+        Simplify template{' '}
         <motion.span
           className="relative whitespace-nowrap bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent"
           initial={{ opacity: 0, x: -20 }}
@@ -28,8 +28,8 @@ export const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
       >
-        A powerful tool that streamlines boilerplate creation and usage,
-        available as both a library and a CLI, with GitHub web integration.
+        A powerful tool that streamlines template creation and usage, available
+        as both a library and a CLI, with GitHub web integration.
       </motion.p>
       <motion.div
         className="mt-10 flex justify-center gap-x-6"
@@ -42,7 +42,7 @@ export const Hero = () => {
           size="lg"
           className="text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
         >
-          <Link to="/boilerplates">Get Started</Link>
+          <Link to="/templates">Get Started</Link>
         </Button>
         <Button variant="outline" size="lg" asChild>
           <a href="https://github.com/RickaPrincy/Templi" target="_blank">

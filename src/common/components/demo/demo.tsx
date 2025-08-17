@@ -5,21 +5,21 @@ import { Play } from 'lucide-react';
 
 const cards = [
   {
-    title: 'Start with a Ready-Made Template',
+    title: 'Start a Project from a Ready-Made Template',
     description:
-      'Quickly launch a project on GitHub by selecting a pre-configured template—no setup required.',
+      'Launch a new project instantly using a template that’s already in Templi’s web interface.',
     gif: '/gif/web-with-template.gif',
   },
   {
-    title: 'Use a Public Template URL',
+    title: 'Use a Template from GitHub',
     description:
-      'Paste a template repository URL to generate a project instantly.',
+      'Generate a project by pasting a GitHub template URL—no setup needed.',
     gif: '/gif/web-from-url.gif',
   },
   {
-    title: 'Generate via CLI with Template URL',
+    title: 'Quickly Create a Project via CLI',
     description:
-      'Use the command-line interface to bootstrap a project directly from a GitHub template.',
+      'Use Templi’s command-line tool to quickly start a project from any GitHub template.',
     gif: '/gif/cli-with-github.gif',
   },
   {

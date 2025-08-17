@@ -1,3 +1,3 @@
 # Templi
 
-A powerful tool that streamlines boilerplate creation and usage.
+A powerful tool that streamlines template creation and usage.

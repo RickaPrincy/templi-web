@@ -15,7 +15,7 @@ import {
   Navigation,
   SubmitYourTemplate,
 } from '@/common/components';
-import { BoilerplateItem } from './components/boilereplate-item';
+import { TemplateItem } from './components/template-item';
 import { useGetList } from '@/common/hooks/providers';
 import { templateProvider } from '@/providers';
 import { FC, useEffect } from 'react';
@@ -72,7 +72,7 @@ export const TagFilter: FC<TagFilterProps> = ({ tags, selected, onChange }) => {
   );
 };
 
-export const Boilerplates = () => {
+export const Templates = () => {
   const setTemplate = useTemplateStore((state) => state.setTemplate);
   const {
     isLoading,
@@ -102,7 +102,7 @@ export const Boilerplates = () => {
         >
           <div className="flex items-center mb-8 gap-10">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-              Boilerplate Templates
+              Template Templates
             </h1>
             <SubmitYourTemplate />
           </div>
@@ -196,7 +196,7 @@ export const Boilerplates = () => {
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
               {templates.map((template) => (
-                <BoilerplateItem key={template.id} template={template} />
+                <TemplateItem key={template.id} template={template} />
               ))}
             </div>
           )}

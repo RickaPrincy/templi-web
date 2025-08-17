@@ -25,22 +25,22 @@ const pageDescriptions: Record<string, PageDescription> = {
   },
   'installation': {
     prev: 'Back to introduction and overview of Templi',
-    next: 'Discover how to create your first boilerplate',
+    next: 'Discover how to create your first template',
   },
-  'creating-boilerplate': {
+  'creating-template': {
     prev: 'Return to installation instructions',
-    next: 'Learn how to configure your boilerplate with templi.json',
+    next: 'Learn how to configure your template with templi.json',
   },
-  'configuring-boilerplate': {
-    prev: 'Back to creating a boilerplate',
-    next: 'Find out how to use your boilerplate to generate projects',
+  'configuring-template': {
+    prev: 'Back to creating a template',
+    next: 'Find out how to use your template to generate projects',
   },
-  'using-boilerplate': {
-    prev: 'Return to boilerplate configuration',
+  'using-template': {
+    prev: 'Return to template configuration',
     next: 'See a complete example project with Templi',
   },
   'example-project': {
-    prev: 'Back to using your boilerplate',
+    prev: 'Back to using your template',
   },
 };
 
