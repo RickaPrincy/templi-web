@@ -9,6 +9,7 @@ import {
   UsingTemplatePage,
 } from './pages';
 import { DocumentationPagination } from './documentation-pagination';
+import { useEffect } from 'react';
 
 type DocumentationContentProps = {
   currentPage: string;
@@ -23,8 +24,12 @@ const PAGE_ANIMATION_VARIANTS = {
 export const DocumentationContent = ({
   currentPage,
 }: DocumentationContentProps) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [currentPage]);
+
   return (
-    <main className="flex-1 container max-w-5xl mx-auto px-4 py-8 overflow-y-auto">
+    <main className="flex-1 container max-w-6xl mx-auto px-4 py-8 overflow-y-auto">
       <motion.div
         exit="exit"
         key={currentPage}
